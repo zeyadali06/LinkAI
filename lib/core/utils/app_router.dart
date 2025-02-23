@@ -13,7 +13,7 @@ abstract class AppRouter {
   static const String profileView = "/profileView";
 
   static final GoRouter router = GoRouter(
-    initialLocation: splashView,
+    initialLocation: loginView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,

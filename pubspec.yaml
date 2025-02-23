@@ -34,6 +34,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.0.0
   flutter_sound: ^9.23.1
+  font_awesome_flutter: ^10.8.0
   get_it: ^8.0.3
   go_router: ^14.8.0
   http: ^1.3.0
@@ -80,7 +81,7 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

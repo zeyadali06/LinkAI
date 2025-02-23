@@ -31,7 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   late bool obscureText;
   late IconData eyeIcon;
 
-  @override
+  @override 
   void initState() {
     obscureText = widget.obscureText;
     eyeIcon = Icons.remove_red_eye_outlined;

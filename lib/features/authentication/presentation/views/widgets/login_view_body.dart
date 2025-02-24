@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/google_button.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/login_text_field.dart';
+import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/logo.dart';
 
 class LoginViewBody extends StatefulWidget {
@@ -58,7 +58,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                             height: 40,
                             color: Colors.white.withValues(alpha: .4),
                           ),
-                          LoginTextField(
+                          AuthTextField(
                             hintText: 'Email',
                             onSaved: (value) {},
                             borderColor: Colors.white.withValues(alpha: 0.3),
@@ -68,22 +68,16 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                             textColor: Colors.white,
                           ),
                           const SizedBox(height: 15),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CustomButton(
-                                  text: "Sign In or Sign up",
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                    } else {
-                                      _autovalidateMode = AutovalidateMode.always;
-                                      setState(() {});
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
+                          CustomButton(
+                            text: "Sign In or Sign up",
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                              } else {
+                                _autovalidateMode = AutovalidateMode.always;
+                                setState(() {});
+                              }
+                            },
                           ),
                           TextButton(
                             onPressed: () {},

@@ -48,37 +48,51 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(height: 50),
-                    const Text(
+                    Text(
                       "Verification",
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Theme.of(context).textTheme.bodyLarge!.color,
+                      ),
                     ),
                     const Expanded(child: SizedBox(height: 25)),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.email_outlined,
                           size: 68,
-                          color: Colors.black,
+                          color: Theme.of(context).iconTheme.color,
                         ),
                         const SizedBox(height: 25),
-                        const Text(
+                        Text(
                           "Enter the verification code we sent to",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).textTheme.bodyLarge!.color,
+                          ),
                         ),
                         const SizedBox(height: 15),
-                        const Text(
+                        Text(
                           "z01551153743@gmail.com",
-                          style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).textTheme.bodyLarge!.color,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         const SizedBox(height: 25),
                         const PinCodeField(),
                         TextButton(
                           onPressed: () {},
-                          style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsets.zero)),
-                          child: const Text(
+                          style: ButtonStyle(
+                            padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+                            backgroundColor: Theme.of(context).textButtonTheme.style!.backgroundColor,
+                            overlayColor: Theme.of(context).textButtonTheme.style!.overlayColor,
+                          ),
+                          child: Text(
                             "Resend",
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Theme.of(context).textButtonTheme.style!.foregroundColor!.resolve({})),
                           ),
                         ),
                       ],

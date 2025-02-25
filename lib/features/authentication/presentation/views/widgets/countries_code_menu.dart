@@ -30,7 +30,8 @@ class _CountriesCodeMenuState extends State<CountriesCodeMenu> {
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: const Color(0xffe6e6e6)),
+        color: Theme.of(context).inputDecorationTheme.fillColor!,
+        border: Border.all(width: 1, color: Theme.of(context).inputDecorationTheme.border!.borderSide.color),
         borderRadius: BorderRadius.circular(16),
       ),
       child: DropdownButton<Country>(
@@ -48,7 +49,10 @@ class _CountriesCodeMenuState extends State<CountriesCodeMenu> {
               children: [
                 Text(
                   "${value.code} ${value.flag}",
-                  style: const TextStyle(fontSize: 14),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).textTheme.bodyLarge!.color,
+                  ),
                 ),
               ],
             ),

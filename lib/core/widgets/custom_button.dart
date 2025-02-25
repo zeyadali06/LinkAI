@@ -7,12 +7,20 @@ class CustomButton extends StatelessWidget {
     required this.text,
     this.height = 55,
     this.fitWidth = true,
+    this.textColor,
+    this.buttonColor,
+    this.splashColor,
+    this.highlightColor,
   });
 
   final void Function()? onPressed;
   final String text;
   final double height;
   final bool fitWidth;
+  final Color? textColor;
+  final Color? buttonColor;
+  final Color? splashColor;
+  final Color? highlightColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +31,21 @@ class CustomButton extends StatelessWidget {
             child: Container(
               height: height,
               clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+              decoration: BoxDecoration(
+                color: buttonColor ?? Theme.of(context).filledButtonTheme.style!.backgroundColor!.resolve({}),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
               ),
               child: MaterialButton(
                 onPressed: onPressed,
-                splashColor: Colors.grey.withValues(alpha: .20),
-                highlightColor: Colors.grey.withValues(alpha: .20),
+                splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
+                highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
                 child: Text(
                   text,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 18),
+                  style: TextStyle(
+                    color: textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),
@@ -44,17 +56,21 @@ class CustomButton extends StatelessWidget {
       return Container(
         height: height,
         clipBehavior: Clip.hardEdge,
-        decoration: const BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+        decoration: BoxDecoration(
+          color: buttonColor ?? Theme.of(context).filledButtonTheme.style!.backgroundColor!.resolve({}),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: MaterialButton(
           onPressed: onPressed,
-          splashColor: Colors.grey.withValues(alpha: .20),
-          highlightColor: Colors.grey.withValues(alpha: .20),
+          splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
+          highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
           child: Text(
             text,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 18),
+            style: TextStyle(
+              color: textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
+              fontWeight: FontWeight.w400,
+              fontSize: 18,
+            ),
           ),
         ),
       );

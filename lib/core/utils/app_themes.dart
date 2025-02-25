@@ -5,28 +5,58 @@ class AppThemes {
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.black),
-    buttonTheme: const ButtonThemeData(buttonColor: Colors.black),
-    textButtonTheme: const TextButtonThemeData(style: ButtonStyle(textStyle: WidgetStatePropertyAll(TextStyle(color: Colors.white)))),
-    appBarTheme: const AppBarTheme(color: Colors.white, foregroundColor: Colors.black),
     textTheme: const TextTheme(bodyLarge: TextStyle(color: Colors.black)),
     hintColor: Colors.grey,
-    inputDecorationTheme: const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: Colors.black))),
-    snackBarTheme: const SnackBarThemeData(contentTextStyle: TextStyle(color: Colors.white)),
-    cardColor: Colors.white,
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xffe6e6e6))),
+      fillColor: Colors.white,
+      suffixIconColor: Colors.grey,
+      activeIndicatorBorder: BorderSide(color: Colors.grey),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.grey),
+    filledButtonTheme: FilledButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: const WidgetStatePropertyAll(Colors.black),
+        foregroundColor: const WidgetStatePropertyAll(Colors.white),
+        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: const WidgetStatePropertyAll(Colors.white),
+        foregroundColor: const WidgetStatePropertyAll(Colors.black),
+        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+      ),
+    ),
   );
 
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: ThemeData.dark().scaffoldBackgroundColor,
-    scaffoldBackgroundColor: ThemeData.dark().scaffoldBackgroundColor,
-    iconTheme: const IconThemeData(color: Colors.white),
-    buttonTheme: const ButtonThemeData(buttonColor: Colors.blue),
-    textButtonTheme: const TextButtonThemeData(style: ButtonStyle(textStyle: WidgetStatePropertyAll(TextStyle(color: Colors.white)))),
-    appBarTheme: AppBarTheme(color: ThemeData.dark().scaffoldBackgroundColor, foregroundColor: Colors.white),
+    scaffoldBackgroundColor: const Color(0xff2a2a2a),
+    iconTheme: const IconThemeData(color: Color(0xff9f9ff8)),
     textTheme: const TextTheme(bodyLarge: TextStyle(color: Colors.white)),
-    inputDecorationTheme: const InputDecorationTheme(border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white))),
-    snackBarTheme: const SnackBarThemeData(contentTextStyle: TextStyle(color: Colors.white)),
-    cardColor: Colors.grey[850],
+    hintColor: Colors.white.withValues(alpha: .5),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.withValues(alpha: .2))),
+      fillColor: const Color(0xff262626),
+      suffixIconColor: Colors.white.withValues(alpha: .5),
+      activeIndicatorBorder: const BorderSide(color: Color(0xffe6e6e6)),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.grey),
+    filledButtonTheme: FilledButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: const WidgetStatePropertyAll(Color(0xff9f9ff8)),
+        foregroundColor: const WidgetStatePropertyAll(Colors.white),
+        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+        foregroundColor: const WidgetStatePropertyAll(Color(0xff9f9ff8)),
+        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+      ),
+    ),
   );
 
   static ThemeMode fromString(String value) {

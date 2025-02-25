@@ -5,29 +5,29 @@ class CustomObsecureTextField extends StatefulWidget {
   const CustomObsecureTextField({
     super.key,
     this.hintText,
-    this.hintColor = Colors.black,
-    this.textColor = Colors.black,
-    this.cursorColor = Colors.black,
-    this.suffixIconColor = Colors.black,
+    this.hintColor,
+    this.textColor,
+    this.cursorColor,
+    this.suffixIconColor,
     this.borderWidth = 1,
-    this.borderColor = const Color(0xffe6e6e6),
+    this.borderColor,
     this.controller,
     this.inputFormatters,
     this.onSaved,
     this.onChanged,
     this.enableValidator = true,
-    this.fillColor = Colors.transparent,
+    this.fillColor,
     this.borderRadius = 16,
     this.obscureText = true,
   });
 
   final String? hintText;
-  final Color fillColor;
-  final Color hintColor;
-  final Color textColor;
-  final Color cursorColor;
-  final Color borderColor;
-  final Color suffixIconColor;
+  final Color? fillColor;
+  final Color? hintColor;
+  final Color? textColor;
+  final Color? cursorColor;
+  final Color? borderColor;
+  final Color? suffixIconColor;
   final double borderWidth;
   final double borderRadius;
   final void Function(String?)? onChanged;
@@ -48,19 +48,21 @@ class _CustomObsecureTextFieldState extends State<CustomObsecureTextField> {
   late Color textColor;
   late Color cursorColor;
   late Color borderColor;
+  late Color fillColor;
   late Color suffixIconColor;
   late bool obscureText;
 
   @override
   void initState() {
-    hintColor = widget.hintColor;
-    textColor = widget.textColor;
-    cursorColor = widget.cursorColor;
-    borderColor = widget.borderColor;
-    suffixIconColor = widget.suffixIconColor;
     eyeIcon = Icons.remove_red_eye_outlined;
     obscureText = widget.obscureText;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    setColors();
+    super.didChangeDependencies();
   }
 
   @override
@@ -81,11 +83,7 @@ class _CustomObsecureTextFieldState extends State<CustomObsecureTextField> {
               setState(() {});
               return "Field is required";
             } else if (foucsed) {
-              hintColor = widget.hintColor;
-              textColor = widget.textColor;
-              cursorColor = widget.cursorColor;
-              borderColor = widget.borderColor;
-              suffixIconColor = widget.suffixIconColor;
+              setColors();
               setState(() {});
             }
           }
@@ -136,5 +134,14 @@ class _CustomObsecureTextFieldState extends State<CustomObsecureTextField> {
       borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       borderSide: BorderSide(width: width, color: borderColor),
     );
+  }
+
+  setColors() {
+    cursorColor = widget.cursorColor ?? Theme.of(context).textSelectionTheme.cursorColor!;
+    hintColor = widget.hintColor ?? Theme.of(context).hintColor;
+    suffixIconColor = widget.suffixIconColor ?? Theme.of(context).inputDecorationTheme.suffixIconColor!;
+    borderColor = widget.borderColor ?? Theme.of(context).inputDecorationTheme.border!.borderSide.color;
+    fillColor = widget.fillColor ?? Theme.of(context).inputDecorationTheme.fillColor!;
+    textColor = widget.textColor ?? Theme.of(context).textTheme.bodyLarge!.color!;
   }
 }

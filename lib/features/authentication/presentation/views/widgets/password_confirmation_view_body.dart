@@ -37,24 +37,28 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 50),
-                  const Text(
+                  Text(
                     "Setup Password",
-                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.bodyLarge!.color,
+                    ),
                   ),
                   const Expanded(child: SizedBox(height: 25)),
                   Column(
                     children: [
-                      const Text(
+                      Text(
                         "z01551153743@gmail.com",
-                        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).textTheme.bodyLarge!.color,
+                        ),
                       ),
                       const SizedBox(height: 25),
                       CustomObsecureTextField(
                         hintText: "Repeat Password",
                         controller: confirmPasswordController,
-                        cursorColor: Colors.grey,
-                        hintColor: Colors.grey,
-                        suffixIconColor: Colors.grey,
                       ),
                     ],
                   ),

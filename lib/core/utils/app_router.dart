@@ -19,7 +19,7 @@ abstract class AppRouter {
   static const String emailVerificationView = "/emailVerificationView";
 
   static final GoRouter router = GoRouter(
-    initialLocation: phoneNumberView,
+    initialLocation: emailVerificationView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,

@@ -5,26 +5,26 @@ class AuthTextField extends StatefulWidget {
   const AuthTextField({
     super.key,
     this.hintText,
-    this.hintColor = Colors.black,
-    this.textColor = Colors.black,
-    this.cursorColor = Colors.black,
+    this.hintColor,
+    this.textColor,
+    this.cursorColor,
+    this.borderColor,
+    this.fillColor,
     this.borderWidth = 1,
-    this.borderColor = const Color(0xffe6e6e6),
     this.controller,
     this.inputFormatters,
     this.onSaved,
     this.onChanged,
     this.enableValidator = true,
-    this.fillColor = Colors.transparent,
     this.borderRadius = 16,
   });
 
   final String? hintText;
-  final Color fillColor;
-  final Color hintColor;
-  final Color textColor;
-  final Color cursorColor;
-  final Color borderColor;
+  final Color? fillColor;
+  final Color? hintColor;
+  final Color? textColor;
+  final Color? cursorColor;
+  final Color? borderColor;
   final double borderWidth;
   final double borderRadius;
   final void Function(String?)? onChanged;
@@ -44,15 +44,18 @@ class _AuthTextFieldState extends State<AuthTextField> {
   late Color textColor;
   late Color cursorColor;
   late Color borderColor;
+  late Color fillColor;
 
   @override
   void initState() {
-    hintColor = widget.hintColor;
-    textColor = widget.textColor;
-    cursorColor = widget.cursorColor;
-    borderColor = widget.borderColor;
     eyeIcon = Icons.remove_red_eye_outlined;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    setColors();
+    super.didChangeDependencies();
   }
 
   @override
@@ -72,10 +75,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
               setState(() {});
               return "Field is required";
             } else if (foucsed) {
-              hintColor = widget.hintColor;
-              textColor = widget.textColor;
-              cursorColor = widget.cursorColor;
-              borderColor = widget.borderColor;
+              setColors();
+
               setState(() {});
             }
           }
@@ -111,5 +112,13 @@ class _AuthTextFieldState extends State<AuthTextField> {
       borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       borderSide: BorderSide(width: width, color: borderColor),
     );
+  }
+
+  setColors() {
+    cursorColor = widget.cursorColor ?? Theme.of(context).textSelectionTheme.cursorColor!;
+    hintColor = widget.hintColor ?? Theme.of(context).hintColor;
+    borderColor = widget.borderColor ?? Theme.of(context).inputDecorationTheme.border!.borderSide.color;
+    fillColor = widget.fillColor ?? Theme.of(context).inputDecorationTheme.fillColor!;
+    textColor = widget.textColor ?? Theme.of(context).textTheme.bodyLarge!.color!;
   }
 }

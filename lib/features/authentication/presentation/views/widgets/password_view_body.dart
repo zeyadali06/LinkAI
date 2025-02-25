@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/core/widgets/snack_bar.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/custom_obsecure_text_field.dart';
 
 class PasswordViewBody extends StatefulWidget {
@@ -14,14 +13,12 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode autovalidatemodel;
   late final TextEditingController passwordController;
-  late final TextEditingController confirmPasswordController;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     autovalidatemodel = AutovalidateMode.disabled;
     passwordController = TextEditingController();
-    confirmPasswordController = TextEditingController();
     super.initState();
   }
 
@@ -40,24 +37,28 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 50),
-                  const Text(
+                  Text(
                     "Setup Password",
-                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.bodyLarge!.color,
+                    ),
                   ),
                   const Expanded(child: SizedBox(height: 25)),
                   Column(
                     children: [
-                      const Text(
+                      Text(
                         "z01551153743@gmail.com",
-                        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).textTheme.bodyLarge!.color,
+                        ),
                       ),
                       const SizedBox(height: 25),
                       CustomObsecureTextField(
                         hintText: "Password",
                         controller: passwordController,
-                        cursorColor: Colors.grey,
-                        hintColor: Colors.grey,
-                        suffixIconColor: Colors.grey,
                       ),
                     ],
                   ),
@@ -66,9 +67,6 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
                     text: "Continue",
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        if (passwordController.text != confirmPasswordController.text) {
-                          showSnackBar(context, "Wrong confirmation password", Colors.white, Colors.red);
-                        } else {}
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

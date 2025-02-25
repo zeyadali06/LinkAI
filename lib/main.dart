@@ -21,13 +21,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<AppThemeCubit>(
       create: (context) => AppThemeCubit(ServiceLocator.getIt<SharedPreferenceServices>())..getTheme(),
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        theme: AppThemes.lightTheme,
-        themeMode: BlocProvider.of<AppThemeCubit>(context).appTheme,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        darkTheme: AppThemes.darkTheme,
-        routerConfig: AppRouter.router,
+      child: BlocBuilder<AppThemeCubit, AppThemeState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            title: "LinkAI",
+            debugShowCheckedModeBanner: false,
+            theme: AppThemes.lightTheme,
+            // themeMode: BlocProvider.of<AppThemeCubit>(context).appTheme,
+            themeMode: ThemeMode.dark,
+            color: Theme.of(context).scaffoldBackgroundColor,
+            darkTheme: AppThemes.darkTheme,
+            routerConfig: AppRouter.router,
+          );
+        },
       ),
     );
   }

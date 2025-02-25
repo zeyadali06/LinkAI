@@ -47,18 +47,21 @@ class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 50),
-                  const Text(
+                  Text(
                     "Phone Number",
-                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyLarge!.color,
+                      fontSize: 18,
+                    ),
                   ),
                   const Expanded(child: SizedBox(height: 25)),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.phone,
                         size: 68,
-                        color: Colors.black,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       const SizedBox(height: 25),
                       Row(
@@ -73,8 +76,6 @@ class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
                             child: AuthTextField(
                               hintText: "Phone Number",
                               controller: phoneController,
-                              cursorColor: Colors.grey,
-                              hintColor: Colors.grey,
                             ),
                           ),
                         ],

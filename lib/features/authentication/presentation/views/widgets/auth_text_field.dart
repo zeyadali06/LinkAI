@@ -27,8 +27,8 @@ class AuthTextField extends StatefulWidget {
   final Color? borderColor;
   final double borderWidth;
   final double borderRadius;
-  final void Function(String?)? onChanged;
-  final void Function(String?)? onSaved;
+  final void Function(String? value)? onChanged;
+  final void Function(String? value)? onSaved;
   final bool enableValidator;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;

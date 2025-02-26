@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:linkai/features/authentication/presentation/views/email_verification_view.dart';
+import 'package:linkai/features/authentication/presentation/views/forget_password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/login_view.dart';
 import 'package:linkai/features/authentication/presentation/views/password_confimation_view.dart';
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
@@ -17,9 +18,10 @@ abstract class AppRouter {
   static const String passwordConfimationView = "/passwordConfimationView";
   static const String phoneNumberView = "/phoneNumberView";
   static const String emailVerificationView = "/emailVerificationView";
+  static const String forgetPasswordView = "/forgetPasswordView";
 
   static final GoRouter router = GoRouter(
-    initialLocation: emailVerificationView,
+    initialLocation: forgetPasswordView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,
@@ -67,6 +69,12 @@ abstract class AppRouter {
         path: emailVerificationView,
         builder: (context, state) {
           return const EmailVerificationView();
+        },
+      ),
+      GoRoute(
+        path: forgetPasswordView,
+        builder: (context, state) {
+          return const ForgetPasswordView();
         },
       ),
     ],

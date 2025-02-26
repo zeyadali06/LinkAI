@@ -23,6 +23,12 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
   }
 
   @override
+  void dispose() {
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [

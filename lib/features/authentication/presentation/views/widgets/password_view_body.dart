@@ -23,6 +23,12 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
   }
 
   @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [

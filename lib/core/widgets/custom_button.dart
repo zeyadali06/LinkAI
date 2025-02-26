@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
     this.buttonColor,
     this.splashColor,
     this.highlightColor,
+    this.gradient,
   });
 
   final void Function()? onPressed;
@@ -22,6 +23,7 @@ class CustomButton extends StatelessWidget {
   final Color? buttonColor;
   final Color? splashColor;
   final Color? highlightColor;
+  final Gradient? gradient;
 
   @override
   Widget build(BuildContext context) {
@@ -29,50 +31,36 @@ class CustomButton extends StatelessWidget {
       return Row(
         children: [
           Expanded(
-            child: Container(
-              height: height,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: buttonColor ?? Theme.of(context).filledButtonTheme.style!.backgroundColor!.resolve({}),
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-              ),
-              child: MaterialButton(
-                onPressed: onPressed,
-                splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
-                highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
-                child: Text(
-                  text,
-                  style: AppStyles.normal18(
-                    context,
-                    textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
-                  ),
-                ),
-              ),
-            ),
+            child: getButton(context),
           ),
         ],
       );
     } else {
-      return Container(
-        height: height,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          color: buttonColor ?? Theme.of(context).filledButtonTheme.style!.backgroundColor!.resolve({}),
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
-        ),
-        child: MaterialButton(
-          onPressed: onPressed,
-          splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
-          highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
-          child: Text(
-            text,
-            style: AppStyles.normal18(
-              context,
-              textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
-            ),
+      return getButton(context);
+    }
+  }
+
+  Widget getButton(BuildContext context) {
+    return Container(
+      height: height,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+      ),
+      child: MaterialButton(
+        onPressed: onPressed,
+        color: gradient == null ? (buttonColor ?? Theme.of(context).filledButtonTheme.style!.backgroundColor!.resolve({})) : null,
+        splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
+        highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
+        child: Text(
+          text,
+          style: AppStyles.normal18(
+            context,
+            textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
           ),
         ),
-      );
-    }
+      ),
+    );
   }
 }

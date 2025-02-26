@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/custom_obsecure_text_field.dart';
 
@@ -45,21 +46,14 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
                   const SizedBox(height: 50),
                   Text(
                     "Setup Password",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Theme.of(context).textTheme.bodyLarge!.color,
-                    ),
+                    style: AppStyles.normal18(context),
                   ),
                   const Expanded(child: SizedBox(height: 25)),
                   Column(
                     children: [
                       Text(
                         "z01551153743@gmail.com",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).textTheme.bodyLarge!.color,
-                        ),
+                        style: AppStyles.semiBold18(context),
                       ),
                       const SizedBox(height: 25),
                       CustomObsecureTextField(

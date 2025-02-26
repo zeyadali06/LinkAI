@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -41,10 +42,9 @@ class CustomButton extends StatelessWidget {
                 highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
                 child: Text(
                   text,
-                  style: TextStyle(
-                    color: textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
+                  style: AppStyles.normal18(
+                    context,
+                    textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
                   ),
                 ),
               ),
@@ -66,10 +66,9 @@ class CustomButton extends StatelessWidget {
           highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
           child: Text(
             text,
-            style: TextStyle(
-              color: textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
-              fontWeight: FontWeight.w400,
-              fontSize: 18,
+            style: AppStyles.normal18(
+              context,
+              textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
             ),
           ),
         ),

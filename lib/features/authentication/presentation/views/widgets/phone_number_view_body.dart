@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/country_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
@@ -49,10 +50,7 @@ class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
                   const SizedBox(height: 50),
                   Text(
                     "Phone Number",
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyLarge!.color,
-                      fontSize: 18,
-                    ),
+                    style: AppStyles.normal18(context),
                   ),
                   const Expanded(child: SizedBox(height: 25)),
                   Column(

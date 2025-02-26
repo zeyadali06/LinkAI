@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinCodeField extends StatelessWidget {
@@ -32,11 +33,7 @@ class PinCodeField extends StatelessWidget {
       enableActiveFill: true,
       controller: controller,
       keyboardType: TextInputType.number,
-      textStyle: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Theme.of(context).textTheme.bodyLarge!.color,
-      ),
+      textStyle: AppStyles.semiBold18(context),
       onCompleted: onCompleted,
       onChanged: onChanged,
       beforeTextPaste: (text) => false,

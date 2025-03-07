@@ -1,0 +1,2 @@
+/home/zeyad/Desktop/GP_Project/GP-Ai-Interview/LinkAI/android/app/.cxx/Debug/6h5m5y6n/x86_64/CMakeFiles/edit_cache.dir
+/home/zeyad/Desktop/GP_Project/GP-Ai-Interview/LinkAI/android/app/.cxx/Debug/6h5m5y6n/x86_64/CMakeFiles/rebuild_cache.dir

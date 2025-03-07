@@ -81,9 +81,7 @@ class InterviewViewBody extends StatelessWidget {
             bottom: 25,
             left: 20,
             right: 20,
-            child: Expanded(
-              child: InterviewTextField(),
-            ),
+            child: InterviewTextField(),
           ),
         ],
       ),

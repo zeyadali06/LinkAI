@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  avatar_glow: ^3.0.1
   cupertino_icons: ^1.0.8
   device_info_plus: ^11.3.0
   flutter:

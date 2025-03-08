@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/authentication/data/models/country_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/pin_code_field.dart';
 
 class EmailVerificationViewBody extends StatefulWidget {
@@ -14,22 +13,12 @@ class EmailVerificationViewBody extends StatefulWidget {
 class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode autovalidatemodel;
-  late final TextEditingController phoneController;
-  late Country countryCode;
-  late String phone;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     autovalidatemodel = AutovalidateMode.disabled;
-    phoneController = TextEditingController();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    phoneController.dispose();
-    super.dispose();
   }
 
   @override
@@ -73,7 +62,9 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                           style: AppStyles.semiBold18(context),
                         ),
                         const SizedBox(height: 25),
-                        const PinCodeField(),
+                        PinCodeField(
+                          onCompleted: (value) {},
+                        ),
                         TextButton(
                           onPressed: () {},
                           style: ButtonStyle(

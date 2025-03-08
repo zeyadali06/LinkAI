@@ -1,7 +1,19 @@
 class UserModel {
-  const UserModel._();
-  static const UserModel _singletonInstance = UserModel._();
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phone;
+  String? token;
+
+  UserModel._();
+  static final UserModel _singletonInstance = UserModel._();
   static UserModel get instance => _singletonInstance;
 
-  static void setFromJson(Map<String, dynamic> json) {}
+  void setFromJson(Map<String, dynamic> json) {
+    firstName = json["firstName"];
+    lastName = json["lastName"];
+    email = json["email"];
+    phone = json["mobileNumber"];
+    token = json["token"];
+  }
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/core/utils/formatters.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
+import 'package:linkai/features/authentication/data/models/register_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
 
 class NameViewBody extends StatefulWidget {
@@ -13,23 +18,12 @@ class NameViewBody extends StatefulWidget {
 class _NameViewBodyState extends State<NameViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode autovalidatemodel;
-  late final TextEditingController firstNameController;
-  late final TextEditingController lastNameController;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     autovalidatemodel = AutovalidateMode.disabled;
-    firstNameController = TextEditingController();
-    lastNameController = TextEditingController();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    firstNameController.dispose();
-    lastNameController.dispose();
-    super.dispose();
   }
 
   @override
@@ -56,12 +50,18 @@ class _NameViewBodyState extends State<NameViewBody> {
                     children: [
                       AuthTextField(
                         hintText: "First name",
-                        controller: firstNameController,
+                        inputFormatters: [Formatters.namesFormatter],
+                        onSaved: (value) {
+                          ServiceLocator.getIt<RegisterModel>().firstName = value;
+                        },
                       ),
                       const SizedBox(height: 25),
                       AuthTextField(
                         hintText: "Last name",
-                        controller: lastNameController,
+                        inputFormatters: [Formatters.namesFormatter],
+                        onSaved: (value) {
+                          ServiceLocator.getIt<RegisterModel>().lastName = value;
+                        },
                       ),
                       const SizedBox(height: 25),
                     ],
@@ -71,6 +71,8 @@ class _NameViewBodyState extends State<NameViewBody> {
                     text: "Continue",
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        GoRouter.of(context).go(AppRouter.phoneNumberView);
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

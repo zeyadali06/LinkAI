@@ -1,10 +1,10 @@
 class LoginModel {
-  final String email;
-  final String password;
+  String? email;
+  String? password;
 
-  const LoginModel({
-    required this.email,
-    required this.password,
+  LoginModel({
+    this.email,
+    this.password,
   });
 
   static const String emailKey = 'email';

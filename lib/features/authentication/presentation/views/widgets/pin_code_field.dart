@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -12,6 +13,7 @@ class PinCodeField extends StatelessWidget {
     this.onChanged,
     this.onCompleted,
     this.obscureText = false,
+    this.inputFormatters,
   });
 
   final TextEditingController? controller;
@@ -21,10 +23,12 @@ class PinCodeField extends StatelessWidget {
   final void Function(String value)? onChanged;
   final void Function(String value)? onCompleted;
   final bool obscureText;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
     return PinCodeTextField(
+      inputFormatters: inputFormatters ?? [],
       appContext: context,
       length: length,
       obscureText: obscureText,

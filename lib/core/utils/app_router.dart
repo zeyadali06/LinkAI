@@ -1,4 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkai/core/utils/service_locator.dart';
+import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
+import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
+import 'package:linkai/features/authentication/presentation/manager/otp_cubit/otp_cubit.dart';
+import 'package:linkai/features/authentication/presentation/manager/register_cubit/register_cubit.dart';
 import 'package:linkai/features/authentication/presentation/views/email_verification_view.dart';
 import 'package:linkai/features/authentication/presentation/views/forget_password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/login_view.dart';
@@ -25,7 +31,7 @@ abstract class AppRouter {
   static const String nameView = "/nameView";
 
   static final GoRouter router = GoRouter(
-    initialLocation: nameView,
+    initialLocation: loginView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,
@@ -54,7 +60,10 @@ abstract class AppRouter {
       GoRoute(
         path: passwordView,
         builder: (context, state) {
-          return const PasswordView();
+          return BlocProvider(
+            create: (context) => LoginCubit(ServiceLocator.getIt<AuthRepo>()),
+            child: const PasswordView(),
+          );
         },
       ),
       GoRoute(
@@ -66,13 +75,19 @@ abstract class AppRouter {
       GoRoute(
         path: phoneNumberView,
         builder: (context, state) {
-          return const PhoneNumberView();
+          return BlocProvider(
+            create: (context) => OtpCubit(ServiceLocator.getIt<AuthRepo>()),
+            child: const PhoneNumberView(),
+          );
         },
       ),
       GoRoute(
         path: emailVerificationView,
         builder: (context, state) {
-          return const EmailVerificationView();
+          return BlocProvider(
+            create: (context) => RegisterCubit(ServiceLocator.getIt<AuthRepo>()),
+            child: const EmailVerificationView(),
+          );
         },
       ),
       GoRoute(

@@ -12,4 +12,12 @@ class ForgetPasswordModel {
   static const String emailKey = "email";
   static const String otpKey = "otp";
   static const String newPasswordKey = "password";
+
+  Map<String, dynamic> toJson() {
+    return {
+      emailKey: email,
+      otpKey: otp,
+      newPasswordKey: newPassword,
+    };
+  }
 }

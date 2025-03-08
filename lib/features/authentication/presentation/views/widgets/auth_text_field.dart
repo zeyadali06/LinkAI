@@ -18,6 +18,7 @@ class AuthTextField extends StatefulWidget {
     this.onChanged,
     this.enableValidator = true,
     this.borderRadius = 16,
+    this.validator,
   });
 
   final String? hintText;
@@ -30,6 +31,7 @@ class AuthTextField extends StatefulWidget {
   final double borderRadius;
   final void Function(String? value)? onChanged;
   final void Function(String? value)? onSaved;
+  final String? Function(String? value)? validator;
   final bool enableValidator;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
@@ -77,8 +79,22 @@ class _AuthTextFieldState extends State<AuthTextField> {
               return "Field is required";
             } else if (foucsed) {
               setColors();
-
               setState(() {});
+            }
+
+            if (widget.validator != null) {
+              String? res = widget.validator!(value);
+              if (res != null) {
+                hintColor = Colors.red;
+                textColor = Colors.red;
+                cursorColor = Colors.red;
+                borderColor = Colors.red;
+                setState(() {});
+                return res;
+              } else {
+                setColors();
+                setState(() {});
+              }
             }
           }
           return null;

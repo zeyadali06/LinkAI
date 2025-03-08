@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
+import 'package:linkai/features/authentication/data/models/login_model.dart';
+import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/custom_obsecure_text_field.dart';
 
 class PasswordViewBody extends StatefulWidget {
@@ -13,20 +17,12 @@ class PasswordViewBody extends StatefulWidget {
 class _PasswordViewBodyState extends State<PasswordViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode autovalidatemodel;
-  late final TextEditingController passwordController;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     autovalidatemodel = AutovalidateMode.disabled;
-    passwordController = TextEditingController();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    passwordController.dispose();
-    super.dispose();
   }
 
   @override
@@ -52,13 +48,18 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
                   Column(
                     children: [
                       Text(
-                        "z01551153743@gmail.com",
+                        ServiceLocator.getIt<LoginModel>().email!,
                         style: AppStyles.semiBold18(context),
                       ),
                       const SizedBox(height: 25),
                       CustomObsecureTextField(
                         hintText: "Password",
-                        controller: passwordController,
+                        validator: (value) {
+                          return value!.length < 6 ? "Password must be at least 6 characters long" : null;
+                        },
+                        onSaved: (value) async {
+                          ServiceLocator.getIt<LoginModel>().password = value;
+                        },
                       ),
                     ],
                   ),
@@ -67,6 +68,8 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
                     text: "Continue",
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        await BlocProvider.of<LoginCubit>(context).login(ServiceLocator.getIt<LoginModel>());
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

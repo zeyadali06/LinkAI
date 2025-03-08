@@ -20,6 +20,7 @@ class CustomObsecureTextField extends StatefulWidget {
     this.fillColor,
     this.borderRadius = 16,
     this.obscureText = true,
+    this.validator,
   });
 
   final String? hintText;
@@ -31,8 +32,9 @@ class CustomObsecureTextField extends StatefulWidget {
   final Color? suffixIconColor;
   final double borderWidth;
   final double borderRadius;
-  final void Function(String?)? onChanged;
-  final void Function(String?)? onSaved;
+  final void Function(String? value)? onChanged;
+  final void Function(String? value)? onSaved;
+  final String? Function(String? value)? validator;
   final bool enableValidator;
   final bool obscureText;
   final TextEditingController? controller;
@@ -86,6 +88,21 @@ class _CustomObsecureTextFieldState extends State<CustomObsecureTextField> {
             } else if (foucsed) {
               setColors();
               setState(() {});
+            }
+
+            if (widget.validator != null) {
+              String? res = widget.validator!(value);
+              if (res != null) {
+                hintColor = Colors.red;
+                textColor = Colors.red;
+                cursorColor = Colors.red;
+                borderColor = Colors.red;
+                setState(() {});
+                return res;
+              } else {
+                setColors();
+                setState(() {});
+              }
             }
           }
           return null;

@@ -1,20 +1,20 @@
 class RegisterModel {
-  final String email;
-  final String password;
-  final String confirmPassword;
-  final String phoneNumber;
-  final String otp;
-  final String firstName;
-  final String lastName;
+  String? email;
+  String? password;
+  String? confirmPassword;
+  String? phoneNumber;
+  String? otp;
+  String? firstName;
+  String? lastName;
 
-  const RegisterModel({
-    required this.email,
-    required this.password,
-    required this.confirmPassword,
-    required this.phoneNumber,
-    required this.otp,
-    required this.firstName,
-    required this.lastName,
+  RegisterModel({
+    this.email,
+    this.password,
+    this.confirmPassword,
+    this.phoneNumber,
+    this.otp,
+    this.firstName,
+    this.lastName,
   });
 
   static const String emailKey = 'email';

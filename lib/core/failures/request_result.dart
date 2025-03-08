@@ -1,15 +1,15 @@
 class RequestResault<S, F> {
   const RequestResault();
-  factory RequestResault.success(S data) = RequestSuccess<S, F>;
-  factory RequestResault.failure(F data) = RequestFailed<S, F>;
+  factory RequestResault.success(S data) = Success<S, F>;
+  factory RequestResault.failure(F data) = Failed<S, F>;
 }
 
-class RequestSuccess<S, F> extends RequestResault<S, F> {
+class Success<S, F> extends RequestResault<S, F> {
   final S data;
-  const RequestSuccess(this.data);
+  const Success(this.data);
 }
 
-class RequestFailed<S, F> extends RequestResault<S, F> {
+class Failed<S, F> extends RequestResault<S, F> {
   final F data;
-  const RequestFailed(this.data);
+  const Failed(this.data);
 }

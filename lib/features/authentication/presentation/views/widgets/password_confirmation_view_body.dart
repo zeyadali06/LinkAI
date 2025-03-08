@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
+import 'package:linkai/features/authentication/data/models/register_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/custom_obsecure_text_field.dart';
 
 class PasswordConfirmationViewBody extends StatefulWidget {
@@ -13,20 +17,12 @@ class PasswordConfirmationViewBody extends StatefulWidget {
 class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode autovalidatemodel;
-  late final TextEditingController confirmPasswordController;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     autovalidatemodel = AutovalidateMode.disabled;
-    confirmPasswordController = TextEditingController();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    confirmPasswordController.dispose();
-    super.dispose();
   }
 
   @override
@@ -45,20 +41,32 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
                 children: [
                   const SizedBox(height: 50),
                   Text(
-                    "Setup Password",
+                    "Confirm Your Password",
                     style: AppStyles.normal18(context),
                   ),
                   const Expanded(child: SizedBox(height: 25)),
                   Column(
                     children: [
                       Text(
-                        "z01551153743@gmail.com",
+                        ServiceLocator.getIt<RegisterModel>().email!,
                         style: AppStyles.semiBold18(context),
                       ),
                       const SizedBox(height: 25),
                       CustomObsecureTextField(
                         hintText: "Repeat Password",
-                        controller: confirmPasswordController,
+                        validator: (value) {
+                          if (value!.length < 6) {
+                            return "Password must be at least 6 characters long";
+                          }
+
+                          if (value != ServiceLocator.getIt<RegisterModel>().password) {
+                            return "Wrong confirmation";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) async {
+                          ServiceLocator.getIt<RegisterModel>().confirmPassword = value;
+                        },
                       ),
                     ],
                   ),
@@ -67,6 +75,8 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
                     text: "Continue",
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        GoRouter.of(context).go(AppRouter.nameView);
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

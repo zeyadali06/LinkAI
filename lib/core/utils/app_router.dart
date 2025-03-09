@@ -34,7 +34,7 @@ abstract class AppRouter {
   static const String createJobView = "/createJobView";
 
   static final GoRouter router = GoRouter(
-    initialLocation: homeView,
+    initialLocation: splashView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,

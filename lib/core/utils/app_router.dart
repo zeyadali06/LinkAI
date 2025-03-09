@@ -24,7 +24,7 @@ abstract class AppRouter {
 
   static final GoRouter router = GoRouter(
 
-    initialLocation: interviewView,
+    initialLocation: homeView,
 
     routes: <RouteBase>[
       GoRoute(

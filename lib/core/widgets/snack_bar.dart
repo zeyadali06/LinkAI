@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 
 void showSnackBar(
   BuildContext context,
@@ -10,7 +11,7 @@ void showSnackBar(
     SnackBar(
       content: Text(
         text,
-        style: TextStyle(color: textColor),
+        style: AppStyles.defaultStyle(context, textColor),
       ),
       backgroundColor: backgroundColor,
       duration: const Duration(seconds: 1, milliseconds: 500),

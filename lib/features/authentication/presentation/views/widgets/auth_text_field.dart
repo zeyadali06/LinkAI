@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 
 class AuthTextField extends StatefulWidget {
   const AuthTextField({
@@ -89,14 +90,14 @@ class _AuthTextFieldState extends State<AuthTextField> {
         cursorOpacityAnimates: true,
         cursorColor: cursorColor,
         inputFormatters: widget.inputFormatters,
-        style: TextStyle(color: textColor),
+        style: AppStyles.defaultStyle(context, textColor),
         decoration: InputDecoration(
           filled: true,
           fillColor: widget.fillColor,
           alignLabelWithHint: true,
           labelText: widget.hintText,
-          labelStyle: TextStyle(color: hintColor),
-          errorStyle: TextStyle(color: textColor),
+          labelStyle: AppStyles.defaultStyle(context, hintColor),
+          errorStyle: AppStyles.defaultStyle(context, textColor),
           border: outlineInputBorder(widget.borderWidth),
           enabledBorder: outlineInputBorder(widget.borderWidth),
           focusedBorder: outlineInputBorder(widget.borderWidth + 1),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/google_button.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
@@ -94,12 +95,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                             ),
                             TextButton(
                               onPressed: () {},
-                              child: const Text(
+                              child: Text(
                                 "Forget Password",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                style: AppStyles.defaultStyle(context, Colors.white),
                               ),
                             ),
                           ],

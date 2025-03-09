@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/authentication/data/models/country_model.dart';
 
 class CountriesCodeMenu extends StatefulWidget {
@@ -49,10 +50,7 @@ class _CountriesCodeMenuState extends State<CountriesCodeMenu> {
               children: [
                 Text(
                   "${value.code} ${value.flag}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).textTheme.bodyLarge!.color,
-                  ),
+                  style: AppStyles.defaultStyle(context),
                 ),
               ],
             ),

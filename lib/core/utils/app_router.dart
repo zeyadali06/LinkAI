@@ -6,6 +6,7 @@ import 'package:linkai/features/authentication/presentation/views/password_confi
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
+import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
 import 'package:linkai/features/splash/presentation/views/splash_view.dart';
 
@@ -19,9 +20,12 @@ abstract class AppRouter {
   static const String phoneNumberView = "/phoneNumberView";
   static const String emailVerificationView = "/emailVerificationView";
   static const String forgetPasswordView = "/forgetPasswordView";
+  static const String interviewView = "/interviewView";
 
   static final GoRouter router = GoRouter(
+
     initialLocation: homeView,
+
     routes: <RouteBase>[
       GoRoute(
         path: splashView,
@@ -75,6 +79,12 @@ abstract class AppRouter {
         path: forgetPasswordView,
         builder: (context, state) {
           return const ForgetPasswordView();
+        },
+      ),
+      GoRoute(
+        path: interviewView,
+        builder: (context, state) {
+          return const InterviewView();
         },
       ),
     ],

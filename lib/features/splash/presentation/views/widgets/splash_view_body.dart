@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/app_router.dart';
-import 'package:linkai/features/authentication/presentation/views/login_view.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashViewBody extends StatefulWidget {

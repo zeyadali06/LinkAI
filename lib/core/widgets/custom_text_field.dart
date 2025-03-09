@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -77,8 +78,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           errorBorder: outlineInputBorder(1),
           focusedErrorBorder: outlineInputBorder(2),
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: color),
-          errorStyle: TextStyle(color: color),
+          hintStyle: AppStyles.defaultStyle(context, color),
+          errorStyle: AppStyles.defaultStyle(context, color),
           suffixIcon: widget.obscureText
               ? IconButton(
                   onPressed: () {

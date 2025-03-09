@@ -1,8 +1,11 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/core/utils/formatters.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/google_button.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/logo.dart';
@@ -72,7 +75,15 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                             ),
                             AuthTextField(
                               hintText: 'Email',
-                              onSaved: (value) {},
+                              validator: (value) {
+                                if (!RegExp(Formatters.emailRegEx).hasMatch(value!)) {
+                                  return "Enter valid email!";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                ServiceLocator.getIt<AuthModel>().email = value;
+                              },
                               borderColor: Colors.white.withValues(alpha: 0.3),
                               fillColor: Colors.white.withValues(alpha: .15),
                               hintColor: Colors.white,
@@ -87,14 +98,19 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
+                                  GoRouter.of(context).push(AppRouter.passwordView);
                                 } else {
                                   _autovalidateMode = AutovalidateMode.always;
                                   setState(() {});
                                 }
                               },
                             ),
+                            const SizedBox(height: 10),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                GoRouter.of(context).push(AppRouter.forgetPasswordView);
+                              },
+                              style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
                               child: Text(
                                 "Forget Password",
                                 style: AppStyles.defaultStyle(context, Colors.white),

@@ -1,19 +1,27 @@
 import 'package:flutter/services.dart';
 
 abstract class Formatters {
-  static final FilteringTextInputFormatter preventSpaces = FilteringTextInputFormatter.deny(RegExp(' '));
+  static final FilteringTextInputFormatter preventSpacesFormatter = FilteringTextInputFormatter.deny(RegExp(' '));
 
-  static final FilteringTextInputFormatter emailOrUsernameRegExp = FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9_@.]"));
+  static final FilteringTextInputFormatter emailOrUsernameFormatter = FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9_@.]"));
 
-  static final FilteringTextInputFormatter emailRegExp = FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9@.]"));
+  static final FilteringTextInputFormatter emailFormatter = FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9@.]"));
 
-  static final FilteringTextInputFormatter usernamesRegExp = FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9_]"));
+  static final FilteringTextInputFormatter usernamesFormatter = FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9_]"));
 
-  static final FilteringTextInputFormatter pricesRegExp = FilteringTextInputFormatter.allow(RegExp(r"[0-9]*\.?[0-9]*"));
+  static final FilteringTextInputFormatter namesFormatter = FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z]"));
 
-  static final FilteringTextInputFormatter phoneNumbersRegExp = FilteringTextInputFormatter.allow(RegExp(r'[0-9+]'));
+  static final FilteringTextInputFormatter pricesFormatter = FilteringTextInputFormatter.allow(RegExp(r"[0-9]*\.?[0-9]*"));
 
-  static final TextInputFormatter numbersOnly = FilteringTextInputFormatter.digitsOnly;
+  static final FilteringTextInputFormatter phoneNumbersFormatter = FilteringTextInputFormatter.allow(RegExp(r'[0-9+]'));
+
+  static final TextInputFormatter numbersOnlyFormatter = FilteringTextInputFormatter.digitsOnly;
+
+  static const String emailRegEx = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$';
+
+  static const String usernameRegEx = r'[a-zA-Z0-9_]';
+
+  static const String nameRegEx = r'[a-zA-Z]';
 
   // to prevent user to input price 0.0
   static final TextInputFormatter correctPrice0 = TextInputFormatter.withFunction((oldValue, newValue) {

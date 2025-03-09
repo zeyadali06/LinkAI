@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/core/utils/formatters.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/country_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
+import 'package:linkai/features/authentication/presentation/manager/otp_cubit/otp_cubit.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/countries_code_menu.dart';
 
 class PhoneNumberViewBody extends StatefulWidget {
   const PhoneNumberViewBody({super.key});
@@ -15,7 +19,6 @@ class PhoneNumberViewBody extends StatefulWidget {
 class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode autovalidatemodel;
-  late final TextEditingController phoneController;
   late Country countryCode;
   late String phone;
 
@@ -23,14 +26,7 @@ class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
   void initState() {
     _formKey = GlobalKey<FormState>();
     autovalidatemodel = AutovalidateMode.disabled;
-    phoneController = TextEditingController();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    phoneController.dispose();
-    super.dispose();
   }
 
   @override
@@ -64,16 +60,28 @@ class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
                       const SizedBox(height: 25),
                       Row(
                         children: [
-                          SizedBox(
-                            child: CountriesCodeMenu(
-                              onChanged: (country) {},
-                            ),
-                          ),
-                          const SizedBox(width: 10),
+                          // SizedBox(
+                          //   child: CountriesCodeMenu(
+                          //     onChanged: (country) {
+                          //       countryCode = country;
+                          //     },
+                          //   ),
+                          // ),
+                          // const SizedBox(width: 10),
                           Expanded(
                             child: AuthTextField(
+                              validator: (value) {
+                                if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value!)) {
+                                  return "Enter valid phone number";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                // ServiceLocator.getIt<RegisterModel>().phoneNumber = "${countryCode.code}$value";
+                                ServiceLocator.getIt<AuthModel>().phoneNumber = value;
+                              },
+                              inputFormatters: [Formatters.numbersOnlyFormatter],
                               hintText: "Phone Number",
-                              controller: phoneController,
                             ),
                           ),
                         ],
@@ -85,7 +93,8 @@ class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
                     text: "Continue",
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.validate();
+                        _formKey.currentState!.save();
+                        await BlocProvider.of<OtpCubit>(context).sendOTP(ServiceLocator.getIt<AuthModel>().email!);
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

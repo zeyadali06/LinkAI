@@ -13,6 +13,8 @@ class CustomButton extends StatelessWidget {
     this.splashColor,
     this.highlightColor,
     this.gradient,
+    this.textAlign,
+    this.padding,
   });
 
   final void Function()? onPressed;
@@ -24,6 +26,8 @@ class CustomButton extends StatelessWidget {
   final Color? splashColor;
   final Color? highlightColor;
   final Gradient? gradient;
+  final TextAlign? textAlign;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +57,10 @@ class CustomButton extends StatelessWidget {
         color: gradient == null ? (buttonColor ?? Theme.of(context).filledButtonTheme.style!.backgroundColor!.resolve({})) : null,
         splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
         highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
+        padding: padding,
         child: Text(
           text,
+          textAlign: textAlign,
           style: AppStyles.normal18(
             context,
             textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),

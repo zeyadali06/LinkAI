@@ -6,8 +6,9 @@ class NameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: NameViewBody(),
+    return Scaffold(
+      appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
+      body: const NameViewBody(),
     );
   }
 }

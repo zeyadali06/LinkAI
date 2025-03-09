@@ -5,7 +5,7 @@ import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/utils/formatters.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/authentication/data/models/login_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/google_button.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/logo.dart';
@@ -82,7 +82,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                                 return null;
                               },
                               onSaved: (value) {
-                                ServiceLocator.getIt<LoginModel>().email = value;
+                                ServiceLocator.getIt<AuthModel>().email = value;
                               },
                               borderColor: Colors.white.withValues(alpha: 0.3),
                               fillColor: Colors.white.withValues(alpha: .15),
@@ -98,7 +98,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  GoRouter.of(context).go(AppRouter.passwordView);
+                                  GoRouter.of(context).push(AppRouter.passwordView);
                                 } else {
                                   _autovalidateMode = AutovalidateMode.always;
                                   setState(() {});
@@ -108,7 +108,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                             const SizedBox(height: 10),
                             TextButton(
                               onPressed: () {
-                                GoRouter.of(context).go(AppRouter.forgetPasswordView);
+                                GoRouter.of(context).push(AppRouter.forgetPasswordView);
                               },
                               style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
                               child: Text(

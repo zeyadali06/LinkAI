@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/service_locator.dart';
@@ -35,79 +36,123 @@ abstract class AppRouter {
     routes: <RouteBase>[
       GoRoute(
         path: splashView,
-        builder: (context, state) {
-          return const SplashView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: SplashView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
       GoRoute(
         path: homeView,
-        builder: (context, state) {
-          return const HomeView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: HomeView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
       GoRoute(
         path: loginView,
-        builder: (context, state) {
-          return const LoginView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: LoginView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
       GoRoute(
         path: profileView,
-        builder: (context, state) {
-          return const ProfileView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: ProfileView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
       GoRoute(
         path: passwordView,
-        builder: (context, state) {
-          return BlocProvider(
-            create: (context) => LoginCubit(ServiceLocator.getIt<AuthRepo>()),
-            child: const PasswordView(),
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => LoginCubit(ServiceLocator.getIt<AuthRepo>()),
+              child: const PasswordView(),
+            ),
+            transitionsBuilder: customTransition,
           );
         },
       ),
       GoRoute(
         path: passwordConfimationView,
-        builder: (context, state) {
-          return const PasswordConfimationView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: PasswordConfimationView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
       GoRoute(
         path: phoneNumberView,
-        builder: (context, state) {
-          return BlocProvider(
-            create: (context) => OtpCubit(ServiceLocator.getIt<AuthRepo>()),
-            child: const PhoneNumberView(),
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => OtpCubit(ServiceLocator.getIt<AuthRepo>()),
+              child: const PhoneNumberView(),
+            ),
+            transitionsBuilder: customTransition,
           );
         },
       ),
       GoRoute(
         path: emailVerificationView,
-        builder: (context, state) {
-          return BlocProvider(
-            create: (context) => RegisterCubit(ServiceLocator.getIt<AuthRepo>()),
-            child: const EmailVerificationView(),
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => RegisterCubit(ServiceLocator.getIt<AuthRepo>()),
+              child: const EmailVerificationView(),
+            ),
+            transitionsBuilder: customTransition,
           );
         },
       ),
       GoRoute(
         path: forgetPasswordView,
-        builder: (context, state) {
-          return const ForgetPasswordView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: ForgetPasswordView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
       GoRoute(
         path: interviewView,
-        builder: (context, state) {
-          return const InterviewView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: InterviewView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
       GoRoute(
         path: nameView,
-        builder: (context, state) {
-          return const NameView();
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: NameView(),
+            transitionsBuilder: customTransition,
+          );
         },
       ),
     ],
   );
+
+  static Widget customTransition(context, animation, secondaryAnimation, child) {
+    const Offset begin = Offset(1.0, 0.0);
+    const Offset end = Offset(0.0, 0.0);
+    const Cubic curve = Curves.easeInOut;
+
+    final Animatable<Offset> tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+    final Animation<Offset> offsetAnimation = animation.drive(tween);
+
+    return SlideTransition(position: offsetAnimation, child: child);
+  }
 }

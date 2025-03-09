@@ -4,7 +4,7 @@ import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/authentication/data/models/register_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/custom_obsecure_text_field.dart';
 
 class PasswordConfirmationViewBody extends StatefulWidget {
@@ -48,7 +48,7 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
                   Column(
                     children: [
                       Text(
-                        ServiceLocator.getIt<RegisterModel>().email!,
+                        ServiceLocator.getIt<AuthModel>().email!,
                         style: AppStyles.semiBold18(context),
                       ),
                       const SizedBox(height: 25),
@@ -59,13 +59,13 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
                             return "Password must be at least 6 characters long";
                           }
 
-                          if (value != ServiceLocator.getIt<RegisterModel>().password) {
+                          if (value != ServiceLocator.getIt<AuthModel>().password) {
                             return "Wrong confirmation";
                           }
                           return null;
                         },
                         onSaved: (value) async {
-                          ServiceLocator.getIt<RegisterModel>().confirmPassword = value;
+                          ServiceLocator.getIt<AuthModel>().confirmPassword = value;
                         },
                       ),
                     ],
@@ -76,7 +76,7 @@ class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewB
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        GoRouter.of(context).go(AppRouter.nameView);
+                        GoRouter.of(context).push(AppRouter.nameView);
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

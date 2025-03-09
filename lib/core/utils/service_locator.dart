@@ -1,8 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/services/shared_preference.dart';
-import 'package:linkai/features/authentication/data/models/login_model.dart';
-import 'package:linkai/features/authentication/data/models/register_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/data/repositories/auth_repo_impl.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
 
@@ -22,12 +21,8 @@ abstract class ServiceLocator {
       AuthRepoImpl(getIt<ApiManager>()),
     );
 
-    getIt.registerSingleton<RegisterModel>(
-      RegisterModel(),
-    );
-
-    getIt.registerSingleton<LoginModel>(
-      LoginModel(),
+    getIt.registerSingleton<AuthModel>(
+      AuthModel(),
     );
   }
 }

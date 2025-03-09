@@ -1,4 +1,4 @@
-class RegisterModel {
+class AuthModel {
   String? email;
   String? password;
   String? confirmPassword;
@@ -7,7 +7,7 @@ class RegisterModel {
   String? firstName;
   String? lastName;
 
-  RegisterModel({
+  AuthModel({
     this.email,
     this.password,
     this.confirmPassword,
@@ -37,8 +37,8 @@ class RegisterModel {
     };
   }
 
-  factory RegisterModel.fromJson(Map<String, dynamic> json) {
-    return RegisterModel(
+  factory AuthModel.fromJson(Map<String, dynamic> json) {
+    return AuthModel(
       email: json[emailKey],
       password: json[passwordKey],
       confirmPassword: json[confirmPasswordKey],

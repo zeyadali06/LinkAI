@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/authentication/data/models/login_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/custom_obsecure_text_field.dart';
 
@@ -48,7 +48,7 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
                   Column(
                     children: [
                       Text(
-                        ServiceLocator.getIt<LoginModel>().email!,
+                        ServiceLocator.getIt<AuthModel>().email!,
                         style: AppStyles.semiBold18(context),
                       ),
                       const SizedBox(height: 25),
@@ -58,7 +58,7 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
                           return value!.length < 6 ? "Password must be at least 6 characters long" : null;
                         },
                         onSaved: (value) async {
-                          ServiceLocator.getIt<LoginModel>().password = value;
+                          ServiceLocator.getIt<AuthModel>().password = value;
                         },
                       ),
                     ],
@@ -69,7 +69,7 @@ class _PasswordViewBodyState extends State<PasswordViewBody> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        await BlocProvider.of<LoginCubit>(context).login(ServiceLocator.getIt<LoginModel>());
+                        await BlocProvider.of<LoginCubit>(context).login(ServiceLocator.getIt<AuthModel>());
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

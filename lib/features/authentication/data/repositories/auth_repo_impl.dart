@@ -1,11 +1,11 @@
 import 'package:linkai/core/failures/custom_failure.dart';
+import 'package:linkai/core/failures/otp_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/utils/api_constants.dart';
 import 'package:linkai/features/authentication/data/models/forget_password_model.dart';
-import 'package:linkai/features/authentication/data/models/login_model.dart';
-import 'package:linkai/features/authentication/data/models/register_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
 
 class AuthRepoImpl extends AuthRepo {
@@ -14,7 +14,7 @@ class AuthRepoImpl extends AuthRepo {
   final ApiManager _apiManager;
 
   @override
-  Future<RequestResault> register(RegisterModel model) async {
+  Future<RequestResault> register(AuthModel model) async {
     try {
       final Map<String, dynamic> data = model.toJson();
       data["DOB"] = DateTime.now().subtract(const Duration(days: 7000)).toIso8601String();
@@ -24,7 +24,7 @@ class AuthRepoImpl extends AuthRepo {
         UserModel.instance.setFromJson(res);
         return RequestResault.success(null);
       } else {
-        return RequestResault.failure(const CustomFailure("Some thing went wrong!"));
+        return RequestResault.failure(OtpFailure(res));
       }
     } catch (e) {
       return RequestResault.failure(const CustomFailure("Some thing went wrong!"));
@@ -32,7 +32,7 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<RequestResault> login(LoginModel model) async {
+  Future<RequestResault> login(AuthModel model) async {
     try {
       Map<String, dynamic> res = await _apiManager.post(model.toJson(), ApiConstants.login);
 
@@ -55,7 +55,7 @@ class AuthRepoImpl extends AuthRepo {
       if (res["success"]) {
         return RequestResault.success(null);
       } else {
-        return RequestResault.failure(const CustomFailure("Some thing went wrong!"));
+        return RequestResault.failure(OtpFailure(res));
       }
     } catch (e) {
       return RequestResault.failure(const CustomFailure("Some thing went wrong!"));

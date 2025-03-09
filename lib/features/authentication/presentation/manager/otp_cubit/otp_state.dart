@@ -10,9 +10,9 @@ final class OtpLoading extends OtpState {}
 final class OtpSuccess extends OtpState {}
 
 final class OtpFail extends OtpState {
-  final String error;
+  final String errMessage;
 
   OtpFail(
-    this.error,
+    this.errMessage,
   );
 }

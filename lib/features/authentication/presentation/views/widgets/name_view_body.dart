@@ -5,7 +5,7 @@ import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/utils/formatters.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/authentication/data/models/register_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
 
 class NameViewBody extends StatefulWidget {
@@ -51,16 +51,28 @@ class _NameViewBodyState extends State<NameViewBody> {
                       AuthTextField(
                         hintText: "First name",
                         inputFormatters: [Formatters.namesFormatter],
+                        validator: (value) {
+                          if (value!.length < 3) {
+                            return "First name must be at least 3 characters long.";
+                          }
+                          return null;
+                        },
                         onSaved: (value) {
-                          ServiceLocator.getIt<RegisterModel>().firstName = value;
+                          ServiceLocator.getIt<AuthModel>().firstName = value;
                         },
                       ),
                       const SizedBox(height: 25),
                       AuthTextField(
                         hintText: "Last name",
                         inputFormatters: [Formatters.namesFormatter],
+                        validator: (value) {
+                          if (value!.length < 3) {
+                            return "First name must be at least 3 characters long.";
+                          }
+                          return null;
+                        },
                         onSaved: (value) {
-                          ServiceLocator.getIt<RegisterModel>().lastName = value;
+                          ServiceLocator.getIt<AuthModel>().lastName = value;
                         },
                       ),
                       const SizedBox(height: 25),
@@ -72,7 +84,7 @@ class _NameViewBodyState extends State<NameViewBody> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        GoRouter.of(context).go(AppRouter.phoneNumberView);
+                        GoRouter.of(context).push(AppRouter.phoneNumberView);
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

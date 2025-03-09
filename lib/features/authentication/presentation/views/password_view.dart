@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
-import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/authentication/data/models/login_model.dart';
-import 'package:linkai/features/authentication/data/models/register_model.dart';
 import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/password_view_body.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -42,12 +39,8 @@ class PasswordView extends StatelessWidget {
                   const SizedBox(height: 10),
                   CustomButton(
                     onPressed: () {
-                      ServiceLocator.getIt<RegisterModel>().email = ServiceLocator.getIt<LoginModel>().email;
-                      ServiceLocator.getIt<RegisterModel>().password = ServiceLocator.getIt<LoginModel>().password;
-                      ServiceLocator.getIt<LoginModel>().email = null;
-                      ServiceLocator.getIt<LoginModel>().password = null;
-
-                      GoRouter.of(context).go(AppRouter.passwordConfimationView);
+                      GoRouter.of(context).pop();
+                      GoRouter.of(context).push(AppRouter.passwordConfimationView);
                     },
                     padding: const EdgeInsets.all(20),
                     fitWidth: true,
@@ -63,8 +56,9 @@ class PasswordView extends StatelessWidget {
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: state is LoginLoading,
-          child: const Scaffold(
-            body: PasswordViewBody(),
+          child: Scaffold(
+            appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
+            body: const PasswordViewBody(),
           ),
         );
       },

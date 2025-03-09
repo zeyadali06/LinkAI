@@ -3,10 +3,10 @@ import 'package:linkai/core/utils/app_styles.dart';
 
 void showSnackBar(
   BuildContext context,
-  String text, [
+  String text, {
   Color textColor = Colors.white,
   Color backgroundColor = Colors.green,
-]) {
+}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(

@@ -4,7 +4,7 @@ import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/utils/formatters.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/authentication/data/models/register_model.dart';
+import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/manager/register_cubit/register_cubit.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/pin_code_field.dart';
 
@@ -63,7 +63,7 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                         ),
                         const SizedBox(height: 15),
                         Text(
-                          ServiceLocator.getIt<RegisterModel>().email!,
+                          ServiceLocator.getIt<AuthModel>().email!,
                           style: AppStyles.semiBold18(context),
                         ),
                         const SizedBox(height: 25),
@@ -71,7 +71,7 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                           length: 5,
                           inputFormatters: [Formatters.numbersOnlyFormatter],
                           onChanged: (value) async {
-                            ServiceLocator.getIt<RegisterModel>().otp = value;
+                            ServiceLocator.getIt<AuthModel>().otp = value;
                           },
                         ),
                         TextButton(
@@ -93,7 +93,7 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          await BlocProvider.of<RegisterCubit>(context).register(ServiceLocator.getIt<RegisterModel>());
+                          await BlocProvider.of<RegisterCubit>(context).register(ServiceLocator.getIt<AuthModel>());
                         } else {
                           autovalidatemodel = AutovalidateMode.always;
                           setState(() {});

@@ -23,7 +23,9 @@ abstract class AppRouter {
   static const String interviewView = "/interviewView";
 
   static final GoRouter router = GoRouter(
+
     initialLocation: interviewView,
+
     routes: <RouteBase>[
       GoRoute(
         path: splashView,

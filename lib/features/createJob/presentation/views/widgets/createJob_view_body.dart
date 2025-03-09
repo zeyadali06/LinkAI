@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'my_textfield.dart';
+import 'my_dropdown.dart';
 
 class CreateJobViewBody extends StatefulWidget {
   const CreateJobViewBody({super.key});
@@ -38,8 +40,20 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
   ];
 
   final List<String> workingTimes = ["Full Time", "Part Time", "Internship"];
-
   final List<String> workLocations = ["On-Site", "Remote", "Hybrid"];
+
+  void postJob() {
+    titleController.clear();
+    companyController.clear();
+    locationController.clear();
+    descriptionController.clear();
+    setState(() {
+      selectedExperience = null;
+      selectedTechnicalSkill = null;
+      selectedWorkingTime = null;
+      selectedWorkLocation = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,71 +69,56 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // job title
-                textField(titleController, "Job Title"),
-
+                MyTextField(
+                    controller: titleController, labelText: "Job Title"),
                 const SizedBox(height: 12),
-
-                // company name
-                textField(companyController, "Company Name"),
-
+                MyTextField(
+                    controller: companyController, labelText: "Company Name"),
                 const SizedBox(height: 12),
-
-                // company location
-                textField(locationController, "Company Location"),
-
+                MyTextField(
+                    controller: locationController,
+                    labelText: "Company Location"),
                 const SizedBox(height: 12),
-
-                // experience
-                dropDown(
-                  "Experience Level",
-                  experienceLevels,
-                  selectedExperience,
-                  (value) => setState(() => selectedExperience = value),
+                MyDropdown(
+                  label: "Experience Level",
+                  items: experienceLevels,
+                  selectedValue: selectedExperience,
+                  onChanged: (value) =>
+                      setState(() => selectedExperience = value),
                 ),
-
                 const SizedBox(height: 12),
-
-                // tech skills
-                dropDown(
-                  "Technical Skills",
-                  technicalSkills,
-                  selectedTechnicalSkill,
-                  (value) => setState(() => selectedTechnicalSkill = value),
+                MyDropdown(
+                  label: "Technical Skills",
+                  items: technicalSkills,
+                  selectedValue: selectedTechnicalSkill,
+                  onChanged: (value) =>
+                      setState(() => selectedTechnicalSkill = value),
                 ),
-
                 const SizedBox(height: 12),
-
-                // working time
-                dropDown(
-                  "Working Time",
-                  workingTimes,
-                  selectedWorkingTime,
-                  (value) => setState(() => selectedWorkingTime = value),
+                MyDropdown(
+                  label: "Working Time",
+                  items: workingTimes,
+                  selectedValue: selectedWorkingTime,
+                  onChanged: (value) =>
+                      setState(() => selectedWorkingTime = value),
                 ),
-
                 const SizedBox(height: 12),
-
-                // work location
-                dropDown(
-                  "Work Location",
-                  workLocations,
-                  selectedWorkLocation,
-                  (value) => setState(() => selectedWorkLocation = value),
+                MyDropdown(
+                  label: "Work Location",
+                  items: workLocations,
+                  selectedValue: selectedWorkLocation,
+                  onChanged: (value) =>
+                      setState(() => selectedWorkLocation = value),
                 ),
-
                 const SizedBox(height: 12),
-
-                // job desc
-                textField(descriptionController, "Job Description",
+                MyTextField(
+                    controller: descriptionController,
+                    labelText: "Job Description",
                     maxLines: 5),
-
                 const SizedBox(height: 80),
               ],
             ),
           ),
-
-          // button
           Positioned(
             bottom: 20,
             left: 20,
@@ -134,9 +133,7 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {
-                  postJob();
-                },
+                onPressed: postJob,
                 child: const Text(
                   "Post Job",
                   style: TextStyle(
@@ -150,98 +147,5 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
         ],
       ),
     );
-  }
-
-  // text field widget
-  Widget textField(TextEditingController controller, String labelText,
-      {int maxLines = 1}) {
-    return TextField(
-      controller: controller,
-      maxLines: maxLines,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: const TextStyle(color: Colors.white70),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white38),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.blueAccent),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        filled: true,
-        fillColor: Colors.grey[900],
-      ),
-    );
-  }
-
-  // drop down widget
-  Widget dropDown(String label, List<String> items, String? selectedValue,
-      Function(String?) onChanged) {
-    return DropdownButtonFormField<String>(
-      value: selectedValue,
-      dropdownColor: Colors.grey[900],
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(color: Colors.white70),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white38),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.blueAccent),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        filled: true,
-        fillColor: Colors.grey[900],
-      ),
-      items: items.map((String item) {
-        return DropdownMenuItem<String>(
-          value: item,
-          child: Text(item),
-        );
-      }).toList(),
-      onChanged: onChanged,
-    );
-  }
-
-  // button pressed
-  void postJob() {
-    if (titleController.text.isEmpty ||
-        companyController.text.isEmpty ||
-        locationController.text.isEmpty ||
-        selectedExperience == null ||
-        selectedTechnicalSkill == null ||
-        selectedWorkingTime == null ||
-        selectedWorkLocation == null ||
-        descriptionController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please fill out all fields"),
-          backgroundColor: Colors.redAccent,
-        ),
-      );
-      return;
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Job Posted Successfully!"),
-        backgroundColor: Colors.green,
-      ),
-    );
-
-    titleController.clear();
-    companyController.clear();
-    locationController.clear();
-    descriptionController.clear();
-    setState(() {
-      selectedExperience = null;
-      selectedTechnicalSkill = null;
-      selectedWorkingTime = null;
-      selectedWorkLocation = null;
-    });
   }
 }

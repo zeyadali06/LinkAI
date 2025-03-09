@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/features/createJob/presentation/views/createJob_view.dart';
 import 'package:linkai/features/home/presentation/views/widgets/jobList.dart';
 
 class HomeViewBody extends StatefulWidget {
@@ -38,8 +39,15 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.white),
-            onPressed: () {},
+            icon:
+                const Icon(Icons.add_circle_outline_sharp, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreatejobView(),
+                  ));
+            },
           ),
         ],
       ),

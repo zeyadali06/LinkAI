@@ -1,0 +1,2 @@
+D:/GP/LinkAI/android/app/.cxx/Debug/3gx515x5/x86/CMakeFiles/edit_cache.dir
+D:/GP/LinkAI/android/app/.cxx/Debug/3gx515x5/x86/CMakeFiles/rebuild_cache.dir

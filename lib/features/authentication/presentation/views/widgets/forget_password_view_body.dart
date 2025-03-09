@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/country_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
@@ -50,10 +51,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                     const SizedBox(height: 50),
                     Text(
                       "Forgot Password",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).textTheme.bodyLarge!.color,
-                      ),
+                      style: AppStyles.normal18(context),
                     ),
                     const Expanded(child: SizedBox(height: 25)),
                     Column(
@@ -67,10 +65,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                         const SizedBox(height: 25),
                         Text(
                           "Please enter the email used during sign up.",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).textTheme.bodyLarge!.color,
-                          ),
+                          style: AppStyles.defaultStyle(context),
                         ),
                         const SizedBox(height: 25),
                         AuthTextField(

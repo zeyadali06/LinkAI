@@ -27,10 +27,9 @@ class MyApp extends StatelessWidget {
             title: "LinkAI",
             debugShowCheckedModeBanner: false,
             theme: AppThemes.lightTheme,
-            // themeMode: BlocProvider.of<AppThemeCubit>(context).appTheme,
-            themeMode: ThemeMode.dark,
-            color: Theme.of(context).scaffoldBackgroundColor,
             darkTheme: AppThemes.darkTheme,
+            themeMode: BlocProvider.of<AppThemeCubit>(context).appTheme,
+            color: Theme.of(context).scaffoldBackgroundColor,
             routerConfig: AppRouter.router,
           );
         },

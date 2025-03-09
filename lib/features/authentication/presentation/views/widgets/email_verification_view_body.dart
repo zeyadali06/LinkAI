@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/country_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/pin_code_field.dart';
@@ -50,10 +51,7 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                     const SizedBox(height: 50),
                     Text(
                       "Verification",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).textTheme.bodyLarge!.color,
-                      ),
+                      style: AppStyles.normal18(context),
                     ),
                     const Expanded(child: SizedBox(height: 25)),
                     Column(
@@ -67,19 +65,12 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                         const SizedBox(height: 25),
                         Text(
                           "Enter the verification code we sent to",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).textTheme.bodyLarge!.color,
-                          ),
+                          style: AppStyles.defaultStyle(context),
                         ),
                         const SizedBox(height: 15),
                         Text(
                           "z01551153743@gmail.com",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).textTheme.bodyLarge!.color,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: AppStyles.semiBold18(context),
                         ),
                         const SizedBox(height: 25),
                         const PinCodeField(),
@@ -92,7 +83,7 @@ class _EmailVerificationViewBodyState extends State<EmailVerificationViewBody> {
                           ),
                           child: Text(
                             "Resend",
-                            style: TextStyle(color: Theme.of(context).textButtonTheme.style!.foregroundColor!.resolve({})),
+                            style: AppStyles.defaultStyle(context, Theme.of(context).textButtonTheme.style!.foregroundColor!.resolve({})),
                           ),
                         ),
                       ],

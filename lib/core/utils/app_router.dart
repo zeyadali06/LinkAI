@@ -21,7 +21,7 @@ abstract class AppRouter {
   static const String forgetPasswordView = "/forgetPasswordView";
 
   static final GoRouter router = GoRouter(
-    initialLocation: splashView,
+    initialLocation: homeView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,

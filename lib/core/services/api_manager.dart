@@ -20,4 +20,16 @@ class ApiManager {
 
     return json.decode(await response.stream.bytesToString());
   }
+
+  Future<Map<String, dynamic>> get(String endPoint, {String? token}) async {
+    final http.Request request = http.Request('GET', Uri.parse('${ApiConstants.baseURL}$endPoint'));
+
+    request.headers.addAll({
+      'authorization': 'Bearer $token',
+    });
+
+    final http.StreamedResponse response = await request.send();
+
+    return json.decode(await response.stream.bytesToString());
+  }
 }

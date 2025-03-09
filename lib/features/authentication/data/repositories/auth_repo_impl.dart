@@ -18,10 +18,11 @@ class AuthRepoImpl extends AuthRepo {
     try {
       final Map<String, dynamic> data = model.toJson();
       data["DOB"] = DateTime.now().subtract(const Duration(days: 7000)).toIso8601String();
-      Map<String, dynamic> res = await _apiManager.post(data, ApiConstants.register);
+      final Map<String, dynamic> res = await _apiManager.post(data, ApiConstants.register);
 
       if (res["success"]) {
-        UserModel.instance.setFromJson(res);
+        await login(model);
+
         return RequestResault.success(null);
       } else {
         return RequestResault.failure(OtpFailure(res));
@@ -34,11 +35,14 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<RequestResault> login(AuthModel model) async {
     try {
-      Map<String, dynamic> res = await _apiManager.post(model.toJson(), ApiConstants.login);
+      final Map<String, dynamic> res = await _apiManager.post(model.toLoginJson(), ApiConstants.login);
 
       if (res["success"]) {
-        UserModel.instance.setFromJson(res);
-        return RequestResault.success(null);
+        UserModel.instance.token = res["token"];
+        final Map<String, dynamic> userData = await _apiManager.get(ApiConstants.userData, token: UserModel.instance.token);
+        UserModel.instance.setFromJson(userData["user"]);
+
+        return RequestResault.success(UserModel.instance.token);
       } else {
         return RequestResault.failure(const CustomFailure("Some thing went wrong!"));
       }

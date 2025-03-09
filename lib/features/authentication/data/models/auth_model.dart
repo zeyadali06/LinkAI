@@ -37,6 +37,13 @@ class AuthModel {
     };
   }
 
+  Map<String, dynamic> toLoginJson() {
+    return {
+      emailKey: email,
+      passwordKey: password,
+    };
+  }
+
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     return AuthModel(
       email: json[emailKey],

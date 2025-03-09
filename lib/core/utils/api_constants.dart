@@ -6,4 +6,5 @@ abstract class ApiConstants {
   static const String sendOTPForgetPassword = "/auth/send-otp-forget-password";
   static const String forgetPassword = "/auth/forget-password";
   static const String refreshToken = "/auth/refresh-token";
+  static const String userData = "/users";
 }

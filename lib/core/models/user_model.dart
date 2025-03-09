@@ -14,6 +14,5 @@ class UserModel {
     lastName = json["lastName"];
     email = json["email"];
     phone = json["mobileNumber"];
-    token = json["token"];
   }
 }

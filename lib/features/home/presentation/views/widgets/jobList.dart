@@ -11,6 +11,7 @@ class JobsListPage extends StatelessWidget {
       "companyLocation": "New Cairo, Cairo",
       "experience": "Entry Level - 1-3 Yrs of Exp",
       "technicalSkills": "JavaScript · HTML · CSS · Software Dev",
+      "description": "we need a skilled developer ",
       "timeAgo": "16 days ago",
       "workingTime": "Part Time",
       "workLocation": "Hybrid",
@@ -21,6 +22,7 @@ class JobsListPage extends StatelessWidget {
       "companyLocation": "Alexandria",
       "experience": "Team Lead - 5+ Years of Exp",
       "technicalSkills": "Flutter · Dart · Firebase · UI/UX",
+      "description": "we need a skilled developer ",
       "timeAgo": "5 days ago",
       "workingTime": "Internship",
       "workLocation": "Remote",
@@ -31,6 +33,8 @@ class JobsListPage extends StatelessWidget {
       "companyLocation": "Berlin, Germany",
       "experience": "3-5 Years of Exp",
       "technicalSkills": "Node.js · Express · MongoDB · AWS",
+      "description":
+          "we need a skilled developer sadaskjdjlkaskdlkasjlkdljkjlk sajldkkasjljdklasjlkdjlklk saldjlskadljkasjlkdljksajlk lkasdksjlajldksajkldjlkajlkjlkdjlkasjlkdjlksajlkdjaj  lasjlkdjlklk saldjlskadljkasjlkdljksajlk lkasdksjlajldksajkldjlkajlkjlkdjlkasjlkdjlksajlkdjaj ljdsakjldkjasjllasjlkdjlklk saldjlskadljkasjlkdljksajlk lkasdksjlajldksajkldjlkajlkjlkdjlkasjlkdjlksajlkdjaj ljdsakjldkjasjllasjlkdjlklk saldjlskadljkasjlkdljksajlk lkasdksjlajldksajkldjlkajlkjlkdjlkasjlkdjlksajlkdjaj ljdsakjldkjasjlljdsakjldkjasjlkdjkladjlksajlkdjlksajkld djklasjlkdajkldjklsajkldjlkajkld dljkasjkdlakldjklsajldksjlakdjlk slakdjsklajdklajkdjlksajkldlk alskjdklajkldjsakljdjalskdlk",
       "timeAgo": "10 days ago",
       "workingTime": "Internship",
       "workLocation": "Remote",
@@ -52,6 +56,7 @@ class JobsListPage extends StatelessWidget {
           timeAgo: job["timeAgo"]!,
           workingTime: job["workingTime"]!,
           workLocation: job["workLocation"]!,
+          description: job["description"]!,
         );
       },
     );

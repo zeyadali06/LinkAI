@@ -7,7 +7,7 @@ import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/country_model.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/manager/otp_cubit/otp_cubit.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
+import 'package:linkai/core/widgets/custom_text_field.dart';
 
 class PhoneNumberViewBody extends StatefulWidget {
   const PhoneNumberViewBody({super.key});
@@ -69,7 +69,7 @@ class _PhoneNumberViewBodyState extends State<PhoneNumberViewBody> {
                           // ),
                           // const SizedBox(width: 10),
                           Expanded(
-                            child: AuthTextField(
+                            child: CustomTextField(
                               validator: (value) {
                                 if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value!)) {
                                   return "Enter valid phone number";

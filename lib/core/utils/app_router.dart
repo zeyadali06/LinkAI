@@ -13,6 +13,7 @@ import 'package:linkai/features/authentication/presentation/views/name_view.dart
 import 'package:linkai/features/authentication/presentation/views/password_confimation_view.dart';
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
+import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
@@ -30,9 +31,10 @@ abstract class AppRouter {
   static const String forgetPasswordView = "/forgetPasswordView";
   static const String interviewView = "/interviewView";
   static const String nameView = "/nameView";
+  static const String createJobView = "/createJobView";
 
   static final GoRouter router = GoRouter(
-    initialLocation: loginView,
+    initialLocation: splashView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,
@@ -138,6 +140,15 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return const CustomTransitionPage(
             child: NameView(),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: createJobView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: CreateJobView(),
             transitionsBuilder: customTransition,
           );
         },

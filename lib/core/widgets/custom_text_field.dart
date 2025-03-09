@@ -5,38 +5,55 @@ import 'package:linkai/core/utils/app_styles.dart';
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
-    required this.hintText,
+    this.hintText,
+    this.hintColor,
+    this.textColor,
+    this.cursorColor,
+    this.borderColor,
+    this.fillColor,
+    this.borderWidth = 1,
     this.controller,
     this.inputFormatters,
     this.onSaved,
     this.onChanged,
-    this.obscureText = false,
     this.enableValidator = true,
+    this.borderRadius = 16,
+    this.validator,
+    this.maxLines = 1,
   });
 
-  final String hintText;
-  final bool obscureText;
+  final String? hintText;
+  final Color? fillColor;
+  final Color? hintColor;
+  final Color? textColor;
+  final Color? cursorColor;
+  final Color? borderColor;
+  final double borderWidth;
+  final double borderRadius;
+  final void Function(String? value)? onChanged;
+  final void Function(String? value)? onSaved;
+  final String? Function(String? value)? validator;
+  final bool enableValidator;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
-  final void Function(String?)? onSaved;
-  final void Function(String?)? onChanged;
-  final bool enableValidator;
+  final int maxLines;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  Color color = Colors.grey;
   bool foucsed = false;
-  late bool obscureText;
-  late IconData eyeIcon;
+  late Color hintColor;
+  late Color textColor;
+  late Color cursorColor;
+  late Color borderColor;
+  late Color fillColor;
 
   @override
-  void initState() {
-    obscureText = widget.obscureText;
-    eyeIcon = Icons.remove_red_eye_outlined;
-    super.initState();
+  void didChangeDependencies() {
+    setColors();
+    super.didChangeDependencies();
   }
 
   @override
@@ -44,21 +61,35 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Focus(
       onFocusChange: (focus) {
         foucsed = focus;
-        if (color != Colors.red) {
-          color = focus ? Colors.green : Colors.grey;
-          setState(() {});
-        }
       },
       child: TextFormField(
         validator: (value) {
           if (widget.enableValidator) {
             if (value == null || value.isEmpty) {
-              color = Colors.red;
+              hintColor = Colors.red;
+              textColor = Colors.red;
+              cursorColor = Colors.red;
+              borderColor = Colors.red;
               setState(() {});
               return "Field is required";
             } else if (foucsed) {
-              color = Colors.green;
+              setColors();
               setState(() {});
+            }
+
+            if (widget.validator != null) {
+              String? res = widget.validator!(value);
+              if (res != null) {
+                hintColor = Colors.red;
+                textColor = Colors.red;
+                cursorColor = Colors.red;
+                borderColor = Colors.red;
+                setState(() {});
+                return res;
+              } else {
+                setColors();
+                setState(() {});
+              }
             }
           }
           return null;
@@ -68,32 +99,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
         onChanged: widget.onChanged,
         controller: widget.controller,
         cursorOpacityAnimates: true,
-        cursorColor: color,
-        obscureText: obscureText,
+        cursorColor: cursorColor,
         inputFormatters: widget.inputFormatters,
+        style: AppStyles.defaultStyle(context, textColor),
+        maxLines: widget.maxLines,
         decoration: InputDecoration(
-          border: outlineInputBorder(1),
-          enabledBorder: outlineInputBorder(1),
-          focusedBorder: outlineInputBorder(2),
-          errorBorder: outlineInputBorder(1),
-          focusedErrorBorder: outlineInputBorder(2),
-          hintText: widget.hintText,
-          hintStyle: AppStyles.defaultStyle(context, color),
-          errorStyle: AppStyles.defaultStyle(context, color),
-          suffixIcon: widget.obscureText
-              ? IconButton(
-                  onPressed: () {
-                    obscureText = !obscureText;
-                    if (eyeIcon == Icons.remove_red_eye_outlined) {
-                      eyeIcon = Icons.remove_red_eye;
-                    } else {
-                      eyeIcon = Icons.remove_red_eye_outlined;
-                    }
-                    setState(() {});
-                  },
-                  icon: Icon(eyeIcon),
-                )
-              : null,
+          filled: true,
+          fillColor: widget.fillColor,
+          alignLabelWithHint: true,
+          labelText: widget.hintText,
+          labelStyle: AppStyles.defaultStyle(context, hintColor),
+          errorStyle: AppStyles.defaultStyle(context, textColor),
+          border: outlineInputBorder(widget.borderWidth),
+          enabledBorder: outlineInputBorder(widget.borderWidth),
+          focusedBorder: outlineInputBorder(widget.borderWidth + 1),
+          errorBorder: outlineInputBorder(widget.borderWidth),
+          focusedErrorBorder: outlineInputBorder(widget.borderWidth + 1),
         ),
       ),
     );
@@ -101,8 +122,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   OutlineInputBorder outlineInputBorder(double width) {
     return OutlineInputBorder(
-      borderRadius: const BorderRadius.all(Radius.circular(8)),
-      borderSide: BorderSide(width: width, color: color),
+      borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
+      borderSide: BorderSide(width: width, color: borderColor),
     );
+  }
+
+  setColors() {
+    cursorColor = widget.cursorColor ?? Theme.of(context).textSelectionTheme.cursorColor!;
+    hintColor = widget.hintColor ?? Theme.of(context).hintColor;
+    borderColor = widget.borderColor ?? Theme.of(context).inputDecorationTheme.border!.borderSide.color;
+    fillColor = widget.fillColor ?? Theme.of(context).inputDecorationTheme.fillColor!;
+    textColor = widget.textColor ?? Theme.of(context).textTheme.bodyLarge!.color!;
   }
 }

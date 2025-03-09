@@ -6,7 +6,7 @@ import 'package:linkai/core/utils/formatters.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
+import 'package:linkai/core/widgets/custom_text_field.dart';
 
 class NameViewBody extends StatefulWidget {
   const NameViewBody({super.key});
@@ -48,7 +48,7 @@ class _NameViewBodyState extends State<NameViewBody> {
                   const Expanded(child: SizedBox(height: 25)),
                   Column(
                     children: [
-                      AuthTextField(
+                      CustomTextField(
                         hintText: "First name",
                         inputFormatters: [Formatters.namesFormatter],
                         validator: (value) {
@@ -62,7 +62,7 @@ class _NameViewBodyState extends State<NameViewBody> {
                         },
                       ),
                       const SizedBox(height: 25),
-                      AuthTextField(
+                      CustomTextField(
                         hintText: "Last name",
                         inputFormatters: [Formatters.namesFormatter],
                         validator: (value) {

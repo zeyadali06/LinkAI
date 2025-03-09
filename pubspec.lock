@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "528579c7e4579719f04b21eeeeddfd73a18b31dabc22766893b7d1be7f49b967"
+      sha256: "0c64e928dcbefddecd234205422bcfc2b5e6d31be0b86fef0d0dd48d7b4c9742"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.3"
+    version: "4.0.4"
   async:
     dependency: transitive
     description:
@@ -16,9 +16,7 @@ packages:
       sha256: d2872f9c19731c2e5f10444b14686eb7cc85c76274bd6c16e1816bff9a3bab63
       url: "https://pub.dev"
     source: hosted
-
     version: "2.12.0"
-
   avatar_glow:
     dependency: "direct main"
     description:
@@ -27,7 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-
   bloc:
     dependency: transitive
     description:

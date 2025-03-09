@@ -11,14 +11,14 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: 20,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const CircleAvatar(
           radius: 20,
-          backgroundImage: AssetImage(Assets.imagesSpalsh),
+          backgroundImage: AssetImage(Assets.imagesSplash),
         ),
-        const SizedBox(width: 20),
         Container(
           margin: const EdgeInsets.only(top: 5),
           constraints: BoxConstraints(

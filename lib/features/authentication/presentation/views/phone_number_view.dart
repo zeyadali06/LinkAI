@@ -17,14 +17,18 @@ class PhoneNumberView extends StatelessWidget {
         if (state is OtpSuccess) {
           GoRouter.of(context).push(AppRouter.emailVerificationView);
         } else if (state is OtpFail) {
-          showSnackBar(context, state.errMessage, backgroundColor: Colors.red);
+          showSnackBar(context, state.errMessage);
         }
       },
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: state is OtpLoading,
           child: Scaffold(
-            appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              foregroundColor: Theme.of(context).iconTheme.color,
+              forceMaterialTransparency: true,
+            ),
             body: const PhoneNumberViewBody(),
           ),
         );

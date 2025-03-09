@@ -9,6 +9,7 @@ abstract class AppThemes {
     iconTheme: const IconThemeData(color: Colors.black),
     textTheme: const TextTheme(bodyLarge: TextStyle(color: Colors.black)),
     hintColor: Colors.grey,
+    cardColor: Colors.grey[1200],
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xffe6e6e6))),
       fillColor: Colors.white,
@@ -39,6 +40,7 @@ abstract class AppThemes {
     iconTheme: const IconThemeData(color: Color(0xff9f9ff8)),
     textTheme: const TextTheme(bodyLarge: TextStyle(color: Colors.white)),
     hintColor: Colors.white.withValues(alpha: .5),
+    cardColor: const Color.fromARGB(255, 34, 34, 34),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.withValues(alpha: .2))),
       fillColor: const Color(0xff262626),

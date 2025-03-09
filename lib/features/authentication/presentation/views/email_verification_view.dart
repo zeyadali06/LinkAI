@@ -24,7 +24,11 @@ class EmailVerificationView extends StatelessWidget {
         return ModalProgressHUD(
           inAsyncCall: state is RegisterLoading,
           child: Scaffold(
-            appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              foregroundColor: Theme.of(context).iconTheme.color,
+              forceMaterialTransparency: true,
+            ),
             body: const EmailVerificationViewBody(),
           ),
         );

@@ -57,7 +57,11 @@ class PasswordView extends StatelessWidget {
         return ModalProgressHUD(
           inAsyncCall: state is LoginLoading,
           child: Scaffold(
-            appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              foregroundColor: Theme.of(context).iconTheme.color,
+              forceMaterialTransparency: true,
+            ),
             body: const PasswordViewBody(),
           ),
         );

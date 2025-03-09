@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linkai/features/home/presentation/views/widgets/jobCard.dart';
+import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/features/home/presentation/views/widgets/job_card.dart';
 
 class JobsListPage extends StatelessWidget {
   const JobsListPage({super.key});
@@ -47,16 +48,19 @@ class JobsListPage extends StatelessWidget {
       itemCount: jobData.length,
       itemBuilder: (context, index) {
         final job = jobData[index];
+
         return JobCard(
-          title: job["title"]!,
-          company: job["company"]!,
-          companyLocation: job["companyLocation"]!,
-          experience: job["experience"]!,
-          technicalSkills: job["technicalSkills"]!,
-          timeAgo: job["timeAgo"]!,
-          workingTime: job["workingTime"]!,
-          workLocation: job["workLocation"]!,
-          description: job["description"]!,
+          jobModel: JobModel(
+            title: job["title"]!,
+            company: job["company"]!,
+            companyLocation: job["companyLocation"]!,
+            experience: job["experience"]!,
+            technicalSkills: job["technicalSkills"]!,
+            timeAgo: job["timeAgo"]!,
+            workingTime: job["workingTime"]!,
+            workLocation: job["workLocation"]!,
+            description: job["description"]!,
+          ),
         );
       },
     );

@@ -1,54 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:linkai/features/createJob/presentation/views/createJob_view.dart';
-import 'package:linkai/features/home/presentation/views/widgets/jobList.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:linkai/core/utils/app_router.dart';
+import 'package:linkai/features/home/presentation/views/widgets/job_list.dart';
+import 'package:linkai/features/home/presentation/views/widgets/search_text_field.dart';
+import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
 
-class HomeViewBody extends StatefulWidget {
+class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
 
   @override
-  State<HomeViewBody> createState() => _HomeViewBodyState();
-}
-
-class _HomeViewBodyState extends State<HomeViewBody> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: TextField(
-          decoration: InputDecoration(
-            hintText: "Search",
-            hintStyle: const TextStyle(color: Colors.grey),
-            prefixIcon: const Icon(Icons.search, color: Colors.grey),
-            filled: true,
-            fillColor: Colors.grey[900],
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 10),
-          ),
-          style: const TextStyle(color: Colors.white),
-        ),
+        forceMaterialTransparency: true,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: const SearchTextField(),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: Colors.grey[800],
-            child: const Icon(Icons.person, color: Colors.white),
+            backgroundColor: Colors.black,
+            child: Icon(
+              Icons.person,
+              color: BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.white : Theme.of(context).iconTheme.color,
+            ),
           ),
         ),
         actions: [
           IconButton(
-            icon:
-                const Icon(Icons.add_circle_outline_sharp, color: Colors.white),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CreatejobView(),
-                  ));
+              GoRouter.of(context).push(AppRouter.createJobView);
             },
+            icon: Icon(
+              Icons.add_circle_outline_sharp,
+              color: Theme.of(context).iconTheme.color,
+            ),
           ),
+          const SizedBox(width: 15),
         ],
       ),
       body: const JobsListPage(),

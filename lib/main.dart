@@ -29,6 +29,8 @@ class MyApp extends StatelessWidget {
             theme: AppThemes.lightTheme,
             darkTheme: AppThemes.darkTheme,
             themeMode: BlocProvider.of<AppThemeCubit>(context).appTheme,
+            // themeMode: ThemeMode.light,
+            // themeMode: ThemeMode.dark,
             color: Theme.of(context).scaffoldBackgroundColor,
             routerConfig: AppRouter.router,
           );

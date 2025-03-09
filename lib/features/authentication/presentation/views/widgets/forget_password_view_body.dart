@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/country_model.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
+import 'package:linkai/core/widgets/custom_text_field.dart';
 
 class ForgetPasswordViewBody extends StatefulWidget {
   const ForgetPasswordViewBody({super.key});
@@ -68,7 +68,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                           style: AppStyles.defaultStyle(context),
                         ),
                         const SizedBox(height: 25),
-                        AuthTextField(
+                        CustomTextField(
                           hintText: "Email",
                           onSaved: (value) {},
                         ),

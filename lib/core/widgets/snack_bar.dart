@@ -5,7 +5,7 @@ void showSnackBar(
   BuildContext context,
   String text, {
   Color textColor = Colors.white,
-  Color backgroundColor = Colors.green,
+  Color backgroundColor = Colors.red,
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

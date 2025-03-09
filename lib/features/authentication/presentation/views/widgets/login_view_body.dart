@@ -7,7 +7,7 @@ import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/google_button.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/auth_text_field.dart';
+import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/logo.dart';
 
 class LoginViewBody extends StatefulWidget {
@@ -73,7 +73,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               height: 40,
                               color: Colors.white.withValues(alpha: .4),
                             ),
-                            AuthTextField(
+                            CustomTextField(
                               hintText: 'Email',
                               validator: (value) {
                                 if (!RegExp(Formatters.emailRegEx).hasMatch(value!)) {

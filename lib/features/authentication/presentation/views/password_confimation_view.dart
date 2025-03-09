@@ -7,7 +7,11 @@ class PasswordConfimationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        foregroundColor: Theme.of(context).iconTheme.color,
+        forceMaterialTransparency: true,
+      ),
       body: const PasswordConfirmationViewBody(),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:linkai/features/home/presentation/views/widgets/jobCard.dart';
 import 'package:linkai/features/home/presentation/views/widgets/jobList.dart';
 
 class HomeViewBody extends StatefulWidget {

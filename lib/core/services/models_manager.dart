@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:linkai/core/services/ip_manager.dart';
+import 'package:linkai/core/utils/api_constants.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ModelsManager {
@@ -12,7 +14,6 @@ class ModelsManager {
   static const String ttvEndPoint = "api/v1/gemini/text-voice";
   static const String tttEndPoint = "api/v1/gemini/text-text";
   static const int port = 3000;
-  static const IPManager _ipManager = IPManager();
   final String _sessionId;
 
   static Future<String> _getBaseUrl(final String deviceIP, [int port = port]) async {
@@ -26,7 +27,7 @@ class ModelsManager {
 
     final http.Request request = http.Request(
       'POST',
-      Uri.parse("${await _getBaseUrl(await _ipManager.getDeviceIP(), port)}/$tttEndPoint"),
+      Uri.parse("${await _getBaseUrl(ServiceLocator.getIt<IPManager>().ip, ApiConstants.port)}/$tttEndPoint"),
     );
 
     request.body = json.encode({
@@ -55,7 +56,7 @@ class ModelsManager {
 
     final http.Request request = http.Request(
       'POST',
-      Uri.parse("${await _getBaseUrl(await _ipManager.getDeviceIP(), port)}/$ttvEndPoint"),
+      Uri.parse("${await _getBaseUrl(ServiceLocator.getIt<IPManager>().ip, port)}/$ttvEndPoint"),
     );
 
     request.body = json.encode({"text": text});
@@ -87,7 +88,7 @@ class ModelsManager {
     debugPrint(isExist.toString());
 
     late http.MultipartRequest request;
-    final String url = "${await _getBaseUrl(await _ipManager.getDeviceIP())}/$vttEndPoint";
+    final String url = "${await _getBaseUrl(ServiceLocator.getIt<IPManager>().ip)}/$vttEndPoint";
 
     request = http.MultipartRequest(
       'POST',

@@ -1,5 +1,9 @@
+import 'package:linkai/core/services/ip_manager.dart';
+import 'package:linkai/core/utils/service_locator.dart';
+
 abstract class ApiConstants {
-  static const String baseURL = "http://localhost:3000";
+  static const int port = 3000;
+  static final String baseURL = "http://${ServiceLocator.getIt<IPManager>().ip}:$port";
   static const String register = "/auth/register";
   static const String login = "/auth/login";
   static const String sendOTP = "/auth/send-otp";

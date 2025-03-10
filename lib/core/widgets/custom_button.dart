@@ -6,7 +6,7 @@ class CustomButton extends StatelessWidget {
     super.key,
     this.onPressed,
     required this.text,
-    this.height = 55,
+    this.height,
     this.fitWidth = true,
     this.textColor,
     this.buttonColor,
@@ -14,12 +14,12 @@ class CustomButton extends StatelessWidget {
     this.highlightColor,
     this.gradient,
     this.textAlign,
-    this.padding,
+    this.padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
   });
 
   final void Function()? onPressed;
   final String text;
-  final double height;
+  final double? height;
   final bool fitWidth;
   final Color? textColor;
   final Color? buttonColor;
@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
   final Color? highlightColor;
   final Gradient? gradient;
   final TextAlign? textAlign;
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -46,18 +46,19 @@ class CustomButton extends StatelessWidget {
 
   Widget getButton(BuildContext context) {
     return Container(
-      height: height,
-      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         gradient: gradient,
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: MaterialButton(
+        height: height,
         onPressed: onPressed,
         color: gradient == null ? (buttonColor ?? Theme.of(context).filledButtonTheme.style!.backgroundColor!.resolve({})) : null,
         splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
         highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
         padding: padding,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
         child: Text(
           text,
           textAlign: textAlign,

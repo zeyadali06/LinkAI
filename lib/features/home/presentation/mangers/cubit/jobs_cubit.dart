@@ -1,0 +1,35 @@
+import 'package:bloc/bloc.dart';
+import 'package:linkai/core/failures/request_result.dart';
+import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/services/api_manager.dart';
+
+import 'package:meta/meta.dart';
+
+import '../../../data/repo/job_repo_impl.dart';
+import '../../../domain/repo/job_repo.dart';
+
+part 'jobs_state.dart';
+
+class JobsCubit extends Cubit<JobsState> {
+  JobsCubit() : super(JobsInitial());
+  final JobRepo _jobRepo = JobRepoImpl(ApiManager());
+
+  Future<void> getJobs() async {
+    emit(JobsLoading());
+    final result = await _jobRepo.getJobs();
+    if (result is Success) {
+      try {
+        final List<JobModel> jobs = [];
+        for (var job in result.data) {
+          jobs.add(JobModel.fromJson(job));
+        }
+        emit(JobsLoaded(jobs));
+      } catch (e) {
+        emit(JobsError(e.toString()));
+      }
+    } 
+ else if (result is Failed) {
+  emit(JobsError(result.data.message));
+}
+  }
+}

@@ -11,4 +11,10 @@ abstract class ApiConstants {
   static const String forgetPassword = "/auth/forget-password";
   static const String refreshToken = "/auth/refresh-token";
   static const String userData = "/users";
+  static const String getJobs = "/jobs/filter";
+  static const String applyForJob = "/jobs/apply";
+  static const String addJob = "/jobs/add";
+  static const String updateJob = "/jobs";
+  static const String deleteJob = "/jobs";
 }
+

@@ -3,6 +3,7 @@ import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/features/createJob/presentation/views/widgets/my_dropdown.dart';
+import 'package:linkai/features/home/presentation/views/home_view.dart';
 
 class CreateJobViewBody extends StatefulWidget {
   const CreateJobViewBody({super.key});
@@ -25,114 +26,124 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
   void initState() {
     _formKey = GlobalKey<FormState>();
     _autovalidatemodel = AutovalidateMode.disabled;
-    _jobModel = JobModel.init();
+    // _jobModel = JobModel.init();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeView(),));},
+        ),
         forceMaterialTransparency: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         foregroundColor: Theme.of(context).iconTheme.color,
       ),
-      body: Form(
-        key: _formKey,
-        autovalidateMode: _autovalidatemodel,
-        child: Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      spacing: 14,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 6),
-                        CustomTextField(
-                          hintText: "Job Title",
-                          onSaved: (value) {
-                            _jobModel.title = value!;
-                          },
-                        ),
-                        CustomTextField(
-                          hintText: "Company Name",
-                          onSaved: (value) {
-                            _jobModel.company = value!;
-                          },
-                        ),
-                        CustomTextField(
-                          hintText: "Company Location",
-                          onSaved: (value) {
-                            _jobModel.company = value!;
-                          },
-                        ),
-                        MyDropdown(
-                          label: "Experience Level",
-                          items: experienceLevels,
-                          onChanged: (value) {
-                            _jobModel.experience = value!;
-                          },
-                        ),
-                        MyDropdown(
-                          label: "Technical Skills",
-                          items: technicalSkills,
-                          onChanged: (value) {
-                            _jobModel.technicalSkills = value!;
-                          },
-                        ),
-                        MyDropdown(
-                          label: "Working Time",
-                          items: workingTimes,
-                          onChanged: (value) {
-                            _jobModel.workingTime = value!;
-                          },
-                        ),
-                        MyDropdown(
-                          label: "Work Location",
-                          items: workLocations,
-                          onChanged: (value) {
-                            _jobModel.workLocation = value!;
-                          },
-                        ),
-                        CustomTextField(
-                          hintText: "Job Description",
-                          maxLines: 5,
-                          onSaved: (value) {
-                            _jobModel.description = value!;
-                          },
-                        ),
-                        const SizedBox(height: 100),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 20,
-              left: 20,
-              right: 20,
-              child: CustomButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                  } else {
-                    _autovalidatemodel = AutovalidateMode.always;
-                    setState(() {});
-                  }
-                },
-                text: "Post Job",
-              ),
-            ),
-          ],
-        ),
-      ),
     );
+    // return Scaffold(
+    //   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    //   appBar: AppBar(
+    //     forceMaterialTransparency: true,
+    //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    //     foregroundColor: Theme.of(context).iconTheme.color,
+    //   ),
+    //   body: Form(
+    //     key: _formKey,
+    //     autovalidateMode: _autovalidatemodel,
+    //     child: Stack(
+    //       children: [
+    //         CustomScrollView(
+    //           slivers: [
+    //             SliverFillRemaining(
+    //               hasScrollBody: false,
+    //               child: Padding(
+    //                 padding: const EdgeInsets.symmetric(horizontal: 16),
+    //                 child: Column(
+    //                   spacing: 14,
+    //                   crossAxisAlignment: CrossAxisAlignment.start,
+    //                   children: [
+    //                     const SizedBox(height: 6),
+    //                     CustomTextField(
+    //                       hintText: "Job Title",
+    //                       onSaved: (value) {
+    //                         _jobModel.title = value!;
+    //                       },
+    //                     ),
+    //                     CustomTextField(
+    //                       hintText: "Company Name",
+    //                       onSaved: (value) {
+    //                         _jobModel.company = value!;
+    //                       },
+    //                     ),
+    //                     CustomTextField(
+    //                       hintText: "Company Location",
+    //                       onSaved: (value) {
+    //                         _jobModel.company = value!;
+    //                       },
+    //                     ),
+    //                     MyDropdown(
+    //                       label: "Experience Level",
+    //                       items: experienceLevels,
+    //                       onChanged: (value) {
+    //                         _jobModel.experience = value!;
+    //                       },
+    //                     ),
+    //                     MyDropdown(
+    //                       label: "Technical Skills",
+    //                       items: technicalSkills,
+    //                       onChanged: (value) {
+    //                         _jobModel.technicalSkills.add(value!);
+    //                       },
+    //                     ),
+    //                     MyDropdown(
+    //                       label: "Working Time",
+    //                       items: workingTimes,
+    //                       onChanged: (value) {
+    //                         _jobModel.workingTime = value!;
+    //                       },
+    //                     ),
+    //                     MyDropdown(
+    //                       label: "Work Location",
+    //                       items: workLocations,
+    //                       onChanged: (value) {
+    //                         _jobModel.workLocation = value!;
+    //                       },
+    //                     ),
+    //                     CustomTextField(
+    //                       hintText: "Job Description",
+    //                       maxLines: 5,
+    //                       onSaved: (value) {
+    //                         _jobModel.description = value!;
+    //                       },
+    //                     ),
+    //                     const SizedBox(height: 100),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //         Positioned(
+    //           bottom: 20,
+    //           left: 20,
+    //           right: 20,
+    //           child: CustomButton(
+    //             onPressed: () {
+    //               if (_formKey.currentState!.validate()) {
+    //                 _formKey.currentState!.save();
+    //               } else {
+    //                 _autovalidatemodel = AutovalidateMode.always;
+    //                 setState(() {});
+    //               }
+    //             },
+    //             text: "Post Job",
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

@@ -1,0 +1,2 @@
+/home/mahmoud/code/LinkAI/android/app/.cxx/Debug/301c5z5e/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/mahmoud/code/LinkAI/android/app/.cxx/Debug/301c5z5e/armeabi-v7a/CMakeFiles/rebuild_cache.dir

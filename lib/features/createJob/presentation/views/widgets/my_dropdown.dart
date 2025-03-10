@@ -86,10 +86,14 @@ class _MyDropdownState extends State<MyDropdown> {
           errorBorder: outlineInputBorder(context, 1),
           focusedErrorBorder: outlineInputBorder(context, 2),
         ),
+        isExpanded: true,
         items: widget.items.map((String item) {
           return DropdownMenuItem<String>(
             value: item,
-            child: Text(item),
+            child: Text(
+              item,
+              overflow: TextOverflow.ellipsis,
+            ),
           );
         }).toList(),
       ),

@@ -28,6 +28,7 @@ class JobCard extends StatelessWidget {
       },
       child: Card(
         color: Theme.of(context).cardColor,
+        shadowColor: Colors.grey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

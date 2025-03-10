@@ -9,7 +9,7 @@ abstract class AppThemes {
     iconTheme: const IconThemeData(color: Colors.black),
     textTheme: const TextTheme(bodyLarge: TextStyle(color: Colors.black)),
     hintColor: Colors.grey,
-    cardColor: Colors.grey[1200],
+    cardColor: Colors.grey[50],
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xffe6e6e6))),
       fillColor: Colors.white,

@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
+
+import '../../../../layout/presentation/views/widgets/job_tag.dart';
 
 class JobdetailsViewBody extends StatelessWidget {
   const JobdetailsViewBody({

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkai/core/navigationCubit/navigation_cubit.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
 import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
@@ -14,14 +15,14 @@ import 'package:linkai/features/authentication/presentation/views/password_confi
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
 import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
-import 'package:linkai/features/home/presentation/views/home_view.dart';
+import 'package:linkai/features/layout/presentation/views/layout_view.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
 import 'package:linkai/features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
   static const String splashView = "/splashView";
-  static const String homeView = "/homeView";
+  static const String layout = "/layout";
   static const String loginView = "/loginView";
   static const String profileView = "/profileView";
   static const String passwordView = "/passwordView";
@@ -46,10 +47,13 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: homeView,
+        path: layout,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
-            child: HomeView(),
+          return  CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => NavigationCubit(),
+              child: const LayoutView(),
+            ),
             transitionsBuilder: customTransition,
           );
         },
@@ -110,7 +114,8 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) => RegisterCubit(ServiceLocator.getIt<AuthRepo>()),
+              create: (context) =>
+                  RegisterCubit(ServiceLocator.getIt<AuthRepo>()),
               child: const EmailVerificationView(),
             ),
             transitionsBuilder: customTransition,
@@ -156,12 +161,14 @@ abstract class AppRouter {
     ],
   );
 
-  static Widget customTransition(context, animation, secondaryAnimation, child) {
+  static Widget customTransition(context, animation, secondaryAnimation,
+      child) {
     const Offset begin = Offset(1.0, 0.0);
     const Offset end = Offset(0.0, 0.0);
     const Cubic curve = Curves.easeInOut;
 
-    final Animatable<Offset> tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+    final Animatable<Offset> tween = Tween(begin: begin, end: end).chain(
+        CurveTween(curve: curve));
     final Animation<Offset> offsetAnimation = animation.drive(tween);
 
     return SlideTransition(position: offsetAnimation, child: child);

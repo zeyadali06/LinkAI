@@ -8,6 +8,7 @@ class UserModel {
   UserModel._();
   static final UserModel _singletonInstance = UserModel._();
   static UserModel get instance => _singletonInstance;
+  static String? get userToken => _singletonInstance.token;
 
   void setFromJson(Map<String, dynamic> json) {
     firstName = json["firstName"];

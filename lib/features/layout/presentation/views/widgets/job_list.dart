@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/models/job_model.dart';
-import 'package:linkai/features/home/presentation/views/widgets/job_card.dart';
+
+import 'job_card.dart';
 
 class JobsListPage extends StatelessWidget {
   const JobsListPage({super.key});

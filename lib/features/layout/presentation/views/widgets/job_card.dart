@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/utils/app_styles.dart';
-import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
 import 'package:linkai/features/jobDetails/presentation/views/widgets/job_details_view_body.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
+
+import 'job_tag.dart';
 
 class JobCard extends StatelessWidget {
   const JobCard({

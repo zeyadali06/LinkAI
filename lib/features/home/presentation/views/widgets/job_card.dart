@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
-import 'package:linkai/features/jobDetails/presentation/views/widgets/job_details_view_body.dart';
+import 'package:linkai/features/jobDetails/presentation/views/job_details_view.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
 
 class JobCard extends StatelessWidget {
@@ -22,7 +22,7 @@ class JobCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => JobdetailsViewBody(jobModel: jobModel),
+            builder: (context) => JobdetailsView(jobModel: jobModel),
           ),
         );
       },
@@ -59,7 +59,7 @@ class JobCard extends StatelessWidget {
 
               // Company & Location
               Text(
-                "${jobModel.company} - ${jobModel.companyLocation}",
+                "${jobModel.company.companyName} - ${jobModel.company.address}",
                 style: AppStyles.bold14(
                   context,
                   BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
@@ -80,18 +80,20 @@ class JobCard extends StatelessWidget {
 
               // Technical Skills
               Text(
-                jobModel.technicalSkills,
+                "${jobModel.technicalSkills.join(', ')}, ${jobModel.softSkills.join(', ')}",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: AppStyles.bold14(
                   context,
                   BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.black54 : Colors.white,
                 ),
               ),
-
+              
               const SizedBox(height: 8),
 
               // Time Ago
               Text(
-                jobModel.timeAgo,
+                "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
                 style: AppStyles.defaultStyle(
                   context,
                   BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,

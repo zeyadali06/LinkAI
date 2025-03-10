@@ -43,14 +43,14 @@ class JobdetailsViewBody extends StatelessWidget {
 
                       // company name and location
                       Text(
-                        "${jobModel.company} - ${jobModel.companyLocation}",
+                        "${jobModel.company.companyName} - ${jobModel.company.address}",
                         style: AppStyles.bold18(
                           context,
                           BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
                         ),
                       ),
                       Text(
-                        jobModel.timeAgo,
+                         "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
                         style: AppStyles.defaultStyle(
                           context,
                           BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
@@ -108,7 +108,18 @@ class JobdetailsViewBody extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        jobModel.technicalSkills,
+                        jobModel.technicalSkills.join(', '),
+                        style: AppStyles.normal16(context),
+                      ),
+                      const SizedBox(height: 15),
+                      const Divider(),
+                       Text(
+                        "Soft Skills",
+                        style: AppStyles.bold18(context),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        jobModel.softSkills.join(', '),
                         style: AppStyles.normal16(context),
                       ),
                       const SizedBox(height: 100),

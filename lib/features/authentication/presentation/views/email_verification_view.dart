@@ -15,7 +15,7 @@ class EmailVerificationView extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          GoRouter.of(context).go(AppRouter.homeView);
+          GoRouter.of(context).go(AppRouter.navigatorView);
         } else if (state is RegisterFailed) {
           showSnackBar(context, state.errorMessage);
         }

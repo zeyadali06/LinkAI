@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:linkai/core/models/job_model.dart';
-import 'package:linkai/core/widgets/snack_bar.dart';
 import 'package:linkai/features/home/presentation/mangers/cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_card.dart';
 

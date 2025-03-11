@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/models/job_model.dart';
-import 'package:linkai/core/widgets/custom_button.dart';
-import 'package:linkai/core/widgets/custom_text_field.dart';
-import 'package:linkai/features/createJob/presentation/views/widgets/my_dropdown.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
 
 class CreateJobViewBody extends StatefulWidget {
@@ -34,9 +31,6 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeView(),));},
-        ),
         forceMaterialTransparency: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         foregroundColor: Theme.of(context).iconTheme.color,

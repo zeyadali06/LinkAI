@@ -5,6 +5,7 @@ import 'package:linkai/core/services/shared_preference.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/data/repositories/auth_repo_impl.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
+import 'package:linkai/features/splash/presentation/data/repo/auto_login_repo.dart';
 
 abstract class ServiceLocator {
   static final GetIt getIt = GetIt.instance;
@@ -21,6 +22,10 @@ abstract class ServiceLocator {
 
     getIt.registerSingleton<ApiManager>(
       const ApiManager(),
+    );
+
+    getIt.registerSingleton<AutoLoginRepo>(
+      AutoLoginRepo(getIt<ApiManager>()),
     );
 
     getIt.registerSingleton<AuthRepo>(

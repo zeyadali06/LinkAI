@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/app_assets.dart';
 import 'package:linkai/core/utils/app_router.dart';
+import 'package:linkai/features/splash/presentation/manager/auto_login_cubit/auto_login_cubit.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashViewBody extends StatefulWidget {
@@ -14,6 +18,7 @@ class SplashViewBody extends StatefulWidget {
 
 class _SplashViewBodyState extends State<SplashViewBody> with TickerProviderStateMixin {
   late AnimationController _controller;
+  StreamSubscription? _authSubscription;
 
   @override
   void initState() {
@@ -23,17 +28,25 @@ class _SplashViewBodyState extends State<SplashViewBody> with TickerProviderStat
     _controller = AnimationController(vsync: this);
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _navigateToLogin();
+        _checkLoginState();
       }
     });
   }
 
-  void _navigateToLogin() {
-    GoRouter.of(context).go(AppRouter.loginView);
+  void _checkLoginState() {
+   _authSubscription= context.read<AutoLoginCubit>().stream.listen((state) {
+
+      if (state is AutoLoginSuccess) {
+        GoRouter.of(context).go(AppRouter.navigatorView);
+      } else if (state is AutoLoginFailure) {
+        GoRouter.of(context).go(AppRouter.loginView);
+      }
+    });
   }
 
   @override
   void dispose() {
+    _authSubscription?.cancel();
     _controller.dispose();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
     super.dispose();

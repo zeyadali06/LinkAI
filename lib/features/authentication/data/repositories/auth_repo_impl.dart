@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:linkai/core/failures/custom_failure.dart';
 import 'package:linkai/core/failures/otp_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
@@ -41,7 +42,8 @@ class AuthRepoImpl extends AuthRepo {
         UserModel.instance.token = res["token"];
         final Map<String, dynamic> userData = await _apiManager.get(ApiConstants.userData, token: UserModel.instance.token);
         UserModel.instance.setFromJson(userData["user"]);
-
+        const storage = FlutterSecureStorage();
+        await storage.write(key: 'user_token', value: UserModel.instance.token);
         return RequestResault.success(UserModel.instance.token);
       } else {
         return RequestResault.failure(const CustomFailure("Some thing went wrong!"));

@@ -16,7 +16,7 @@ class PasswordView extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) async {
         if (state is LoginSuccess) {
-          GoRouter.of(context).go(AppRouter.homeView);
+          GoRouter.of(context).go(AppRouter.navigatorView);
         } else if (state is CompleteRegister) {
           await showDialog(
             context: context,

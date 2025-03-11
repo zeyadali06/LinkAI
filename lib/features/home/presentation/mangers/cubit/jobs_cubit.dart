@@ -12,7 +12,7 @@ part 'jobs_state.dart';
 
 class JobsCubit extends Cubit<JobsState> {
   JobsCubit() : super(JobsInitial());
-  final JobRepo _jobRepo = JobRepoImpl(ApiManager());
+   final JobRepo _jobRepo = const JobRepoImpl( ApiManager());
 
   Future<void> getJobs() async {
     emit(JobsLoading());

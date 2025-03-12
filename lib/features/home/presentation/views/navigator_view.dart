@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:linkai/features/companies/presentation/views/companies_view/companies_view.dart';
+import 'package:linkai/features/companies/presentation/views/companies_view/all_companies_view.dart';
 import 'package:linkai/features/home/presentation/mangers/cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
 
@@ -20,7 +20,7 @@ class _NavigatorViewState extends State<NavigatorView> {
       create: (context) => JobsCubit()..getJobs(),
       child: const HomeView(),
     ),
-    const CompaniesView(),
+    const AllCompaniesView(),
   ];
 
   void _onItemTapped(int index) {

@@ -15,12 +15,9 @@ class _NavigatorViewState extends State<NavigatorView> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
-  final List<Widget> _screens = [
-    BlocProvider(
-      create: (context) => JobsCubit()..getJobs(),
-      child: const HomeView(),
-    ),
-    const AllCompaniesView(),
+  final List<Widget> _screens = const [
+    HomeView(),
+    AllCompaniesView(),
   ];
 
   void _onItemTapped(int index) {
@@ -42,29 +39,36 @@ class _NavigatorViewState extends State<NavigatorView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        children: _screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Companies',
-          ),
-        ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => JobsCubit()..getJobs(),
+        ),
+      ],
+      child: Scaffold(
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          children: _screens,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              label: 'Companies',
+            ),
+          ],
+        ),
       ),
     );
   }

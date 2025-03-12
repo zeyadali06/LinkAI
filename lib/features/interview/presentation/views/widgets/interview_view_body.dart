@@ -9,7 +9,7 @@ class InterviewViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Stack(
         children: [
           CustomScrollView(
@@ -17,7 +17,7 @@ class InterviewViewBody extends StatelessWidget {
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
                     children: [
                       MessageBubble(
@@ -70,14 +70,14 @@ class InterviewViewBody extends StatelessWidget {
                           type: MessageType.recieved,
                         ),
                       ),
-                      SizedBox(height: 150),
+                      SizedBox(height: MediaQuery.sizeOf(context).height),
                     ],
                   ),
                 ),
               ),
             ],
           ),
-          Positioned(
+          const Positioned(
             bottom: 25,
             left: 20,
             right: 20,

@@ -95,7 +95,6 @@ class _InterviewTextFieldState extends State<InterviewTextField> {
                 CustomButton(
                   text: "Send",
                   fitWidth: false,
-                  height: 40,
                   gradient: recording
                       ? null
                       : const LinearGradient(

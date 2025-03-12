@@ -19,7 +19,7 @@ import 'package:linkai/features/home/presentation/views/navigator_view.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/jobDetails/presentation/views/job_details_view.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
-import 'package:linkai/features/splash/presentation/data/repo/auto_login_repo.dart';
+import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 import 'package:linkai/features/splash/presentation/manager/auto_login_cubit/auto_login_cubit.dart';
 import 'package:linkai/features/splash/presentation/views/splash_view.dart';
 

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:linkai/core/failures/request_result.dart';
-import 'package:linkai/features/splash/presentation/data/repo/auto_login_repo.dart';
+import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 import 'package:meta/meta.dart';
 
 part 'auto_login_state.dart';

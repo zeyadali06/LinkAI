@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/services/audio_manager.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
 import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
@@ -141,7 +142,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) => InterviewCubit(ServiceLocator.getIt<InterviewRepo>()),
+              create: (context) => InterviewCubit(ServiceLocator.getIt<InterviewRepo>(), ServiceLocator.getIt<AudioManager>()),
               child: InterviewView(state.extra as JobModel),
             ),
             transitionsBuilder: customTransition,

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:linkai/core/services/api_manager.dart';
+import 'package:linkai/core/services/audio_manager.dart';
 import 'package:linkai/core/services/ip_manager.dart';
 import 'package:linkai/core/services/shared_preference.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
@@ -17,6 +18,11 @@ abstract class ServiceLocator {
       IPManager(),
     );
     await getIt<IPManager>().getDeviceIP();
+
+    getIt.registerSingleton<AudioManager>(
+      AudioManager(),
+    );
+    await getIt<AudioManager>().init();
 
     getIt.registerSingleton<SharedPreferenceServices>(
       SharedPreferenceServices(),

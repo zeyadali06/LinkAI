@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:linkai/core/services/audio_manager.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
 import 'package:linkai/features/interview/presentation/views/widgets/interview_text_field.dart';
@@ -18,7 +20,6 @@ class InterviewTextFieldContainer extends StatefulWidget {
 class _InterviewTextFieldContainerState extends State<InterviewTextFieldContainer> {
   late bool recording;
   late String message;
-  late String voicePath;
 
   @override
   void initState() {
@@ -64,7 +65,7 @@ class _InterviewTextFieldContainerState extends State<InterviewTextFieldContaine
                 if (!recording)
                   GestureDetector(
                     onTap: () async {
-                      voicePath = await BlocProvider.of<InterviewCubit>(context).startRecord();
+                      await BlocProvider.of<InterviewCubit>(context).startRecord();
 
                       recording = true;
                       setState(() {});
@@ -78,7 +79,7 @@ class _InterviewTextFieldContainerState extends State<InterviewTextFieldContaine
                 else
                   GestureDetector(
                     onTap: () async {
-                      voicePath = await BlocProvider.of<InterviewCubit>(context).stopRecording();
+                      await BlocProvider.of<InterviewCubit>(context).stopRecording();
 
                       recording = false;
                       setState(() {});
@@ -108,9 +109,9 @@ class _InterviewTextFieldContainerState extends State<InterviewTextFieldContaine
                     setState(() {});
 
                     if (voice) {
-                      voicePath = await BlocProvider.of<InterviewCubit>(context).stopRecording();
+                      await BlocProvider.of<InterviewCubit>(context).stopRecording();
                       if (context.mounted) {
-                        await BlocProvider.of<InterviewCubit>(context).sendVoice(voicePath);
+                        await BlocProvider.of<InterviewCubit>(context).sendVoice(ServiceLocator.getIt<AudioManager>().fileName);
                       }
                     } else {
                       if (message.isNotEmpty) {

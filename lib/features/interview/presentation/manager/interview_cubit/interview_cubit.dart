@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sound/flutter_sound.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/services/audio_manager.dart';
@@ -9,13 +8,11 @@ import 'package:linkai/features/interview/domain/repositories/interview_repo.dar
 part 'interview_state.dart';
 
 class InterviewCubit extends Cubit<InterviewState> {
-  InterviewCubit(this._interviewRepo) : super(InterviewInitial());
+  InterviewCubit(this._interviewRepo, this._audioManager) : super(InterviewInitial());
 
   final InterviewRepo _interviewRepo;
-  late AudioManager _audioManager;
+  final AudioManager _audioManager;
   final List<String> chat = [];
-  String fileName = "audio.wav";
-  Codec codec = Codec.pcm16WAV;
 
   Future<void> setupChat(JobModel jobModel) async {
     try {
@@ -48,31 +45,24 @@ class InterviewCubit extends Cubit<InterviewState> {
     }
   }
 
-  Future<String> startRecord() async {
+  Future<void> startRecord() async {
     try {
       emit(InterviewLoading());
-      _audioManager = AudioManager(fileName, codec);
-      final String filePath = await _audioManager.startRecording();
+      _audioManager.setData();
+      await _audioManager.record();
       emit(InterviewSuccess());
-      return filePath;
     } catch (e) {
       emit(InterviewFailed("Error try again!"));
-      return "";
     }
   }
 
-  Future<String> stopRecording() async {
+  Future<void> stopRecording() async {
     try {
       emit(InterviewLoading());
-      _audioManager = AudioManager(fileName, codec);
-      final String filePath = await _audioManager.stopRecording();
-      await _audioManager.startPlayAudio();
-
+      await _audioManager.stopRecorder();
       emit(InterviewSuccess());
-      return filePath;
     } catch (e) {
       emit(InterviewFailed("Error try again!"));
-      return "";
     }
   }
 

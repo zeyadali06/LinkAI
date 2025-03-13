@@ -1,61 +1,63 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:linkai/core/services/file_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AudioManager {
-  AudioManager(this._fileName, this._codec);
+  AudioManager();
 
-  final FlutterSoundRecorder _audioRecorder = FlutterSoundRecorder();
-  FlutterSoundPlayer _audioPlayer = FlutterSoundPlayer();
-  final Codec _codec;
-  final int _sampleRate = 16000;
-  final FileManager _fileManager = const FileManager();
-  final String _fileName;
+  late final FlutterSoundRecorder audioRecorder;
+  late final FlutterSoundPlayer audioPlayer;
+  late Codec codec;
+  late String fileName;
+  late int sampleRate;
 
-  Future<String> startRecording() async {
-    await _audioRecorder.openRecorder();
+  Future<void> init() async {
+    audioRecorder = FlutterSoundRecorder();
+    audioPlayer = FlutterSoundPlayer();
+
+    await audioPlayer.openPlayer();
+    await audioRecorder.openRecorder();
+  }
+
+  void setData({
+    String fileName = 'audio.mp4',
+    Codec codec = Codec.aacMP4,
+    int sampleRate = 16000,
+  }) {
+    this.fileName = fileName;
+    this.codec = codec;
+  }
+
+  Future<void> record() async {
     final PermissionStatus permissionStatus = await Permission.microphone.request();
 
     if (permissionStatus.isGranted) {
-      debugPrint("Start Recording");
-      final String path = await _fileManager.getFullFilePath(_fileName);
-      debugPrint("audio_file_path: $path");
-
-      await _audioRecorder.startRecorder(
-        codec: _codec,
-        sampleRate: _sampleRate,
-        toFile: path,
+      await audioRecorder.startRecorder(
+        toFile: fileName,
+        codec: codec,
+        audioSource: AudioSource.microphone,
       );
-
-      return path;
     } else {
       throw Exception("Permission Denied");
     }
   }
 
-  Future<String> stopRecording() async {
-    debugPrint("Stop Recording");
-    String? path = await _audioRecorder.stopRecorder();
-    await _audioRecorder.closeRecorder();
-    debugPrint(path!);
-    return path;
+  Future<void> stopRecorder() async {
+    await audioRecorder.stopRecorder();
   }
 
-  Future<void> startPlayAudio() async {
-    _audioPlayer = (await _audioPlayer.openPlayer())!;
-
-    await _audioPlayer.startPlayer(
-      fromURI: await _fileManager.getFullFilePath(_fileName),
-      codec: _codec,
-      whenFinished: () async {},
+  Future<void> play() async {
+    await audioPlayer.startPlayer(
+      fromURI: fileName,
+      whenFinished: () {},
     );
-
-    debugPrint("Start Play Audio");
   }
 
-  Future<void> stopPlayAudio() async {
-    await _audioPlayer.stopPlayer();
-    debugPrint("Stop Play Audio");
+  Future<void> stopPlayer() async {
+    await audioPlayer.stopPlayer();
+  }
+
+  Future<void> dispose() async {
+    await audioPlayer.closePlayer();
+    await audioRecorder.closeRecorder();
   }
 }

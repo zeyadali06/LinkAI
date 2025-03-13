@@ -17,5 +17,8 @@ abstract class ApiConstants {
   static const String updateJob = "/jobs";
   static const String deleteJob = "/jobs";
   static const String companies = "/companies";
-}
 
+  static const String modelsBaseURL = "https://441d-35-230-62-110.ngrok-free.app";
+  static const String startChat = "/start-chat";
+  static const String sendMessage = "/chat";
+}

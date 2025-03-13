@@ -139,7 +139,7 @@ class JobdetailsViewBody extends StatelessWidget {
             right: 20,
             child: CustomButton(
               onPressed: () {
-                GoRouter.of(context).push(AppRouter.interviewView);
+                GoRouter.of(context).push(AppRouter.interviewView, extra: jobModel);
               },
               text: "Interview Now",
             ),

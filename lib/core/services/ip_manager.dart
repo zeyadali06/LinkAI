@@ -20,21 +20,17 @@ class IPManager {
 
         if (isEmulator) {
           ip = '10.0.2.2';
-          return '10.0.2.2';
         } else {
-          ip = '192.168.1.8';
-          return '192.168.1.8';
+          ip = '192.168.1.5';
         }
       } else if (Platform.isWindows || Platform.isMacOS) {
         ip = '127.0.0.1';
-        return '127.0.0.1';
       } else {
         ip = '0.0.0.0';
-        return '0.0.0.0';
       }
     } catch (_) {
       ip = '0.0.0.0';
-      return '0.0.0.0';
     }
+    return ip;
   }
 }

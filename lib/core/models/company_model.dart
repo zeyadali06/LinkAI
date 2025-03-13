@@ -55,10 +55,11 @@ class CompanyModel {
       createdBy: json['createdBy'] ?? '',
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
-      numberOfEmployees: json['numberOfEmployees'] ?? '',
+
+      //TODO: numberOfEmployees become Map not String
+      numberOfEmployees: json['numberOfEmployees']["from"].toString(),
       HRs: List<String>.from(json['HRs'] ?? []),
       approvedByAdmin: json['approvedByAdmin'] ?? false,
     );
   }
-
 }

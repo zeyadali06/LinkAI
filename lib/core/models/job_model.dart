@@ -29,7 +29,6 @@ class JobModel {
       'id': id,
       'title': title,
       'company': company,
-
       'experience': experience,
       'technicalSkills': technicalSkills,
       'softSkills': softSkills,

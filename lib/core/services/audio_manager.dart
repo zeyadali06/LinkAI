@@ -7,7 +7,7 @@ class AudioManager {
   AudioManager(this._fileName, this._codec);
 
   final FlutterSoundRecorder _audioRecorder = FlutterSoundRecorder();
-  final FlutterSoundPlayer _audioPlayer = FlutterSoundPlayer();
+  FlutterSoundPlayer _audioPlayer = FlutterSoundPlayer();
   final Codec _codec;
   final int _sampleRate = 16000;
   final FileManager _fileManager = const FileManager();
@@ -20,7 +20,7 @@ class AudioManager {
     if (permissionStatus.isGranted) {
       debugPrint("Start Recording");
       final String path = await _fileManager.getFullFilePath(_fileName);
-      debugPrint(path);
+      debugPrint("audio_file_path: $path");
 
       await _audioRecorder.startRecorder(
         codec: _codec,
@@ -43,10 +43,10 @@ class AudioManager {
   }
 
   Future<void> startPlayAudio() async {
-    await _audioPlayer.openPlayer();
+    _audioPlayer = (await _audioPlayer.openPlayer())!;
 
     await _audioPlayer.startPlayer(
-      fromURI: _fileName,
+      fromURI: await _fileManager.getFullFilePath(_fileName),
       codec: _codec,
       whenFinished: () async {},
     );

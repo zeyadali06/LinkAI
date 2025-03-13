@@ -16,6 +16,8 @@ import 'package:linkai/features/authentication/presentation/views/password_view.
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
 import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
 import 'package:linkai/features/home/presentation/views/navigator_view.dart';
+import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
+import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/jobDetails/presentation/views/job_details_view.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
@@ -137,8 +139,11 @@ abstract class AppRouter {
       GoRoute(
         path: interviewView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
-            child: InterviewView(),
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => InterviewCubit(ServiceLocator.getIt<InterviewRepo>()),
+              child: InterviewView(state.extra as JobModel),
+            ),
             transitionsBuilder: customTransition,
           );
         },

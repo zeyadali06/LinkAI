@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/features/interview/data/models/message_item_model.dart';
 import 'package:linkai/features/interview/data/models/message_type_enum.dart';
-import 'package:linkai/features/interview/presentation/views/widgets/interview_text_field.dart';
+import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
+import 'package:linkai/features/interview/presentation/views/widgets/interview_text_field_container.dart';
 import 'package:linkai/features/interview/presentation/views/widgets/message_bubble.dart';
 
 class InterviewViewBody extends StatelessWidget {
-  const InterviewViewBody({super.key});
+  const InterviewViewBody({super.key, required this.chatId});
+
+  final String chatId;
 
   @override
   Widget build(BuildContext context) {
@@ -19,69 +23,31 @@ class InterviewViewBody extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
-                    children: [
-                      MessageBubble(
-                        model: MessageItemModel(message: "1", type: MessageType.sended),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(message: "2", type: MessageType.recieved),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(message: "3", type: MessageType.sended),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(
-                          message: "4o1jpij4pifh1ovb[o4bivb1obobvjb1j4nlmeknvwqkmcckmkmkeckmcekmkjrrrrrrrrqkjkjvmmmm m m m m m m m m m m m m m m m m m m mm m m m m m m m",
-                          type: MessageType.recieved,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(message: "5hvo4h3rv;b23ovb23vbj;b35;gjb", type: MessageType.recieved),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(
-                          message: "4o1jpij4pifh1ovb[o4bivb1obobvjb1j4nlmeknvwqkmcckmkmkeckmcekmkjrrrrrrrrqkjkjvmmmm m m m m m m m m m m m m m m m m m m mm m m m m m m m",
-                          type: MessageType.recieved,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(
-                          message: "4o1jpij4pifh1ovb[o4bivb1obobvjb1j4nlmeknvwqkmcckmkmkeckmcekmkjrrrrrrrrqkjkjvmmmm m m m m m m m m m m m m m m m m m m mm m m m m m m m",
-                          type: MessageType.recieved,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(
-                          message: "4o1jpij4pifh1ovb[o4bivb1obobvjb1j4nlmeknvwqkmcckmkmkeckmcekmkjrrrrrrrrqkjkjvmmmm m m m m m m m m m m m m m m m m m m mm m m m m m m m",
-                          type: MessageType.recieved,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      MessageBubble(
-                        model: MessageItemModel(
-                          message: "4o1jpij4pifh1ovb[o4bivb1obobvjb1j4nlmeknvwqkmcckmkmkeckmcekmkjrrrrrrrrqkjkjvmmmm m m m m m m m m m m m m m m m m m m mm m m m m m m m",
-                          type: MessageType.recieved,
-                        ),
-                      ),
-                      SizedBox(height: MediaQuery.sizeOf(context).height),
-                    ],
+                    children: () {
+                      final List<Widget> messages = List.generate(
+                        BlocProvider.of<InterviewCubit>(context).chat.length,
+                        (index) {
+                          return MessageBubble(
+                            model: MessageItemModel(
+                              message: BlocProvider.of<InterviewCubit>(context).chat[index],
+                              type: MessageType.recieved,
+                            ),
+                          );
+                        },
+                      );
+                      messages.add(SizedBox(height: MediaQuery.sizeOf(context).height));
+                      return messages;
+                    }.call(),
                   ),
                 ),
               ),
             ],
           ),
-          const Positioned(
+          Positioned(
             bottom: 25,
             left: 20,
             right: 20,
-            child: InterviewTextField(),
+            child: InterviewTextFieldContainer(chatId: chatId),
           ),
         ],
       ),

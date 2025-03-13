@@ -53,4 +53,8 @@ class JobModel {
       workLocation: json['jobLocation'] ?? '',
     );
   }
+
+  String getFullJobApplication() {
+    return "Job Title: $title\n Job Description: $description\n Experience: $experience\n Technical Skills: $technicalSkills\n Soft Skills: $softSkills";
+  }
 }

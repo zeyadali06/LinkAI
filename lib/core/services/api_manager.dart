@@ -52,7 +52,9 @@ class ApiManager {
 
     final http.StreamedResponse response = await request.send();
 
-    return json.decode(await response.stream.bytesToString());
+    String res = await response.stream.bytesToString();
+
+    return json.decode(res);
   }
 
   Future<Map<String, dynamic>> get(String endPoint, {String? token}) async {

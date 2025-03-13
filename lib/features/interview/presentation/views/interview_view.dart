@@ -23,7 +23,7 @@ class InterviewView extends StatelessWidget {
     return BlocConsumer<InterviewCubit, InterviewState>(
       listener: (context, state) {
         if (state is InterviewFailed) {
-          showSnackBar(context, "Error try again!");
+          showSnackBar(context, state.errorMessage);
         } else if (state is InterviewGetChatId) {
           chatId = state.chatId;
         }
@@ -37,7 +37,7 @@ class InterviewView extends StatelessWidget {
               centerTitle: true,
               forceMaterialTransparency: true,
               title: Text(
-                "Interview",
+                getTitle(),
                 style: AppStyles.semiBold18(context),
               ),
             ),
@@ -46,5 +46,13 @@ class InterviewView extends StatelessWidget {
         );
       },
     );
+  }
+
+  String getTitle() {
+    String title = jobModel.title.trim();
+    if (!title.toLowerCase().contains("interview")) {
+      title = "$title Interview";
+    }
+    return title;
   }
 }

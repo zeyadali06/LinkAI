@@ -1,4 +1,5 @@
 import 'package:linkai/core/failures/custom_failure.dart';
+import 'package:linkai/core/failures/interview_message_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/services/api_manager.dart';
@@ -14,11 +15,7 @@ class InterviewRepoImpl extends InterviewRepo {
   @override
   Future<RequestResault<String, Failed>> setupChat(JobModel jobModel) async {
     try {
-      final String jobString =
-          "Job Title: ${jobModel.title}\n Job Description: ${jobModel.description}\n Experience: ${jobModel.experience}\n Technical Skills: ${jobModel.technicalSkills}\n Soft Skills: ${jobModel.softSkills}";
-
       final Map<String, dynamic> res = await _apiManager.post({}, ApiConstants.startChat, baseUrl: ApiConstants.modelsBaseURL);
-      await sendMessage(jobString, res["chat_id"]);
 
       return RequestResault.success(res["chat_id"]);
     } catch (e) {
@@ -33,10 +30,14 @@ class InterviewRepoImpl extends InterviewRepo {
         "message": message,
         "chat_id": chatId,
       };
-      final Map<String, dynamic> res = await _apiManager.post(body, ApiConstants.sendMessage);
+      final Map<String, dynamic> res = await _apiManager.post(body, ApiConstants.sendMessage, baseUrl: ApiConstants.modelsBaseURL);
 
       if (res["response"] != null) {
-        res["response"].replaceAll("\n", " ");
+        res["response"] = (res["response"] as String).trim().replaceAll("\n", " ").replaceAll(RegExp(r'\s+'), ' ');
+      }
+
+      if (res.containsKey("error")) {
+        return RequestResault.failure(InterviewMessageFailure(res["error"]));
       }
 
       return RequestResault.success(res["response"]);

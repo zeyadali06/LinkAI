@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/services/audio_manager.dart';
+import 'package:linkai/features/interview/data/models/message_item_model.dart';
+import 'package:linkai/features/interview/data/models/message_type_enum.dart';
 import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
 
 part 'interview_state.dart';
@@ -12,7 +14,7 @@ class InterviewCubit extends Cubit<InterviewState> {
 
   final InterviewRepo _interviewRepo;
   final AudioManager _audioManager;
-  final List<String> chat = [];
+  final List<MessageItemModel> chat = [];
 
   Future<void> setupChat(JobModel jobModel) async {
     try {
@@ -21,6 +23,8 @@ class InterviewCubit extends Cubit<InterviewState> {
 
       if (res is Success) {
         emit(InterviewGetChatId(res.data));
+
+        await sendMessage(jobModel.getFullJobApplication(), res.data, addToChatList: false);
       } else if (res is Failed) {
         emit(InterviewFailed(res.data.message));
       }
@@ -29,16 +33,20 @@ class InterviewCubit extends Cubit<InterviewState> {
     }
   }
 
-  Future<void> sendMessage(String message, String chatId) async {
+  Future<void> sendMessage(String message, String chatId, {bool addToChatList = true}) async {
     try {
+      if (addToChatList) {
+        chat.add(MessageItemModel(message: message, type: MessageType.sended));
+      }
+
       emit(InterviewLoading());
       final RequestResault res = await _interviewRepo.sendMessage(message, chatId);
 
       if (res is Success) {
-        chat.add(res.data);
+        chat.add(MessageItemModel(message: res.data, type: MessageType.recieved));
         emit(InterviewAnswer(res.data));
       } else if (res is Failed) {
-        emit(InterviewFailed(res.data.message));
+        emit(InterviewFailed(res.data));
       }
     } catch (e) {
       emit(InterviewFailed("Error try again!"));

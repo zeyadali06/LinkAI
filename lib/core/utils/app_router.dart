@@ -14,14 +14,14 @@ import 'package:linkai/features/authentication/presentation/views/password_confi
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
 import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
-import 'package:linkai/features/home/presentation/mangers/cubit/jobs_cubit.dart';
-import 'package:linkai/features/home/presentation/views/home_view.dart';
 import 'package:linkai/features/home/presentation/views/navigator_view.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 import 'package:linkai/features/splash/presentation/manager/auto_login_cubit/auto_login_cubit.dart';
 import 'package:linkai/features/splash/presentation/views/splash_view.dart';
+
+import '../../features/settings/presentation/views/settings.dart';
 
 abstract class AppRouter {
   static const String splashView = "/splashView";
@@ -36,6 +36,7 @@ abstract class AppRouter {
   static const String interviewView = "/interviewView";
   static const String nameView = "/nameView";
   static const String createJobView = "/createJobView";
+  static const String settings = "/settings";
 
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
@@ -62,6 +63,15 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: settings,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: Settings(),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
         path: loginView,
         pageBuilder: (context, state) {
           return const CustomTransitionPage(
@@ -73,7 +83,7 @@ abstract class AppRouter {
       GoRoute(
         path: profileView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
+          return CustomTransitionPage(
             child: ProfileView(),
             transitionsBuilder: customTransition,
           );

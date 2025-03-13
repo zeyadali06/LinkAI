@@ -4,6 +4,9 @@ import 'package:linkai/features/companies/presentation/views/companies_view/all_
 import 'package:linkai/features/home/presentation/mangers/cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
 
+import '../../../profile/presentation/views/profile_view.dart';
+import '../../../splash/presentation/manager/cubit/app_theme_cubit.dart';
+
 class NavigatorView extends StatefulWidget {
   const NavigatorView({super.key});
 
@@ -21,6 +24,7 @@ class _NavigatorViewState extends State<NavigatorView> {
       child: const HomeView(),
     ),
     const AllCompaniesView(),
+     ProfileView()
   ];
 
   void _onItemTapped(int index) {
@@ -55,14 +59,28 @@ class _NavigatorViewState extends State<NavigatorView> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Companies',
+          ),
+          BottomNavigationBarItem(
+            //TODo add user image
+            icon: CircleAvatar(
+              backgroundColor: Colors.black,
+              child: Icon(
+                Icons.person,
+                color: BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                        ThemeMode.light
+                    ? Colors.white
+                    : Theme.of(context).iconTheme.color,
+              ),
+            ),
+            label: 'Profile',
           ),
         ],
       ),

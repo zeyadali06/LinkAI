@@ -19,12 +19,13 @@ class HomeViewBody extends StatelessWidget {
         title: const SearchTextField(),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.black,
-            child: Icon(
-              Icons.person,
-              color: BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.white : Theme.of(context).iconTheme.color,
-            ),
+          child: IconButton(
+            onPressed: () => GoRouter.of(context).push(AppRouter.settings),
+            icon: Icon(Icons.settings,
+                color: BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                        ThemeMode.light
+                    ? Colors.white
+                    : Theme.of(context).iconTheme.color),
           ),
         ),
         actions: [

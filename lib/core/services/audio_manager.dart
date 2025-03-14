@@ -9,6 +9,7 @@ class AudioManager {
   late Codec codec;
   late String fileName;
   late int sampleRate;
+  int index = 0;
 
   Future<void> init() async {
     audioRecorder = FlutterSoundRecorder();
@@ -19,8 +20,8 @@ class AudioManager {
   }
 
   void setData({
-    String fileName = 'audio.mp4',
-    Codec codec = Codec.aacMP4,
+    String fileName = 'audio.wav',
+    Codec codec = Codec.pcm16WAV,
     int sampleRate = 16000,
   }) {
     this.fileName = fileName;
@@ -32,17 +33,18 @@ class AudioManager {
 
     if (permissionStatus.isGranted) {
       await audioRecorder.startRecorder(
-        toFile: fileName,
+        toFile: "$index$fileName",
         codec: codec,
         audioSource: AudioSource.microphone,
       );
+      index++;
     } else {
       throw Exception("Permission Denied");
     }
   }
 
-  Future<void> stopRecorder() async {
-    await audioRecorder.stopRecorder();
+  Future<String> stopRecorder() async {
+    return (await audioRecorder.stopRecorder())!;
   }
 
   Future<void> play() async {

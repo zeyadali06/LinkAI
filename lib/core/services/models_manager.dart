@@ -13,7 +13,7 @@ class ModelsManager {
   static const String vttEndPoint = "api/v1/gemini/voice-text";
   static const String ttvEndPoint = "api/v1/gemini/text-voice";
   static const String tttEndPoint = "api/v1/gemini/text-text";
-  static const int port = 3000;
+  static const int port = 3001;
   final String _sessionId;
 
   static Future<String> _getBaseUrl(final String deviceIP, [int port = port]) async {
@@ -86,6 +86,7 @@ class ModelsManager {
     final File audioFile = File(voicePath);
     bool isExist = await audioFile.exists();
     debugPrint(isExist.toString());
+    int l = await audioFile.length();
 
     late http.MultipartRequest request;
     final String url = "${await _getBaseUrl(ServiceLocator.getIt<IPManager>().ip)}/$vttEndPoint";
@@ -100,13 +101,17 @@ class ModelsManager {
     );
 
     final http.StreamedResponse response = await request.send();
+
     if (response.statusCode == 200) {
       final String responseData = await response.stream.bytesToString();
       final Map<String, dynamic> jsonResponse = json.decode(responseData);
       debugPrint("data: ${jsonResponse['data']}");
 
+      await audioFile.delete(recursive: true);
       return jsonResponse['data'];
     } else {
+      await audioFile.delete(recursive: true);
+
       debugPrint("Error");
       return "Error";
     }

@@ -111,7 +111,7 @@ class _InterviewTextFieldContainerState extends State<InterviewTextFieldContaine
                     if (voice) {
                       await BlocProvider.of<InterviewCubit>(context).stopRecording();
                       if (context.mounted) {
-                        await BlocProvider.of<InterviewCubit>(context).sendVoice(ServiceLocator.getIt<AudioManager>().fileName);
+                        await BlocProvider.of<InterviewCubit>(context).sendVoice(ServiceLocator.getIt<AudioManager>().fileName, widget.chatId);
                       }
                     } else {
                       if (message.isNotEmpty) {

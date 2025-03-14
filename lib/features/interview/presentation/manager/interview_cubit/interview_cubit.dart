@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/services/audio_manager.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/interview/data/models/message_item_model.dart';
 import 'package:linkai/features/interview/data/models/message_type_enum.dart';
 import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
@@ -33,6 +34,27 @@ class InterviewCubit extends Cubit<InterviewState> {
     }
   }
 
+  Future<void> startRecord() async {
+    try {
+      emit(InterviewLoading());
+      _audioManager.setData();
+      await _audioManager.record();
+      emit(InterviewSuccess());
+    } catch (e) {
+      emit(InterviewFailed("Error try again!"));
+    }
+  }
+
+  Future<void> stopRecording() async {
+    try {
+      emit(InterviewLoading());
+      ServiceLocator.getIt<AudioManager>().fileName = await _audioManager.stopRecorder();
+      emit(InterviewSuccess());
+    } catch (e) {
+      emit(InterviewFailed("Error try again!"));
+    }
+  }
+
   Future<void> sendMessage(String message, String chatId, {bool addToChatList = true}) async {
     try {
       if (addToChatList) {
@@ -53,33 +75,14 @@ class InterviewCubit extends Cubit<InterviewState> {
     }
   }
 
-  Future<void> startRecord() async {
-    try {
-      emit(InterviewLoading());
-      _audioManager.setData();
-      await _audioManager.record();
-      emit(InterviewSuccess());
-    } catch (e) {
-      emit(InterviewFailed("Error try again!"));
-    }
-  }
-
-  Future<void> stopRecording() async {
-    try {
-      emit(InterviewLoading());
-      await _audioManager.stopRecorder();
-      emit(InterviewSuccess());
-    } catch (e) {
-      emit(InterviewFailed("Error try again!"));
-    }
-  }
-
-  Future<void> sendVoice(String voicePath) async {
+  Future<void> sendVoice(String voicePath, String chatId) async {
     try {
       emit(InterviewLoading());
       final RequestResault res = await _interviewRepo.sendVoice(voicePath);
 
       if (res is Success) {
+        await sendMessage(res.data, chatId);
+
         emit(InterviewAnswer(res.data));
       } else if (res is Failed) {
         emit(InterviewFailed(res.data.message));

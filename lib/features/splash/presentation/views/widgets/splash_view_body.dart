@@ -34,12 +34,15 @@ class _SplashViewBodyState extends State<SplashViewBody> with TickerProviderStat
   }
 
   void _checkLoginState() {
-   _authSubscription= context.read<AutoLoginCubit>().stream.listen((state) {
-
+    _authSubscription = context.read<AutoLoginCubit>().stream.listen((state) {
       if (state is AutoLoginSuccess) {
-        GoRouter.of(context).go(AppRouter.navigatorView);
+        if (mounted) {
+          GoRouter.of(context).go(AppRouter.navigatorView);
+        }
       } else if (state is AutoLoginFailure) {
-        GoRouter.of(context).go(AppRouter.loginView);
+        if (mounted) {
+          GoRouter.of(context).go(AppRouter.loginView);
+        }
       }
     });
   }

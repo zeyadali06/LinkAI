@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:linkai/core/failures/custom_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/company_model.dart';
@@ -7,8 +9,8 @@ import 'package:linkai/core/utils/api_constants.dart';
 import 'package:linkai/features/companies/domain/repo/companies_repo.dart';
 
 class CompaniesRepoImpl implements CompaniesRepo {
-  final ApiManager _apiManager;
   const CompaniesRepoImpl(this._apiManager);
+  final ApiManager _apiManager;
 
   @override
   Future<RequestResault> getAllCompanies() async {
@@ -31,9 +33,33 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
     }
   }
+    @override
+      Future<RequestResault> getUserCompanies() async {
+    try {
+      final Map<String, dynamic> res = await _apiManager.get(
+        ApiConstants.userCompanies,
+        token: UserModel.instance.token,
+      );
 
+      if (res["success"]) {
+        List<CompanyModel> companies = [];
+        for (var company in res["data"]) {
+          companies.add(CompanyModel.fromJson(company));
+        }
+        return RequestResault.success(companies);
+      } else {
+        return RequestResault.failure(
+          const CustomFailure("Failed to fetch companies"),
+        );
+      }
+    } catch (e) {
+      return RequestResault.failure(
+        CustomFailure("Something went wrong! ${e.toString()}"),
+      );
+    }
+  }
   @override
-  Future<RequestResault> addCompany(CompanyModel company) async {
+  Future<RequestResault> addCompany(CompanyModel company, File? profileImage, File? coverImage) async {
     try {
       final Map<String, dynamic> res = await _apiManager.post(
         company.toJson(),
@@ -42,10 +68,24 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
 
       if (res["success"]) {
-        return RequestResault.success(res['company']);
+        CompanyModel company = CompanyModel.fromJson(res['company']);
+        print(company.id);
+        try{
+        if (profileImage != null) {
+          final RequestResault res = await uploadCompanyLogo(profileImage,company.id!);
+        }
+        if (coverImage != null) {
+          final RequestResault res = await uploadCompanyCover(coverImage,company.id!);
+        }
+        }
+        // ignore: empty_catches
+        catch (e){
+
+        }
+        return RequestResault.success(company);
       } else {
         return RequestResault.failure(
-          const CustomFailure("Failed to add company"),
+           CustomFailure("Failed to add company, ${res['message']}"),
         );
       }
     } catch (e) {
@@ -54,7 +94,49 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
     }
   }
-
+  Future<RequestResault> uploadCompanyLogo(File? profileImage,String companyId) async {
+    try {
+      final Map<String, dynamic> res = await _apiManager.uploadFile(
+      
+        "${ApiConstants.uploadCompanyLogo}/$companyId",
+        profileImage!.path,
+        token: UserModel.instance.token,
+      );
+      if (res["success"]) {
+        return RequestResault.success(res["data"]);
+      } else {
+        return RequestResault.failure(
+          const CustomFailure("Failed to add company images"),
+        );
+      }
+    }
+    catch (e) {
+      return RequestResault.failure(
+        const CustomFailure("Something went wrong!"),
+      );
+    }
+    }
+  Future<RequestResault> uploadCompanyCover(File? coverImage,String companyId) async {
+    try {
+        final Map<String, dynamic> res = await _apiManager.uploadFile(
+      
+        "${ApiConstants.uploadCompanyCover}/$companyId",
+        coverImage!.path,
+        token: UserModel.instance.token,
+      );
+      if (res["success"]) { 
+        return RequestResault.success(res["data"]);
+      } else {
+        return RequestResault.failure(
+          const CustomFailure("Failed to add company images"),
+        );
+      }
+    } catch (e) {
+      return RequestResault.failure(
+        const CustomFailure("Something went wrong!"),
+      );
+    }
+  }
   @override
   Future<RequestResault> deleteCompany(String companyId) async {
     try {

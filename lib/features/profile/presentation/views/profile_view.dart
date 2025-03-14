@@ -12,12 +12,7 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        backgroundColor:
-            BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light
-                ? Colors.white
-                : const Color(0xff2a2a2a),
+        )
       ),
       body: const ProfileViewBody(),
     );

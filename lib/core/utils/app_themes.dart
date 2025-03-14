@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:linkai/core/utils/app_styles.dart';
+
+import 'app_colors.dart';
 
 abstract class AppThemes {
   static final ThemeData lightTheme = ThemeData(
@@ -11,7 +14,8 @@ abstract class AppThemes {
     hintColor: Colors.grey,
     cardColor: Colors.grey[50],
     inputDecorationTheme: const InputDecorationTheme(
-      border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xffe6e6e6))),
+      border:
+          OutlineInputBorder(borderSide: BorderSide(color: Color(0xffe6e6e6))),
       fillColor: Colors.white,
       suffixIconColor: Colors.grey,
       activeIndicatorBorder: BorderSide(color: Colors.grey),
@@ -21,28 +25,46 @@ abstract class AppThemes {
       style: ButtonStyle(
         backgroundColor: const WidgetStatePropertyAll(Colors.black),
         foregroundColor: const WidgetStatePropertyAll(Colors.white),
-        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+        overlayColor:
+            WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         backgroundColor: const WidgetStatePropertyAll(Colors.white),
         foregroundColor: const WidgetStatePropertyAll(Colors.black),
-        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+        overlayColor:
+            WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
       ),
     ),
   );
 
   static final ThemeData darkTheme = ThemeData(
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.darkBackgroundColor,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        fontSize: 18,
+        color: Colors.white,
+        fontFamily: GoogleFonts.inter().fontFamily,
+        fontWeight: FontWeight.w500,
+      ),
+      iconTheme: const IconThemeData(
+        color: Colors.white,
+        size: 22,
+      ),
+
+    ),
     brightness: Brightness.dark,
     fontFamily: GoogleFonts.inter().fontFamily,
-    scaffoldBackgroundColor: const Color(0xff2a2a2a),
+    scaffoldBackgroundColor: AppColors.darkBackgroundColor,
     iconTheme: const IconThemeData(color: Color(0xff9f9ff8)),
     textTheme: const TextTheme(bodyLarge: TextStyle(color: Colors.white)),
     hintColor: Colors.white.withValues(alpha: .5),
     cardColor: const Color.fromARGB(255, 34, 34, 34),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.withValues(alpha: .2))),
+      border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.withValues(alpha: .2))),
       fillColor: const Color(0xff262626),
       suffixIconColor: Colors.white.withValues(alpha: .5),
       activeIndicatorBorder: const BorderSide(color: Color(0xffe6e6e6)),
@@ -52,14 +74,16 @@ abstract class AppThemes {
       style: ButtonStyle(
         backgroundColor: const WidgetStatePropertyAll(Color(0xff9f9ff8)),
         foregroundColor: const WidgetStatePropertyAll(Colors.white),
-        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+        overlayColor:
+            WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
         foregroundColor: const WidgetStatePropertyAll(Color(0xff9f9ff8)),
-        overlayColor: WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
+        overlayColor:
+            WidgetStatePropertyAll(Colors.grey.withValues(alpha: .20)),
       ),
     ),
   );

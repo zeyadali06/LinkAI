@@ -21,6 +21,8 @@ import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 import 'package:linkai/features/splash/presentation/manager/auto_login_cubit/auto_login_cubit.dart';
 import 'package:linkai/features/splash/presentation/views/splash_view.dart';
 
+import '../../features/profile/presentation/views/change_email.dart';
+import '../../features/profile/presentation/views/change_name.dart';
 import '../../features/settings/presentation/views/settings.dart';
 
 abstract class AppRouter {
@@ -37,6 +39,8 @@ abstract class AppRouter {
   static const String nameView = "/nameView";
   static const String createJobView = "/createJobView";
   static const String settings = "/settings";
+  static const String changeName = "/changeName";
+  static const String changeEmail = "/changeEmail";
 
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
@@ -44,9 +48,11 @@ abstract class AppRouter {
       GoRoute(
         path: splashView,
         pageBuilder: (context, state) {
-          return  CustomTransitionPage(
+          return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) => AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())..autoLogin(),
+              create: (context) =>
+                  AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())
+                    ..autoLogin(),
               child: const SplashView(),
             ),
             transitionsBuilder: customTransition,
@@ -81,9 +87,27 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: changeName,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: ChangeName(),
+            transitionsBuilder: bottomUpTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: changeEmail,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: ChangeEmail(),
+            transitionsBuilder: bottomUpTransition,
+          );
+        },
+      ),
+      GoRoute(
         path: profileView,
         pageBuilder: (context, state) {
-          return CustomTransitionPage(
+          return const CustomTransitionPage(
             child: ProfileView(),
             transitionsBuilder: customTransition,
           );
@@ -185,5 +209,16 @@ abstract class AppRouter {
     final Animation<Offset> offsetAnimation = animation.drive(tween);
 
     return SlideTransition(position: offsetAnimation, child: child);
+  }
+
+  static Widget bottomUpTransition(
+      context, animation, secondaryAnimation, child) {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0, 1),
+        end: Offset.zero,
+      ).animate(animation),
+      child: child,
+    );
   }
 }

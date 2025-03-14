@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/profile_list_tile.dart';
 import '../../../../../core/models/user_model.dart';
 import '../../../../../core/utils/app_styles.dart';
@@ -35,6 +37,7 @@ class ProfileViewBody extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ProfileListTile(
+              onPressed: () => GoRouter.of(context).push(AppRouter.changeName),
               title: "Name",
               subtitle: user.firstName!,
               hasArrow: true,
@@ -53,6 +56,7 @@ class ProfileViewBody extends StatelessWidget {
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16))),
             ProfileListTile(
+              onPressed:() => GoRouter.of(context).push(AppRouter.changeEmail) ,
               title: "Email",
               hasArrow: true,
               subtitle: user.email!,
@@ -60,7 +64,7 @@ class ProfileViewBody extends StatelessWidget {
               borderStyle: const Border(
                   bottom: BorderSide(color: Color(0xFF3B3B3B), width: 1)),
             ),
-
+// TODo add delete account option
             ProfileListTile(
               title: "Password",
               hasArrow: true,

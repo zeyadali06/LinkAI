@@ -18,16 +18,17 @@ class _NavigatorViewState extends State<NavigatorView> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
-  final List<Widget> _screens = const [
-    HomeView(),
-    AllCompaniesView(),
   final List<Widget> _screens = [
+
+
     BlocProvider(
-      create: (context) => JobsCubit()..getJobs(),
+      create: (context) =>
+      JobsCubit()
+        ..getJobs(),
       child: const HomeView(),
     ),
     const AllCompaniesView(),
-     ProfileView()
+    const ProfileView()
   ];
 
   void _onItemTapped(int index) {
@@ -50,73 +51,54 @@ class _NavigatorViewState extends State<NavigatorView> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => JobsCubit()..getJobs(),
-        ),
-      ],
-      child: Scaffold(
-        body: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          children: _screens,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Companies',
-            ),
-          ],
-        ),
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        children: _screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Companies',
-          ),
-          BottomNavigationBarItem(
-            //TODo add user image
-            icon: CircleAvatar(
-              backgroundColor: Colors.black,
-              child: Icon(
-                Icons.person,
-                color: BlocProvider.of<AppThemeCubit>(context).appTheme ==
-                        ThemeMode.light
-                    ? Colors.white
-                    : Theme.of(context).iconTheme.color,
-              ),
-            ),
-            label: 'Profile',
+        providers: [
+          BlocProvider(
+            create: (context) =>
+            JobsCubit()
+              ..getJobs(),
           ),
         ],
-      ),
-    );
-  }
-}
+        child: Scaffold(
+            body: PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              children: _screens,
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.business),
+                  label: 'Companies',
+                ),
+                BottomNavigationBarItem(
+                  //TODo add user image
+                  icon: CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: Icon(
+                      Icons.person,
+                      color: BlocProvider
+                          .of<AppThemeCubit>(context)
+                          .appTheme ==
+                          ThemeMode.light
+                          ? Colors.white
+                          : Theme
+                          .of(context)
+                          .iconTheme
+                          .color,
+                    ),
+                  ),
+                  label: 'Profile',
+                ),
+              ],
+            )));
+  }}

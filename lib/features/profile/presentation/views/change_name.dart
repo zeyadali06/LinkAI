@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/utils/app_styles.dart';
-import 'package:linkai/features/profile/presentation/views/widgets/change_first_name_body.dart';
-import 'package:linkai/features/profile/presentation/views/widgets/change_last_name_body.dart';
+import 'package:linkai/features/profile/presentation/views/widgets/nameWidgets/change_first_name_body.dart';
+import 'package:linkai/features/profile/presentation/views/widgets/nameWidgets/change_last_name_body.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+import '../managers/change_name_cubit/change_name_cubit.dart';
 
 class ChangeName extends StatefulWidget {
   const ChangeName({super.key});
@@ -25,8 +29,10 @@ class _ChangeNameState extends State<ChangeName> {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autoValidateMode = AutovalidateMode.disabled;
-    firstNameController = TextEditingController(text: UserModel.instance.firstName);
-    lastNameController = TextEditingController(text: UserModel.instance.lastName);
+    firstNameController =
+        TextEditingController(text: UserModel.instance.firstName);
+    lastNameController =
+        TextEditingController(text: UserModel.instance.lastName);
     _pageController = PageController();
 
     _screens = [
@@ -35,7 +41,8 @@ class _ChangeNameState extends State<ChangeName> {
     ];
   }
 
-  void _nextPage() {
+  void _nextPage(
+      BuildContext context, String firstName, String lastName) async {
     if (_selectedIndex < _screens.length - 1) {
       _pageController.animateToPage(
         _selectedIndex + 1,
@@ -46,8 +53,8 @@ class _ChangeNameState extends State<ChangeName> {
         _selectedIndex++;
       });
     } else {
-      // TODO: Handle Save Logic
-      Navigator.pop(context);
+      ChangeNameCubit cubit = ChangeNameCubit.get(context);
+      await cubit.changeName(firstName, lastName);
     }
   }
 
@@ -62,52 +69,72 @@ class _ChangeNameState extends State<ChangeName> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          title: const Text("Change Name"),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(12),
-              topLeft: Radius.circular(12),
-            ),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.pop(context),
-          ),
-          actions: [
-            TextButton(
-              onPressed: ()  {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                _nextPage();
-                } else {
-                  _autoValidateMode = AutovalidateMode.always;
-                  setState(() {});
-                }
-              },
-              child: Text(
-                _selectedIndex + 1 == _screens.length ? "Save" : "Next",
-                style: AppStyles.normal18(context, Colors.white),
+      child: BlocConsumer<ChangeNameCubit, ChangeNameState>(
+        listener: (context, state) {
+          if (state is ChangeNameSuccess) {
+
+            Navigator.pop(context);
+          }
+          if (state is ChangeNameFailure) {
+           AlertDialog(
+
+           );
+          }
+        },
+        builder: (context, state) {
+
+          return ModalProgressHUD(
+            inAsyncCall: state is ChangeNameLoading,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                title: const Text("Change Name"),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(12),
+                    topLeft: Radius.circular(12),
+                  ),
+                ),
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        _nextPage(context, firstNameController.text,
+                            lastNameController.text);
+                      } else {
+                        _autoValidateMode = AutovalidateMode.always;
+                        setState(() {});
+                      }
+                    },
+                    child: Text(
+                      _selectedIndex + 1 == _screens.length ? "Save" : "Next",
+                      style: AppStyles.normal18(context, Colors.white),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
-        body: Form(
-          key:_formKey ,
-          autovalidateMode: _autoValidateMode,
-          child: PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            children: _screens,
-          ),
-        ),
+              body: Form(
+                key: _formKey,
+                autovalidateMode: _autoValidateMode,
+                child: PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                  children: _screens,
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

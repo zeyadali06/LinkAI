@@ -17,7 +17,6 @@ class ProfileViewBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Profile Info
             Row(
               children: [
                 const CircleAvatar(
@@ -64,8 +63,9 @@ class ProfileViewBody extends StatelessWidget {
               borderStyle: const Border(
                   bottom: BorderSide(color: Color(0xFF3B3B3B), width: 1)),
             ),
-// TODo add delete account option
+               // TODo add delete account option
             ProfileListTile(
+              onPressed: () => GoRouter.of(context).push(AppRouter.changePassword),
               title: "Password",
               hasArrow: true,
               description: "Set a permanent password to login to your account",

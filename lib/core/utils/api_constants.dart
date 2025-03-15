@@ -17,5 +17,6 @@ abstract class ApiConstants {
   static const String updateJob = "/jobs";
   static const String deleteJob = "/jobs";
   static const String companies = "/companies";
+  static const String changeName = "/users";
 }
 

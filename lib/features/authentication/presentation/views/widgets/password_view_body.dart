@@ -5,7 +5,7 @@ import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/custom_obsecure_text_field.dart';
+import 'package:linkai/core/widgets/custom_obsecure_text_field.dart';
 
 class PasswordViewBody extends StatefulWidget {
   const PasswordViewBody({super.key});

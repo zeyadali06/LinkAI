@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/app_styles.dart';
-import '../../../../../core/utils/formatters.dart';
-import '../../../../../core/widgets/custom_text_field.dart';
+import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/utils/formatters.dart';
+import '../../../../../../core/widgets/custom_text_field.dart';
 
 class NewEmailBody extends StatelessWidget {
   const NewEmailBody({super.key, required this.controller});

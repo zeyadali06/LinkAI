@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/widgets/custom_text_field.dart';
+import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/widgets/custom_text_field.dart';
 
 class ChangeFirstNameBody extends StatelessWidget {
   const ChangeFirstNameBody({super.key, required this.controller});

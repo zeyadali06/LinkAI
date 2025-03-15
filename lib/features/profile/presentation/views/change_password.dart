@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/utils/app_styles.dart';
-import 'package:linkai/features/profile/presentation/views/widgets/emailWidgets/change_email_pass_body.dart';
-import 'package:linkai/features/profile/presentation/views/widgets/emailWidgets/new_email_body.dart';
-import 'package:linkai/features/profile/presentation/views/widgets/emailWidgets/new_email_pin_body.dart';
+import 'package:linkai/features/profile/presentation/views/widgets/passwordWidgets/change_password_new_pass_body.dart';
+import 'package:linkai/features/profile/presentation/views/widgets/passwordWidgets/change_password_old_pass_body.dart';
+import 'package:linkai/features/profile/presentation/views/widgets/passwordWidgets/confirm_password_body.dart';
 
-
-  class ChangeEmail extends StatefulWidget {
-  const ChangeEmail({super.key});
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({super.key});
 
   @override
-  State<ChangeEmail> createState() => _ChangeEmailState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _ChangeEmailState extends State<ChangeEmail> {
+class _ChangePasswordState extends State<ChangePassword> {
   int _selectedIndex = 0;
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autoValidateMode;
-  late TextEditingController passwordController;
-  late TextEditingController pinController;
-  late TextEditingController newEmailController;
+  late TextEditingController oldPasswordController;
+  late TextEditingController newPasswordController;
+  late TextEditingController confirmPasswordController;
   late PageController _pageController;
   late List<Widget> _screens;
 
@@ -27,15 +26,19 @@ class _ChangeEmailState extends State<ChangeEmail> {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autoValidateMode = AutovalidateMode.disabled;
-    passwordController = TextEditingController();
-    newEmailController = TextEditingController();
-   pinController = TextEditingController();
+    oldPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    newPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
     _pageController = PageController();
 
     _screens = [
-      ChangeEmailPassBody(controller: passwordController),
-      NewEmailBody(controller: newEmailController),
-      NewEmailPinBody(controller: pinController,email: newEmailController,)
+      ChangePasswordOldPassBody(controller: oldPasswordController),
+      ChangePasswordNewPassBody(controller: newPasswordController),
+      ConfirmPasswordBody(
+        newPasswordController: newPasswordController,
+        confirmPasswordController: confirmPasswordController,
+      )
     ];
   }
 
@@ -58,8 +61,9 @@ class _ChangeEmailState extends State<ChangeEmail> {
   @override
   void dispose() {
     _pageController.dispose();
-    passwordController.dispose();
-    newEmailController.dispose();
+    oldPasswordController.dispose();
+    newPasswordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -69,7 +73,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text("Change Email"),
+          title: const Text("Change Password"),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(12),
@@ -82,7 +86,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
           ),
           actions: [
             TextButton(
-              onPressed: ()  {
+              onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   _nextPage();
@@ -92,7 +96,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                 }
               },
               child: Text(
-                _selectedIndex + 1 == _screens.length ? "Submit" : "Next",
+                _selectedIndex + 1 == _screens.length ? "Save" : "Next",
                 style: AppStyles.normal18(context, Colors.white),
               ),
             )

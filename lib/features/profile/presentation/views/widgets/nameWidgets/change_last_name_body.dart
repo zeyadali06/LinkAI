@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:linkai/core/utils/app_colors.dart';
 
-import '../../../../../core/widgets/custom_text_field.dart';
+import '../../../../../../core/widgets/custom_text_field.dart';
 
 class ChangeLastNameBody extends StatelessWidget {
   const ChangeLastNameBody({super.key, required this.controller});

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/app_styles.dart';
-import '../../../../../core/utils/formatters.dart';
-import '../../../../../core/widgets/pin_code_field.dart';
+import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/utils/formatters.dart';
+import '../../../../../../core/widgets/pin_code_field.dart';
 
 class NewEmailPinBody extends StatefulWidget {
   const NewEmailPinBody({

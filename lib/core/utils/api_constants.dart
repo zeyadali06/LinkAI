@@ -25,4 +25,5 @@ abstract class ApiConstants {
   static const String uploadCompanyLogo = "/companies/uploadCompanyLogo";
   static const String uploadCompanyCover = "/companies/uploadCompanyCoverPic";
   static const String jobs = "/jobs";
+  static const String changePassword = "/users/updatePass";
 }

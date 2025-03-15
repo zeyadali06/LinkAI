@@ -20,7 +20,7 @@ import 'package:linkai/features/companies/presentation/manger/cubit/companies_cu
 import 'package:linkai/features/companies/presentation/views/add_company_view/add_company_view.dart';
 import 'package:linkai/features/companies/presentation/views/company_details_view/company_details_view.dart';
 import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
-import 'package:linkai/features/home/presentation/mangers/cubit/jobs_cubit.dart';
+import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/navigator_view.dart';
 import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
 import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';

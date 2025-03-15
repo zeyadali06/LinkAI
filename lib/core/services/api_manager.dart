@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:linkai/core/utils/api_constants.dart';
-
+@injectable
 class ApiManager {
   const ApiManager();
   Future<Map<String, dynamic>> delete(String endPoint, {String? token}) async {

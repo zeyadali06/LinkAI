@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/app_router.dart';
-import 'package:linkai/core/widgets/person_avatar.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_list.dart';
 import 'package:linkai/features/home/presentation/views/widgets/search_text_field.dart';
+
+import '../../../../splash/presentation/manager/cubit/app_theme_cubit.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -16,9 +18,16 @@ class HomeViewBody extends StatelessWidget {
         forceMaterialTransparency: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const SearchTextField(),
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: PersonAvatar(),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: IconButton(
+            onPressed: () => GoRouter.of(context).push(AppRouter.settings),
+            icon: Icon(Icons.settings,
+                color: BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                        ThemeMode.light
+                    ? Colors.white
+                    : Theme.of(context).iconTheme.color),
+          ),
         ),
         actions: [
           IconButton(

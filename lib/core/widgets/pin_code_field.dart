@@ -4,7 +4,7 @@ import 'package:linkai/core/utils/app_styles.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinCodeField extends StatelessWidget {
-  const PinCodeField({
+   PinCodeField({
     super.key,
     this.controller,
     this.height = 50,
@@ -14,6 +14,7 @@ class PinCodeField extends StatelessWidget {
     this.onCompleted,
     this.obscureText = false,
     this.inputFormatters,
+    this.validator,
   });
 
   final TextEditingController? controller;
@@ -24,10 +25,12 @@ class PinCodeField extends StatelessWidget {
   final void Function(String value)? onCompleted;
   final bool obscureText;
   final List<TextInputFormatter>? inputFormatters;
+  String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return PinCodeTextField(
+      validator: validator,
       inputFormatters: inputFormatters ?? [],
       appContext: context,
       length: length,

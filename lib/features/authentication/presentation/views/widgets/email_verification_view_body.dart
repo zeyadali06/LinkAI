@@ -6,7 +6,7 @@ import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/manager/register_cubit/register_cubit.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/pin_code_field.dart';
+import 'package:linkai/core/widgets/pin_code_field.dart';
 
 class EmailVerificationViewBody extends StatefulWidget {
   const EmailVerificationViewBody({super.key});

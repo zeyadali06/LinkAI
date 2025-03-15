@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/companies/presentation/views/user_companies_view/all_companies_view.dart';
 import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
 
+import '../../../profile/domain/useCases/addProfileImageUseCase/add_profile_image.dart';
 import '../../../profile/presentation/managers/profile_cubit/profile_cubit.dart';
 import '../../../profile/presentation/views/profile_view.dart';
 import '../../../splash/presentation/manager/cubit/app_theme_cubit.dart';
@@ -30,7 +32,7 @@ class _NavigatorViewState extends State<NavigatorView> {
     ),
     const AllCompaniesView(),
     BlocProvider(
-      create: (context) => ProfileCubit(),
+      create: (context) => ProfileCubit(ServiceLocator.getIt<AddProfileImageUseCase>()),
       child: const ProfileView(),
     )
   ];
@@ -76,11 +78,11 @@ class _NavigatorViewState extends State<NavigatorView> {
               currentIndex: _selectedIndex,
               onTap: _onItemTapped,
               items: [
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.business),
                   label: 'Companies',
                 ),

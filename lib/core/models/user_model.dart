@@ -4,6 +4,7 @@ class UserModel {
   String? email;
   String? phone;
   String? token;
+  String? profileImage;
 
   UserModel._();
   static final UserModel _singletonInstance = UserModel._();
@@ -14,5 +15,6 @@ class UserModel {
     lastName = json["lastName"];
     email = json["email"];
     phone = json["mobileNumber"];
+    profileImage = json["profilePic"]["secure_url"];
   }
 }

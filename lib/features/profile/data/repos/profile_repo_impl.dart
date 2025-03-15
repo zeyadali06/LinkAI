@@ -1,6 +1,6 @@
-import 'package:injectable/injectable.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:linkai/core/failures/request_result.dart';
-
 import '../../../../core/failures/custom_failure.dart';
 import '../../../../core/models/user_model.dart';
 import '../../../../core/services/api_manager.dart';
@@ -45,12 +45,36 @@ class ProfileRepoImpl implements ProfileRepo {
       if (response["success"]) {
         return RequestResault.success(response["msg"]);
       } else {
-        return RequestResault.failure(
-            CustomFailure(response["msg"] ?? response["message"] ?? "Some thing went wrong!"));
+        return RequestResault.failure(CustomFailure(response["msg"] ??
+            response["message"] ??
+            "Some thing went wrong!"));
       }
     } catch (e) {
       return RequestResault.failure(
           const CustomFailure("Some thing went wrong!"));
+    }
+  }
+
+  @override
+  Future<RequestResault> addProfileImage(XFile? profileImage) async {
+    try {
+      final Map<String, dynamic> res = await _apiManager.uploadFile(
+        ApiConstants.uploadProfileImage,
+        profileImage!.path,
+        token: UserModel.instance.token,
+      );
+      if (res["success"]) {
+        UserModel.instance.setFromJson(res["data"]);
+        return RequestResault.success(res["data"]);
+      } else {
+        return RequestResault.failure(
+          const CustomFailure("Failed to add company images"),
+        );
+      }
+    } catch (e) {
+      return RequestResault.failure(
+        const CustomFailure("Something went wrong!"),
+      );
     }
   }
 }

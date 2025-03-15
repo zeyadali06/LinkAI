@@ -90,6 +90,8 @@ flutter:
   assets:
     - assets/images/
     - assets/animations/
+    - assets/voices/nice-work.wav
+    - C:\Users\Zeyad\Desktop\nice-work.wav
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

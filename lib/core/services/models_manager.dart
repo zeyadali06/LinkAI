@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:linkai/core/services/ip_manager.dart';
 import 'package:linkai/core/utils/api_constants.dart';
+import 'package:linkai/core/utils/app_assets.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -86,12 +87,10 @@ class ModelsManager {
     final File audioFile = File(voicePath);
     bool isExist = await audioFile.exists();
     debugPrint(isExist.toString());
-    int l = await audioFile.length();
 
-    late http.MultipartRequest request;
     final String url = "${await _getBaseUrl(ServiceLocator.getIt<IPManager>().ip)}/$vttEndPoint";
 
-    request = http.MultipartRequest(
+    late final http.MultipartRequest request = http.MultipartRequest(
       'POST',
       Uri.parse(url),
     );
@@ -107,11 +106,8 @@ class ModelsManager {
       final Map<String, dynamic> jsonResponse = json.decode(responseData);
       debugPrint("data: ${jsonResponse['data']}");
 
-      await audioFile.delete(recursive: true);
       return jsonResponse['data'];
     } else {
-      await audioFile.delete(recursive: true);
-
       debugPrint("Error");
       return "Error";
     }

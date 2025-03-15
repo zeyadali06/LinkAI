@@ -19,6 +19,7 @@ import 'package:linkai/features/authentication/presentation/views/phone_number_v
 import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
 import 'package:linkai/features/companies/presentation/views/add_company_view/add_company_view.dart';
 import 'package:linkai/features/companies/presentation/views/company_details_view/company_details_view.dart';
+import 'package:linkai/features/companies/presentation/views/edit_company_view/edit_company_view.dart';
 import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
 import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/navigator_view.dart';
@@ -62,6 +63,7 @@ abstract class AppRouter {
   static const String changeEmail = "/changeEmail";
   static const String changePassword = "/changePassword";
 
+  static const String editCompanyView = "/editCompanyView";
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
     routes: <RouteBase>[
@@ -74,6 +76,20 @@ abstract class AppRouter {
                   AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())
                     ..autoLogin(),
               child: const SplashView(),
+            ),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: editCompanyView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider.value(
+              value: (state.extra as Map<String, dynamic>)['companiesCubit'] as CompaniesCubit,
+              child: EditCompanyView(
+                companyModel: (state.extra as Map<String, dynamic>)['companyModel'] as CompanyModel,
+              ),
             ),
             transitionsBuilder: customTransition,
           );

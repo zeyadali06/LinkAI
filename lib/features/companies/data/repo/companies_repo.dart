@@ -72,14 +72,13 @@ class CompaniesRepoImpl implements CompaniesRepo {
 
       if (res["success"]) {
         CompanyModel company = CompanyModel.fromJson(res['company']);
-        debugPrint(company.id);
-        try {
-          if (profileImage != null) {
-            await uploadCompanyLogo(profileImage, company.id!);
-          }
-          if (coverImage != null) {
-            await uploadCompanyCover(coverImage, company.id!);
-          }
+        try{
+        if (profileImage != null) {
+           await uploadCompanyLogo(profileImage,company.id!);
+        }
+        if (coverImage != null) {
+           await uploadCompanyCover(coverImage,company.id!);
+        }
         }
         // ignore: empty_catches
         catch (e) {}
@@ -150,7 +149,28 @@ class CompaniesRepoImpl implements CompaniesRepo {
         return RequestResault.success(null);
       } else {
         return RequestResault.failure(
-          const CustomFailure("Failed to delete company"),
+          CustomFailure("Failed to delete company ${res['message']}"),
+        );
+      }
+    } catch (e) {
+      return RequestResault.failure(
+        const CustomFailure("Something went wrong!"),
+      );
+    }
+  }
+  @override
+  Future<RequestResault> updateCompany(CompanyModel company) async {
+    try {
+      final Map<String, dynamic> res = await _apiManager.patch(
+        company.toJson(),
+        "${ApiConstants.companies}/${company.id}",
+        token: UserModel.instance.token,
+      );
+      if (res["success"]) {
+        return RequestResault.success(res["data"]);
+      } else {
+        return RequestResault.failure(
+          CustomFailure(res["message"]),
         );
       }
     } catch (e) {

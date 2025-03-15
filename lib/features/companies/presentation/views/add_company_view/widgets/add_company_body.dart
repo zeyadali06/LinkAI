@@ -249,7 +249,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                             industry: _industryController.text,
                             address: _addressController.text,
                             companyEmail: _emailController.text,
-                            hrs: _hrEmails,
+                            HRs: _hrEmails,
                             minEmployees: int.parse(_minEmployeesController.text),
                             maxEmployees: int.parse(_maxEmployeesController.text),
                           );

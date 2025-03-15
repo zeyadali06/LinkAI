@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
 
@@ -39,7 +40,10 @@ class CompanyCard extends StatelessWidget {
                       style: AppStyles.bold18(context, Colors.blueAccent),
                     ),
                   ),
-                  JobTag(text: companyModel.role ?? ''),
+                  JobTag(text: companyModel.role??''),
+                  companyModel.role?.toLowerCase() =="owner" ?IconButton(onPressed: () {
+                    GoRouter.of(context).push(AppRouter.editCompanyView, extra: {'companyModel': companyModel,'companiesCubit': context.read<CompaniesCubit>(),});
+                  }, icon: const Icon(Icons.edit)):const SizedBox(),
                 ],
               ),
 

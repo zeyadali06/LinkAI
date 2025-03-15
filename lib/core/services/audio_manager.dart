@@ -20,8 +20,8 @@ class AudioManager {
   }
 
   void setData({
-    String fileName = 'audio.wav',
-    Codec codec = Codec.pcm16WAV,
+    String fileName = 'audio.mp4',
+    Codec codec = Codec.aacMP4,
     int sampleRate = 16000,
   }) {
     this.fileName = fileName;
@@ -33,7 +33,7 @@ class AudioManager {
 
     if (permissionStatus.isGranted) {
       await audioRecorder.startRecorder(
-        toFile: "$index$fileName",
+        toFile: "$fileName",
         codec: codec,
         audioSource: AudioSource.microphone,
       );

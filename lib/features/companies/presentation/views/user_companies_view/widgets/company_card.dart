@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
 
-class JobCard extends StatelessWidget {
-  const JobCard({
-    super.key,
-    required this.jobModel,
-  });
-
-  final JobModel jobModel;
-
+class CompanyCard extends StatelessWidget {
+  const CompanyCard({super.key, required this.companyModel});
+  final CompanyModel companyModel;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+        return GestureDetector(
       onTap: () {
-        // Navigate to Job Details Page
-        GoRouter.of(context).push(AppRouter.jobDetailsView, extra: jobModel);
+        
+        GoRouter.of(context).push(AppRouter.companyDetailsView, extra: companyModel);
       },
       child: Card(
         color: Theme.of(context).cardColor,
@@ -35,19 +30,18 @@ class JobCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Job Title & Tags (Work Type + Work Location)
               Row(
                 spacing: 5,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  
                   Expanded(
                     child: Text(
-                      jobModel.title,
+                      companyModel.companyName,
                       style: AppStyles.bold18(context, Colors.blueAccent),
                     ),
                   ),
-                  JobTag(text: jobModel.workingTime),
-                  JobTag(text: jobModel.workLocation),
+                  JobTag(text: companyModel.role??''),
                 ],
               ),
 
@@ -55,7 +49,7 @@ class JobCard extends StatelessWidget {
 
               // Company & Location
               Text(
-                "${jobModel.company.companyName} - ${jobModel.company.address}",
+                companyModel.address,
                 style: AppStyles.bold14(
                   context,
                   BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
@@ -63,38 +57,44 @@ class JobCard extends StatelessWidget {
               ),
 
               const SizedBox(height: 5),
-
-              // Experience
               Text(
-                jobModel.experience,
+                "from ${companyModel.minEmployees} to ${companyModel.maxEmployees} Employee",
                 style: AppStyles.bold14(
                   context,
                   BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.grey[500] : Colors.white60,
                 ),
-              ),
-              const SizedBox(height: 5),
+              ), 
+              // // Experience
+              // Text(
+              //   jobModel.experience,
+              //   style: AppStyles.bold14(
+              //     context,
+              //     BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.grey[500] : Colors.white60,
+              //   ),
+              // ),
+              // const SizedBox(height: 5),
 
-              // Technical Skills
-              Text(
-                "${jobModel.technicalSkills.join(', ')}, ${jobModel.softSkills.join(', ')}",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppStyles.bold14(
-                  context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.black54 : Colors.white,
-                ),
-              ),
+              // // Technical Skills
+              // Text(
+              //   "${jobModel.technicalSkills.join(', ')}, ${jobModel.softSkills.join(', ')}",
+              //   maxLines: 2,
+              //   overflow: TextOverflow.ellipsis,
+              //   style: AppStyles.bold14(
+              //     context,
+              //     BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.black54 : Colors.white,
+              //   ),
+              // ),
+              
+              // const SizedBox(height: 8),
 
-              const SizedBox(height: 8),
-
-              // Time Ago
-              Text(
-                "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
-                style: AppStyles.defaultStyle(
-                  context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
-                ),
-              ),
+              // // Time Ago
+              // Text(
+              //   "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
+              //   style: AppStyles.defaultStyle(
+              //     context,
+              //     BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
+              //   ),
+              // ),
             ],
           ),
         ),

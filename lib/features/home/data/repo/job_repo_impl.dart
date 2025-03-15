@@ -100,7 +100,26 @@ class JobRepoImpl extends JobRepo {
       );
     }
   }
+  @override
+  Future<RequestResault> getJobsByCompanyId(String companyId) async {
+    try {
+      print("${ApiConstants.companies}/$companyId${ApiConstants.jobs}");
+      final Map<String, dynamic> res = await _apiManager.get(
+        "${ApiConstants.companies}/$companyId${ApiConstants.jobs}",
+        token: UserModel.instance.token,
+      );
+      if (res["success"]) {
+        return RequestResault.success(res["jobs"]);
+      } else {
 
+        return RequestResault.failure( CustomFailure("${res["message"]}"));
+      }
+    } catch (e) {
+      return RequestResault.failure(
+        const CustomFailure("Something went wrong!"),
+      );
+    }
+  }
   @override
   Future<RequestResault> applyForJob(String jobId) async {
     try {

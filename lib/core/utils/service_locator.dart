@@ -8,6 +8,8 @@ import 'package:linkai/features/authentication/data/repositories/auth_repo_impl.
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
 import 'package:linkai/features/interview/data/repositories/interview_repo_impl.dart';
 import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
+import 'package:linkai/features/companies/data/repo/companies_repo.dart';
+import 'package:linkai/features/companies/domain/repo/companies_repo.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 
 abstract class ServiceLocator {
@@ -30,6 +32,9 @@ abstract class ServiceLocator {
 
     getIt.registerSingleton<ApiManager>(
       const ApiManager(),
+    );
+    getIt.registerSingleton<CompaniesRepo>(
+      CompaniesRepoImpl(getIt<ApiManager>()),
     );
 
     getIt.registerSingleton<AutoLoginRepo>(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:linkai/features/companies/presentation/views/companies_view/all_companies_view.dart';
+import 'package:linkai/features/companies/presentation/views/user_companies_view/all_companies_view.dart';
 import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
 

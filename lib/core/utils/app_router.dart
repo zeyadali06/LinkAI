@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/services/audio_manager.dart';
+import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
 import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
@@ -15,7 +16,11 @@ import 'package:linkai/features/authentication/presentation/views/name_view.dart
 import 'package:linkai/features/authentication/presentation/views/password_confimation_view.dart';
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
+import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
+import 'package:linkai/features/companies/presentation/views/add_company_view/add_company_view.dart';
+import 'package:linkai/features/companies/presentation/views/company_details_view/company_details_view.dart';
 import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
+import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/navigator_view.dart';
 import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
 import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
@@ -40,17 +45,33 @@ abstract class AppRouter {
   static const String nameView = "/nameView";
   static const String createJobView = "/createJobView";
   static const String jobDetailsView = "/jobDetailsView";
-
+  static const String addCompanyView = "/addCompanyView";
+  static const String companyDetailsView = "/companyDetailsView";
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
     routes: <RouteBase>[
       GoRoute(
         path: splashView,
         pageBuilder: (context, state) {
+        
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) => AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())..autoLogin(),
+              create: (context) =>
+                  AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())
+                    ..autoLogin(),
               child: const SplashView(),
+            ),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: addCompanyView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => CompaniesCubit(),
+              child: const AddCompanyView(),
             ),
             transitionsBuilder: customTransition,
           );
@@ -79,6 +100,18 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return const CustomTransitionPage(
             child: ProfileView(),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: companyDetailsView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => JobsCubit()..getJobsByCompanyId((state.extra as CompanyModel).id??''),
+              child: CompanyDetailsView(company: state.extra as CompanyModel),
+            ),
             transitionsBuilder: customTransition,
           );
         },

@@ -9,4 +9,5 @@ abstract class JobRepo {
   Future<RequestResault> updateJob(JobModel job);
   Future<RequestResault> deleteJob(String jobId);
   Future<RequestResault> applyForJob(String jobId);
+  Future<RequestResault> getJobsByCompanyId(String companyId);
 }

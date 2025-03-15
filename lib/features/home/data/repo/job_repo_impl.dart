@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:linkai/core/failures/custom_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
@@ -104,7 +105,7 @@ class JobRepoImpl extends JobRepo {
   @override
   Future<RequestResault> getJobsByCompanyId(String companyId) async {
     try {
-      print("${ApiConstants.companies}/$companyId${ApiConstants.jobs}");
+      debugPrint("${ApiConstants.companies}/$companyId${ApiConstants.jobs}");
       final Map<String, dynamic> res = await _apiManager.get(
         "${ApiConstants.companies}/$companyId${ApiConstants.jobs}",
         token: UserModel.instance.token,

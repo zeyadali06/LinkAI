@@ -35,8 +35,9 @@ class JobsCubit extends Cubit<JobsState> {
     final result = await _jobRepo.getJobsByCompanyId(companyId);
     if (result is Success) {
       try {
+      try {
         final List<JobModel> jobs = [];
-        print(result.data);
+        debugPrint(result.data);
         for (var job in result.data) {
           jobs.add(JobModel.fromJson(job));
         }
@@ -44,6 +45,7 @@ class JobsCubit extends Cubit<JobsState> {
       } catch (e) {
         emit(JobsError(e.toString()));
       }
+    } else if (result is Failed) {
     } else if (result is Failed) {
       emit(JobsError(result.data.message));
     }

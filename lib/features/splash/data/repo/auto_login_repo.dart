@@ -21,7 +21,7 @@ class AutoLoginRepo {
         );
       }
 
-     final Map<String, dynamic> userData = await _apiManager.get(ApiConstants.userData, token: token);
+      final Map<String, dynamic> userData = await _apiManager.get(ApiConstants.userData, token: token);
 
       UserModel.instance.token = token;
       UserModel.instance.setFromJson(userData["user"]);

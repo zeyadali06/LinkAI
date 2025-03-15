@@ -110,7 +110,7 @@ class CompanyDetailsViewBody extends StatelessWidget {
               // Company Details Tab
               DetailsSection(company: company),
               // Company Jobs Tab - To be implemented later
-              JobsListPage(companyModel: company),
+              const JobsListPage()
             ],
           ),
         ),

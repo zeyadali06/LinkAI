@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
-import 'package:linkai/features/companies/presentation/views/add_company_view/add_company_view.dart';
 import 'package:linkai/features/companies/presentation/views/user_companies_view/widgets/all_companies_view_body.dart';
 
 class AllCompaniesView extends StatelessWidget {
@@ -12,7 +11,7 @@ class AllCompaniesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(UserModel.instance.token);
+    debugPrint(UserModel.instance.token);
     return BlocProvider(
       create: (context) => CompaniesCubit()..getUserCompanies(),
       child: Builder(

@@ -28,12 +28,13 @@ class CustomTextFormField extends StatelessWidget {
         border: const OutlineInputBorder(),
         filled: true,
       ),
-      validator: validator ?? (value) {
-        if ((value == null || value.isEmpty) && validate) {
-          return 'Please enter $labelText';
-        }
-        return null;
-      },
+      validator: validator ??
+          (value) {
+            if ((value == null || value.isEmpty) && validate) {
+              return 'Please enter $labelText';
+            }
+            return null;
+          },
     );
   }
 }

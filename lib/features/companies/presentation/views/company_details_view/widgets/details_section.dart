@@ -52,8 +52,7 @@ class DetailsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailItem(
-      BuildContext context, String label, String? value, IconData icon) {
+  Widget _buildDetailItem(BuildContext context, String label, String? value, IconData icon) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(

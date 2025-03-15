@@ -86,12 +86,10 @@ class ModelsManager {
     final File audioFile = File(voicePath);
     bool isExist = await audioFile.exists();
     debugPrint(isExist.toString());
-    int l = await audioFile.length();
 
-    late http.MultipartRequest request;
     final String url = "${await _getBaseUrl(ServiceLocator.getIt<IPManager>().ip)}/$vttEndPoint";
 
-    request = http.MultipartRequest(
+    late final http.MultipartRequest request = http.MultipartRequest(
       'POST',
       Uri.parse(url),
     );
@@ -107,11 +105,8 @@ class ModelsManager {
       final Map<String, dynamic> jsonResponse = json.decode(responseData);
       debugPrint("data: ${jsonResponse['data']}");
 
-      await audioFile.delete(recursive: true);
       return jsonResponse['data'];
     } else {
-      await audioFile.delete(recursive: true);
-
       debugPrint("Error");
       return "Error";
     }

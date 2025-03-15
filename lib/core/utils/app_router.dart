@@ -70,9 +70,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) =>
-              AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())
-                ..autoLogin(),
+              create: (context) => AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())..autoLogin(),
               child: const SplashView(),
             ),
             transitionsBuilder: customTransition,
@@ -83,8 +81,8 @@ abstract class AppRouter {
         path: addCompanyView,
         pageBuilder: (context, state) {
           return CustomTransitionPage(
-            child: BlocProvider(
-              create: (context) => CompaniesCubit(),
+            child: BlocProvider.value(
+              value: state.extra as CompaniesCubit,
               child: const AddCompanyView(),
             ),
             transitionsBuilder: customTransition,
@@ -173,9 +171,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) =>
-              JobsCubit()
-                ..getJobsByCompanyId((state.extra as CompanyModel).id ?? ''),
+              create: (context) => JobsCubit()..getJobsByCompanyId((state.extra as CompanyModel).id ?? ''),
               child: CompanyDetailsView(company: state.extra as CompanyModel),
             ),
             transitionsBuilder: customTransition,

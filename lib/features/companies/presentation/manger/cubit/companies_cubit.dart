@@ -1,11 +1,10 @@
 import 'dart:io';
-
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/companies/domain/repo/companies_repo.dart';
-import 'package:meta/meta.dart';
 
 part 'companies_state.dart';
 

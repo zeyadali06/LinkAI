@@ -10,25 +10,25 @@ class CompanyModel {
   final String? updatedAt;
   final int maxEmployees;
   final int minEmployees;
-  final List<String> HRs;
+  final List<String> hrs;
   final bool? approvedByAdmin;
-   String? coverImage;
-   String? profileImage;
+  String? coverImage;
+  String? profileImage;
   final String? role;
   CompanyModel({
-     this.id,
+    this.id,
     required this.companyName,
     required this.description,
     required this.industry,
     required this.address,
     required this.companyEmail,
-     this.createdBy,
-     this.createdAt,
-     this.updatedAt,
+    this.createdBy,
+    this.createdAt,
+    this.updatedAt,
     required this.maxEmployees,
     required this.minEmployees,
-    required this.HRs,
-     this.approvedByAdmin,
+    required this.hrs,
+    this.approvedByAdmin,
     this.role,
     this.coverImage,
     this.profileImage,
@@ -49,7 +49,7 @@ class CompanyModel {
         'from': minEmployees,
         'to': maxEmployees,
       },
-      'HRs': HRs,
+      'HRs': hrs,
       'approvedByAdmin': approvedByAdmin,
     };
   }
@@ -65,13 +65,13 @@ class CompanyModel {
       createdBy: json['createdBy'] ?? '',
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
-      coverImage: json['coverPic']?["secure_url"] ,
+      coverImage: json['coverPic']?["secure_url"],
       profileImage: json['logo']?["secure_url"],
       maxEmployees: json['numberOfEmployees']?['to'] ?? 0,
       minEmployees: json['numberOfEmployees']?['from'] ?? 0,
-      HRs: List<String>.from(json['HRs'] ?? []),
+      hrs: List<String>.from(json['HRs'] ?? []),
       approvedByAdmin: json['approvedByAdmin'] ?? false,
-      role: json['userRole'] ,
+      role: json['userRole'],
     );
   }
 }

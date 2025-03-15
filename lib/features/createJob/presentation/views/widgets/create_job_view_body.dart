@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:linkai/core/models/job_model.dart';
-import 'package:linkai/features/home/presentation/views/home_view.dart';
 
 class CreateJobViewBody extends StatefulWidget {
   const CreateJobViewBody({super.key});
@@ -15,14 +13,14 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
   final List<String> workingTimes = ["Full Time", "Part Time", "Internship"];
   final List<String> workLocations = ["On-Site", "Remote", "Hybrid"];
 
-  late final GlobalKey<FormState> _formKey;
-  late AutovalidateMode _autovalidatemodel;
-  late final JobModel _jobModel;
+  // late final GlobalKey<FormState> _formKey;
+  // late AutovalidateMode _autovalidatemodel;
+  // late final JobModel _jobModel;
 
   @override
   void initState() {
-    _formKey = GlobalKey<FormState>();
-    _autovalidatemodel = AutovalidateMode.disabled;
+    // _formKey = GlobalKey<FormState>();
+    // _autovalidatemodel = AutovalidateMode.disabled;
     // _jobModel = JobModel.init();
     super.initState();
   }

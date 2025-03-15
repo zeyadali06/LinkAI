@@ -38,7 +38,7 @@ class JobRepoImpl extends JobRepo {
     try {
       final Map<String, dynamic> res = await _apiManager.post(
         job.toJson(),
-        ApiConstants.addJob,
+        "${ApiConstants.addJob}/${job.company.id}",
         token: UserModel.instance.token,
       );
 
@@ -100,6 +100,7 @@ class JobRepoImpl extends JobRepo {
       );
     }
   }
+
   @override
   Future<RequestResault> getJobsByCompanyId(String companyId) async {
     try {
@@ -111,8 +112,7 @@ class JobRepoImpl extends JobRepo {
       if (res["success"]) {
         return RequestResault.success(res["jobs"]);
       } else {
-
-        return RequestResault.failure( CustomFailure("${res["message"]}"));
+        return RequestResault.failure(CustomFailure("${res["message"]}"));
       }
     } catch (e) {
       return RequestResault.failure(
@@ -120,6 +120,7 @@ class JobRepoImpl extends JobRepo {
       );
     }
   }
+
   @override
   Future<RequestResault> applyForJob(String jobId) async {
     try {

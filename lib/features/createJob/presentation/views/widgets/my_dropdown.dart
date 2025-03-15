@@ -112,7 +112,8 @@ class _MyDropdownState extends State<MyDropdown> {
 
   setColors() {
     hintColor = Theme.of(context).hintColor;
-    borderColor = Theme.of(context).inputDecorationTheme.border!.borderSide.color;
+    borderColor =
+        Theme.of(context).inputDecorationTheme.border!.borderSide.color;
     textColor = Theme.of(context).textTheme.bodyLarge!.color!;
   }
 }

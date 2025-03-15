@@ -1,41 +1,44 @@
 import 'package:linkai/core/models/company_model.dart';
 
 class JobModel {
-  String id;
+  String? id;
   String title;
   CompanyModel company;
   String experience;
   List<dynamic> technicalSkills;
   List<dynamic> softSkills;
   String description;
-  String createdAt;
+  String? createdAt;
   String workingTime;
   String workLocation;
+  String jobCountry;
 
   JobModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.company,
     required this.experience,
     required this.technicalSkills,
     required this.description,
-    required this.createdAt,
+    this.createdAt,
     required this.workingTime,
     required this.workLocation,
     required this.softSkills,
+    required this.jobCountry,
   });
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
+      'jobTitle': title,
       'company': company,
-      'experience': experience,
+      'seniorityLevel': experience,
       'technicalSkills': technicalSkills,
       'softSkills': softSkills,
-      'description': description,
+      'jobDescription': description,
       'createdAt': createdAt,
       'workingTime': workingTime,
-      'workLocation': workLocation,
+      'jobLocation': workLocation,
+      'jobCountry': jobCountry,
     };
   }
 
@@ -51,6 +54,7 @@ class JobModel {
       createdAt: json['createdAt'] ?? '',
       workingTime: json['workingTime'] ?? '',
       workLocation: json['jobLocation'] ?? '',
+      jobCountry: json['jobCountry'] ?? '',
     );
   }
 

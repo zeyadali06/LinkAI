@@ -58,7 +58,10 @@ class JobCard extends StatelessWidget {
                 "${jobModel.company.companyName} - ${jobModel.company.address}",
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                          ThemeMode.light
+                      ? Colors.blueGrey
+                      : Colors.white70,
                 ),
               ),
 
@@ -69,7 +72,10 @@ class JobCard extends StatelessWidget {
                 jobModel.experience,
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.grey[500] : Colors.white60,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                          ThemeMode.light
+                      ? Colors.grey[500]
+                      : Colors.white60,
                 ),
               ),
               const SizedBox(height: 5),
@@ -81,7 +87,10 @@ class JobCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.black54 : Colors.white,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                          ThemeMode.light
+                      ? Colors.black54
+                      : Colors.white,
                 ),
               ),
 
@@ -89,10 +98,13 @@ class JobCard extends StatelessWidget {
 
               // Time Ago
               Text(
-                "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
+                "${DateTime.now().difference(DateTime.parse(jobModel.createdAt ?? '')).inDays} days ago",
                 style: AppStyles.defaultStyle(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                          ThemeMode.light
+                      ? Colors.green
+                      : Colors.white38,
                 ),
               ),
             ],
@@ -100,6 +112,5 @@ class JobCard extends StatelessWidget {
         ),
       ),
     );
-  
   }
 }

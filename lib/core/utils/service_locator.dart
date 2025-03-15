@@ -1,10 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:linkai/core/services/api_manager.dart';
+import 'package:linkai/core/services/audio_manager.dart';
 import 'package:linkai/core/services/ip_manager.dart';
 import 'package:linkai/core/services/shared_preference.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/data/repositories/auth_repo_impl.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
+import 'package:linkai/features/interview/data/repositories/interview_repo_impl.dart';
+import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
 import 'package:linkai/features/companies/data/repo/companies_repo.dart';
 import 'package:linkai/features/companies/domain/repo/companies_repo.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
@@ -17,6 +20,11 @@ abstract class ServiceLocator {
       IPManager(),
     );
     await getIt<IPManager>().getDeviceIP();
+
+    getIt.registerSingleton<AudioManager>(
+      AudioManager(),
+    );
+    await getIt<AudioManager>().init();
 
     getIt.registerSingleton<SharedPreferenceServices>(
       SharedPreferenceServices(),
@@ -39,6 +47,10 @@ abstract class ServiceLocator {
 
     getIt.registerSingleton<AuthModel>(
       AuthModel(),
+    );
+
+    getIt.registerSingleton<InterviewRepo>(
+      InterviewRepoImpl(getIt<ApiManager>()),
     );
   }
 }

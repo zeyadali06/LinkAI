@@ -74,5 +74,4 @@ class CompanyModel {
       role: json['userRole'] ,
     );
   }
-
 }

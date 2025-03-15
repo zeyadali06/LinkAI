@@ -29,7 +29,6 @@ class JobModel {
       'id': id,
       'title': title,
       'company': company,
-
       'experience': experience,
       'technicalSkills': technicalSkills,
       'softSkills': softSkills,
@@ -53,5 +52,9 @@ class JobModel {
       workingTime: json['workingTime'] ?? '',
       workLocation: json['jobLocation'] ?? '',
     );
+  }
+
+  String getFullJobApplication() {
+    return "Job Title: $title\n Job Description: $description\n Experience: $experience\n Technical Skills: $technicalSkills\n Soft Skills: $softSkills";
   }
 }

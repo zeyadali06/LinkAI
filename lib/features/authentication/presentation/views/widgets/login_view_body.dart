@@ -8,7 +8,7 @@ import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
 import 'package:linkai/features/authentication/presentation/views/widgets/google_button.dart';
 import 'package:linkai/core/widgets/custom_text_field.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/logo.dart';
+import 'package:linkai/core/widgets/logo.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});

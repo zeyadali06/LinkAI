@@ -14,6 +14,7 @@ class CustomButton extends StatelessWidget {
     this.highlightColor,
     this.gradient,
     this.textAlign,
+    this.borderRadius = 16,
     this.padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
   });
 
@@ -28,6 +29,7 @@ class CustomButton extends StatelessWidget {
   final Gradient? gradient;
   final TextAlign? textAlign;
   final EdgeInsets padding;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class CustomButton extends StatelessWidget {
   Widget getButton(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius),
         gradient: gradient,
       ),
       child: MaterialButton(
@@ -56,8 +59,8 @@ class CustomButton extends StatelessWidget {
         splashColor: splashColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
         highlightColor: highlightColor ?? Theme.of(context).filledButtonTheme.style!.overlayColor!.resolve({}),
         padding: padding,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
         ),
         child: Text(
           text,

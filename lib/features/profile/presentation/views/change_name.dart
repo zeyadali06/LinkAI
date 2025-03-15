@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/core/widgets/snack_bar.dart';
+import 'package:linkai/features/profile/presentation/managers/profile_cubit/profile_cubit.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/nameWidgets/change_first_name_body.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/nameWidgets/change_last_name_body.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -55,6 +57,7 @@ class _ChangeNameState extends State<ChangeName> {
     } else {
       ChangeNameCubit cubit = ChangeNameCubit.get(context);
       await cubit.changeName(firstName, lastName);
+      context.read<ProfileCubit>().updateProfile();
     }
   }
 
@@ -72,17 +75,16 @@ class _ChangeNameState extends State<ChangeName> {
       child: BlocConsumer<ChangeNameCubit, ChangeNameState>(
         listener: (context, state) {
           if (state is ChangeNameSuccess) {
-
+            showSnackBar(context, "Name changed successfully",
+                backgroundColor: Colors.green);
             Navigator.pop(context);
           }
           if (state is ChangeNameFailure) {
-           AlertDialog(
-
-           );
+            showSnackBar(context, state.errorMessage);
+            Navigator.pop(context);
           }
         },
         builder: (context, state) {
-
           return ModalProgressHUD(
             inAsyncCall: state is ChangeNameLoading,
             child: Scaffold(

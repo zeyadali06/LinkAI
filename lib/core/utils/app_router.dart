@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/services/audio_manager.dart';
 import 'package:linkai/core/models/company_model.dart';
-import 'package:linkai/core/services/di.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/authentication/domain/repositories/auth_repo_interface.dart';
 import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
@@ -34,6 +33,7 @@ import 'package:linkai/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/profile/domain/useCases/changeNameuseCase/change_name_use_case.dart';
 import '../../features/profile/presentation/managers/change_name_cubit/change_name_cubit.dart';
+import '../../features/profile/presentation/managers/profile_cubit/profile_cubit.dart';
 import '../../features/profile/presentation/views/change_email.dart';
 import '../../features/profile/presentation/views/change_name.dart';
 import '../../features/profile/presentation/views/change_password.dart';
@@ -67,13 +67,11 @@ abstract class AppRouter {
         path: splashView,
         pageBuilder: (context, state) {
 
-          return CustomTransitionPage(
+
           return CustomTransitionPage(
             child: BlocProvider(
               create: (context) =>
-                  AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())
-                    ..autoLogin(),
-              create: (context) =>
+
               AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())
                 ..autoLogin(),
               child: const SplashView(),
@@ -134,9 +132,12 @@ abstract class AppRouter {
         path: changeName,
         pageBuilder: (context, state) {
           return  CustomTransitionPage(
-            child: BlocProvider(
-              create: (context) => ChangeNameCubit(get<ChangeNameUseCase>()),
-              child: const ChangeName(),
+            child: MultiBlocProvider(
+             providers: [
+               BlocProvider(create:(context) =>ChangeNameCubit(ServiceLocator.getIt<ChangeNameUseCase>())),
+               BlocProvider.value(value:  state.extra as ProfileCubit,),
+             ],
+              child:  ChangeName(),
             ),
             transitionsBuilder: bottomUpTransition,
           );
@@ -268,14 +269,13 @@ abstract class AppRouter {
     ],
   );
 
-  static Widget customTransition(context, animation, secondaryAnimation,
-      child) {
+
   static Widget customTransition(context, animation, secondaryAnimation, child) {
     const Offset begin = Offset(1.0, 0.0);
     const Offset end = Offset(0.0, 0.0);
     const Cubic curve = Curves.easeInOut;
 
-    final Animatable<Offset> tween =
+
     Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
     final Animatable<Offset> tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
     final Animation<Offset> offsetAnimation = animation.drive(tween);

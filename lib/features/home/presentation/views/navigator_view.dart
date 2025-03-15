@@ -4,6 +4,7 @@ import 'package:linkai/features/companies/presentation/views/user_companies_view
 import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/home_view.dart';
 
+import '../../../profile/presentation/managers/profile_cubit/profile_cubit.dart';
 import '../../../profile/presentation/views/profile_view.dart';
 import '../../../splash/presentation/manager/cubit/app_theme_cubit.dart';
 
@@ -28,7 +29,10 @@ class _NavigatorViewState extends State<NavigatorView> {
       child: const HomeView(),
     ),
     const AllCompaniesView(),
-    const ProfileView()
+    BlocProvider(
+      create: (context) => ProfileCubit(),
+      child: const ProfileView(),
+    )
   ];
 
   void _onItemTapped(int index) {
@@ -101,4 +105,5 @@ class _NavigatorViewState extends State<NavigatorView> {
                 ),
               ],
             )));
-  }}
+  }
+}

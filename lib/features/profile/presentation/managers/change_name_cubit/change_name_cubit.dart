@@ -7,7 +7,7 @@ import '../../../../../core/failures/request_result.dart';
 import '../../../domain/useCases/changeNameuseCase/change_name_use_case.dart';
 
 part 'change_name_state.dart';
-@injectable
+
 class ChangeNameCubit extends Cubit<ChangeNameState> {
   final ChangeNameUseCase _changeNameUseCase;
 

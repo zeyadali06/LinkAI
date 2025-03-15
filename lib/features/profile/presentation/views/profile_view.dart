@@ -14,7 +14,7 @@ class ProfileView extends StatelessWidget {
         title: const Text("Profile",
         )
       ),
-      body: const ProfileViewBody(),
+      body:  const ProfileViewBody(),
     );
   }
 }

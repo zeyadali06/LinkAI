@@ -12,6 +12,10 @@ import 'package:linkai/features/companies/data/repo/companies_repo.dart';
 import 'package:linkai/features/companies/domain/repo/companies_repo.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 
+import '../../features/profile/data/repos/profile_repo_impl.dart';
+import '../../features/profile/domain/abstractRepos/profile_repo.dart';
+import '../../features/profile/domain/useCases/changeNameuseCase/change_name_use_case.dart';
+
 abstract class ServiceLocator {
   static final GetIt getIt = GetIt.instance;
 
@@ -51,6 +55,12 @@ abstract class ServiceLocator {
 
     getIt.registerSingleton<InterviewRepo>(
       InterviewRepoImpl(getIt<ApiManager>()),
+    );
+    getIt.registerSingleton<ProfileRepo>(
+      ProfileRepoImpl(getIt<ApiManager>()),
+    );
+    getIt.registerSingleton<ChangeNameUseCase>(
+      ChangeNameUseCase(getIt<ProfileRepo>()),
     );
   }
 }

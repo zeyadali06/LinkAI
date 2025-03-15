@@ -6,7 +6,7 @@ import '../../../../core/models/user_model.dart';
 import '../../../../core/services/api_manager.dart';
 import '../../../../core/utils/api_constants.dart';
 import '../../domain/abstractRepos/profile_repo.dart';
-@Injectable(as: ProfileRepo)
+
 class ProfileRepoImpl implements ProfileRepo {
   final ApiManager _apiManager;
 
@@ -15,9 +15,14 @@ class ProfileRepoImpl implements ProfileRepo {
   Future<RequestResault> changeName(String firstName, String lastName) async{
     try{
       final response = await _apiManager
-          .patch({}, ApiConstants.changeName, token: UserModel.instance.token);
+          .patch({
+        "firstName": firstName,
+        "lastName": lastName,
+      }, ApiConstants.changeName, token: UserModel.instance.token);
       if (response["success"]) {
-        UserModel.instance.setFromJson(response["user"]);
+        // UserModel.instance.setFromJson(response["user"]);
+        UserModel.instance.firstName = firstName;
+        UserModel.instance.lastName = lastName;
         return RequestResault.success(UserModel.instance.firstName);
       } else {
         return RequestResault.failure(

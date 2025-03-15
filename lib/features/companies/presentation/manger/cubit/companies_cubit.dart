@@ -12,7 +12,7 @@ part 'companies_state.dart';
 class CompaniesCubit extends Cubit<CompaniesState> {
   CompaniesCubit() : super(CompaniesInitial());
   final _companiesRepo = ServiceLocator.getIt<CompaniesRepo>();
-
+  final List<CompanyModel> userCompanies = [];
   Future<void> createCompany(CompanyModel company, File? profileImage, File? coverImage) async {
     emit(CompaniesLoading());
     final result = await _companiesRepo.addCompany(company, profileImage, coverImage);
@@ -28,8 +28,23 @@ class CompaniesCubit extends Cubit<CompaniesState> {
     final result = await _companiesRepo.getUserCompanies();
     if (result is Success) {
       emit(CompaniesSuccess(result.data));
+      userCompanies.clear();
+      userCompanies.addAll(result.data);
     } else if (result is Failed) {
       emit(CompaniesFailure(result.data.message));
+    }
+  }
+ Future<void> updateCompany(CompanyModel company) async {
+    emit(CompaniesLoading());
+    final result = await _companiesRepo.updateCompany(company);
+    if (result is Success) {
+     final index = userCompanies.indexWhere((element) => element.id == company.id);
+     if (index != -1) {
+       userCompanies[index].setFrom(company);
+     }
+      emit(CompanyUpdateSuccess());
+    } else if (result is Failed) {
+      emit(CompanyUpdateFailure(result.data.message));
     }
   }
 }

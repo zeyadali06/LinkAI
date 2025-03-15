@@ -9,5 +9,6 @@ abstract class CompaniesRepo {
   Future<RequestResault> addCompany(CompanyModel company, File? profileImage, File? coverImage);
   Future<RequestResault> deleteCompany(String companyId);
   Future<RequestResault> getUserCompanies();
+  Future<RequestResault> updateCompany(CompanyModel company);
 }
 

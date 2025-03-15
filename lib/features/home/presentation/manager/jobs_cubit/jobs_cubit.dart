@@ -36,7 +36,6 @@ class JobsCubit extends Cubit<JobsState> {
     if (result is Success) {
         try {
         final List<JobModel> jobs = [];
-        print(result.data);
         for (var job in result.data) {
           jobs.add(JobModel.fromJson(job));
         }

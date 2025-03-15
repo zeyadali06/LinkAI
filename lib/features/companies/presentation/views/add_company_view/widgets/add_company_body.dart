@@ -8,7 +8,6 @@ import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/core/widgets/snack_bar.dart';
 import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
-import 'package:linkai/features/companies/presentation/views/add_company_view/widgets/add_company_text_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class AddCompanyBody extends StatefulWidget {
@@ -62,6 +61,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
     try{
      image = await picker.pickImage(source: ImageSource.gallery);
     }
+    // ignore: empty_catches
     catch (e){
      
     }

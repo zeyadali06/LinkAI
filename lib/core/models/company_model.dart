@@ -1,20 +1,19 @@
 class CompanyModel {
-  final String? id;
-  final String companyName;
-  final String description;
-  final String industry;
-  final String address;
-  final String companyEmail;
-  final String? createdBy;
-  final String? createdAt;
-  final String? updatedAt;
-  final int maxEmployees;
-  final int minEmployees;
-  final List<String> HRs;
-  final bool? approvedByAdmin;
+   String? id;
+   String companyName;
+   String description;
+   String industry;
+   String address;
+   String companyEmail;
+   String? createdBy;
+   String? createdAt;
+   String? updatedAt;
+   int maxEmployees;
+   int minEmployees;
+   List<String> HRs;
    String? coverImage;
    String? profileImage;
-  final String? role;
+   String? role;
   CompanyModel({
      this.id,
     required this.companyName,
@@ -28,7 +27,6 @@ class CompanyModel {
     required this.maxEmployees,
     required this.minEmployees,
     required this.HRs,
-     this.approvedByAdmin,
     this.role,
     this.coverImage,
     this.profileImage,
@@ -36,21 +34,16 @@ class CompanyModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'companyName': companyName,
       'description': description,
       'industry': industry,
       'address': address,
       'companyEmail': companyEmail,
-      'createdBy': createdBy,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
       'numberOfEmployees': {
         'from': minEmployees,
         'to': maxEmployees,
       },
       'HRs': HRs,
-      'approvedByAdmin': approvedByAdmin,
     };
   }
 
@@ -70,8 +63,50 @@ class CompanyModel {
       maxEmployees: json['numberOfEmployees']?['to'] ?? 0,
       minEmployees: json['numberOfEmployees']?['from'] ?? 0,
       HRs: List<String>.from(json['HRs'] ?? []),
-      approvedByAdmin: json['approvedByAdmin'] ?? false,
       role: json['userRole'] ,
+    );
+  }
+  void setFrom(CompanyModel other) {
+    id = other.id;
+    companyName = other.companyName;
+    description = other.description;
+    companyEmail = other.companyEmail;
+    address = other.address;
+    industry = other.industry;
+    profileImage = other.profileImage;
+    coverImage = other.coverImage;
+    minEmployees = other.minEmployees;
+    maxEmployees = other.maxEmployees;
+    HRs = other.HRs;
+    createdAt = other.createdAt;
+    createdBy = other.createdBy;
+    updatedAt = other.updatedAt;
+  }
+  CompanyModel copyWith({
+    String? id,
+    String? companyName,
+    String? description,
+    String? companyEmail,
+    String? address,
+    String? industry,
+    String? profileImage,
+    String? coverImage,
+    int? minEmployees,
+    int? maxEmployees,
+    List<String>? HRs,
+  }) {
+    return CompanyModel(
+      id: id ?? this.id,
+      companyName: companyName ?? this.companyName,
+      description: description ?? this.description,
+      companyEmail: companyEmail ?? this.companyEmail,
+      address: address ?? this.address,
+      industry: industry ?? this.industry,
+      profileImage: profileImage ?? this.profileImage,
+      coverImage: coverImage ?? this.coverImage,
+      minEmployees: minEmployees ?? this.minEmployees,
+      maxEmployees: maxEmployees ?? this.maxEmployees,
+      HRs: HRs ?? this.HRs,
     );
   }
 }

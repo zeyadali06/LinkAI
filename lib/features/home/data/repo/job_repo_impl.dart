@@ -103,7 +103,6 @@ class JobRepoImpl extends JobRepo {
   @override
   Future<RequestResault> getJobsByCompanyId(String companyId) async {
     try {
-      print("${ApiConstants.companies}/$companyId${ApiConstants.jobs}");
       final Map<String, dynamic> res = await _apiManager.get(
         "${ApiConstants.companies}/$companyId${ApiConstants.jobs}",
         token: UserModel.instance.token,

@@ -148,7 +148,7 @@ class CompaniesRepoImpl implements CompaniesRepo {
         return RequestResault.success(null);
       } else {
         return RequestResault.failure(
-          const CustomFailure("Failed to delete company"),
+          CustomFailure("Failed to delete company ${res['message']}"),
         );
       }
     } catch (e) {

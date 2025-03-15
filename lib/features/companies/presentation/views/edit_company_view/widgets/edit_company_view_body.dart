@@ -74,12 +74,19 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<CompaniesCubit>();
     return BlocConsumer<CompaniesCubit, CompaniesState>(
       listener: (context, state) {
         if (state is CompanyUpdateSuccess) {
           GoRouter.of(context).pop();
         }
-        if (state is CompanyUpdateFailure) {
+        if (state is CompanyUpdateFailure ) {
+          showSnackBar(context, state.message);
+        }
+        if (state is CompanyDeleteSuccess) {
+          GoRouter.of(context).pop();
+        }
+        if (state is CompanyDeleteFailure) {
           showSnackBar(context, state.message);
         }
       },
@@ -228,6 +235,34 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
                             .updateCompany( updatedCompany);
                       }
                     },
+                  ),
+                  const SizedBox(height: 16),
+                  CustomButton(
+                    text: 'Delete Company',
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Delete Company'),
+                          content: const Text('Are you sure you want to delete this company?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                cubit.deleteCompany(widget.companyModel.id!);
+                                Navigator.pop(context); // Close dialog
+                              },
+                              child: const Text('Delete'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    textColor: Colors.white,
+                    buttonColor: Colors.red,
                   ),
                 ],
               ),

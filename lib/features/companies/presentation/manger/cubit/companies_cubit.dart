@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/utils/service_locator.dart';
@@ -10,6 +12,7 @@ import 'package:meta/meta.dart';
 part 'companies_state.dart';
 
 class CompaniesCubit extends Cubit<CompaniesState> {
+
   CompaniesCubit() : super(CompaniesInitial());
   final _companiesRepo = ServiceLocator.getIt<CompaniesRepo>();
   final List<CompanyModel> userCompanies = [];
@@ -47,4 +50,15 @@ class CompaniesCubit extends Cubit<CompaniesState> {
       emit(CompanyUpdateFailure(result.data.message));
     }
   }
+  Future<void> deleteCompany(String companyId) async {
+    emit(CompaniesLoading());
+    final result = await _companiesRepo.deleteCompany(companyId);
+    if (result is Success) {
+      emit(CompanyDeleteSuccess());
+      userCompanies.removeWhere((element) => element.id == companyId);
+    } else if (result is Failed) {
+      emit(CompanyDeleteFailure(result.data.message));
+    }
+  }
+  
 }

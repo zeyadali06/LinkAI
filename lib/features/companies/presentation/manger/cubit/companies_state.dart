@@ -27,3 +27,10 @@ final class CompanyUpdateFailure extends CompaniesState {
   final String message;
   CompanyUpdateFailure(this.message);
 }
+final class CompanyDeleteSuccess extends CompaniesState {
+  CompanyDeleteSuccess();
+}
+final class CompanyDeleteFailure extends CompaniesState {
+  final String message;
+  CompanyDeleteFailure(this.message);
+}

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:linkai/core/models/company_model.dart';
+import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/core/widgets/snack_bar.dart';
 import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
 import 'package:linkai/features/companies/presentation/views/add_company_view/widgets/add_company_text_field.dart';
@@ -80,6 +81,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
     return BlocConsumer<CompaniesCubit, CompaniesState>(
       listener: (context, state) {
         if (state is CompanyCreateSuccess) {
+          context.read<CompaniesCubit>().getUserCompanies();
           GoRouter.of(context).pop();
         }
         else if (state is CompaniesFailure) {
@@ -165,61 +167,62 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  CustomTextFormField(
+                  CustomTextField(
                     controller: _nameController,
-                    labelText: 'Company Name',
+                    hintText: 'Company Name',
+
                   ),
                   const SizedBox(height: 16),
-                  CustomTextFormField(
+                  CustomTextField(
                     controller: _descriptionController,
-                    labelText: 'Description',
+                    hintText: 'Description',
                     maxLines: 3,
                   ),
                   const SizedBox(height: 16),
-                  CustomTextFormField(
+                  CustomTextField(
                     controller: _industryController,
-                    labelText: 'Industry',
+                    hintText: 'Industry',
                   ),
                   const SizedBox(height: 16),
-                  CustomTextFormField(
+                  CustomTextField(
                     controller: _addressController,
-                    labelText: 'Address',
+                    hintText: 'Address',
                   ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
                       Expanded(
-                        child: CustomTextFormField(
+                        child: CustomTextField(
                           controller: _minEmployeesController,
-                          labelText: 'Min Employees',
+                          hintText: 'Min Employees',
                           keyboardType: TextInputType.number,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
-                        child: CustomTextFormField(
+                        child: CustomTextField(
                           controller: _maxEmployeesController,
-                          labelText: 'Max Employees',
+                          hintText: 'Max Employees',
                           keyboardType: TextInputType.number,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  CustomTextFormField(
+                  CustomTextField(
                     controller: _emailController,
-                    labelText: 'Company Email',
+                    hintText: 'Company Email',
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
                       Expanded(
-                        child: CustomTextFormField(
+                        child: CustomTextField(
                           controller: _hrEmailController,
-                          labelText: 'HR Email',
+                          hintText: 'HR Email',
                           keyboardType: TextInputType.emailAddress,
-                          validate: false,
+                          enableValidator: false,
                         ),
                       ),
                       const SizedBox(width: 8),

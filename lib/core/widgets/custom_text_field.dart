@@ -5,6 +5,7 @@ import 'package:linkai/core/utils/app_styles.dart';
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
+    this.keyboardType,
     this.hintText,
     this.hintColor,
     this.textColor,
@@ -21,7 +22,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.maxLines = 1,
   });
-
+  final TextInputType? keyboardType;
   final String? hintText;
   final Color? fillColor;
   final Color? hintColor;
@@ -103,6 +104,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         inputFormatters: widget.inputFormatters,
         style: AppStyles.defaultStyle(context, textColor),
         maxLines: widget.maxLines,
+        keyboardType: widget.keyboardType,
         decoration: InputDecoration(
           filled: true,
           fillColor: widget.fillColor,

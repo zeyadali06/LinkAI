@@ -69,8 +69,8 @@ abstract class AppRouter {
         path: addCompanyView,
         pageBuilder: (context, state) {
           return CustomTransitionPage(
-            child: BlocProvider(
-              create: (context) => CompaniesCubit(),
+            child: BlocProvider.value(
+              value: state.extra as CompaniesCubit,
               child: const AddCompanyView(),
             ),
             transitionsBuilder: customTransition,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
@@ -50,7 +52,7 @@ class JobdetailsViewBody extends StatelessWidget {
                         ),
                       ),
                       Text(
-                         "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
+                        "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
                         style: AppStyles.defaultStyle(
                           context,
                           BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
@@ -113,7 +115,7 @@ class JobdetailsViewBody extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       const Divider(),
-                       Text(
+                      Text(
                         "Soft Skills",
                         style: AppStyles.bold18(context),
                       ),
@@ -136,7 +138,9 @@ class JobdetailsViewBody extends StatelessWidget {
             left: 20,
             right: 20,
             child: CustomButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).push(AppRouter.interviewView, extra: jobModel);
+              },
               text: "Interview Now",
             ),
           ),

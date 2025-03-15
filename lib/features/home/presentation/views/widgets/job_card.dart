@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
-import 'package:linkai/features/jobDetails/presentation/views/job_details_view.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
 
 class JobCard extends StatelessWidget {
@@ -19,12 +20,7 @@ class JobCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to Job Details Page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => JobdetailsView(jobModel: jobModel),
-          ),
-        );
+        GoRouter.of(context).push(AppRouter.jobDetailsView, extra: jobModel);
       },
       child: Card(
         color: Theme.of(context).cardColor,
@@ -88,7 +84,7 @@ class JobCard extends StatelessWidget {
                   BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.black54 : Colors.white,
                 ),
               ),
-              
+
               const SizedBox(height: 8),
 
               // Time Ago
@@ -104,5 +100,6 @@ class JobCard extends StatelessWidget {
         ),
       ),
     );
+  
   }
 }

@@ -1,0 +1,280 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:linkai/core/models/company_model.dart';
+import 'package:linkai/core/widgets/snack_bar.dart';
+import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
+import 'package:linkai/features/companies/presentation/views/add_company_view/widgets/add_company_text_field.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+class AddCompanyBody extends StatefulWidget {
+  const AddCompanyBody({super.key});
+
+  @override
+  State<AddCompanyBody> createState() => _AddCompanyBodyState();
+}
+
+class _AddCompanyBodyState extends State<AddCompanyBody> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _industryController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _minEmployeesController = TextEditingController();
+  final TextEditingController _maxEmployeesController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  final List<String> _hrEmails = [];
+  final TextEditingController _hrEmailController = TextEditingController();
+
+  File? _profileImage;
+  File? _coverImage;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    _industryController.dispose();
+    _addressController.dispose();
+    _minEmployeesController.dispose();
+    _maxEmployeesController.dispose();
+    _emailController.dispose();
+    _hrEmailController.dispose();
+    super.dispose();
+  }
+
+  void _addHrEmail() {
+    if (_hrEmailController.text.isNotEmpty) {
+      setState(() {
+        _hrEmails.add(_hrEmailController.text);
+        _hrEmailController.clear();
+      });
+    }
+  }
+
+  Future<void> _pickImage(bool isProfile) async {
+    final ImagePicker picker = ImagePicker();
+     XFile? image;
+    try{
+     image = await picker.pickImage(source: ImageSource.gallery);
+    }
+    catch (e){
+     
+    }
+    if (image != null) {
+      setState(() {
+        if (isProfile) {
+          _profileImage = File(image!.path);
+        } else {
+          _coverImage = File(image!.path);
+        }
+      });
+    }
+  }
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<CompaniesCubit, CompaniesState>(
+      listener: (context, state) {
+        if (state is CompanyCreateSuccess) {
+          GoRouter.of(context).pop();
+        }
+        else if (state is CompaniesFailure) {
+          isLoading = false;
+         showSnackBar(context, state.message);
+        }
+        else if (state is CompaniesLoading) {
+            isLoading = true;
+        }
+      },
+      builder: (context, state) {
+        return ModalProgressHUD(
+          inAsyncCall: isLoading,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () => _pickImage(false),
+                            child: Container(
+                              height: 200,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(8),
+                                image: _coverImage != null
+                                    ? DecorationImage(
+                                        image: FileImage(_coverImage!),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                              ),
+                              child: _coverImage == null
+                                  ? const Icon(
+                                      Icons.add_photo_alternate_outlined,
+                                      size: 40,
+                                      color: Colors.grey,
+                                    )
+                                  : null,
+                            ),
+                          ),
+                          const SizedBox(
+                              height: 30), // Space for profile picture overflow
+                        ],
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        child: GestureDetector(
+                          onTap: () => _pickImage(true),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 4,
+                              ),
+                            ),
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.grey[300],
+                              backgroundImage: _profileImage != null
+                                  ? FileImage(_profileImage!)
+                                  : null,
+                              child: _profileImage == null
+                                  ? const Icon(
+                                      Icons.add_a_photo_outlined,
+                                      size: 30,
+                                      color: Colors.grey,
+                                    )
+                                  : null,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  CustomTextFormField(
+                    controller: _nameController,
+                    labelText: 'Company Name',
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _descriptionController,
+                    labelText: 'Description',
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _industryController,
+                    labelText: 'Industry',
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _addressController,
+                    labelText: 'Address',
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomTextFormField(
+                          controller: _minEmployeesController,
+                          labelText: 'Min Employees',
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: CustomTextFormField(
+                          controller: _maxEmployeesController,
+                          labelText: 'Max Employees',
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextFormField(
+                    controller: _emailController,
+                    labelText: 'Company Email',
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomTextFormField(
+                          controller: _hrEmailController,
+                          labelText: 'HR Email',
+                          keyboardType: TextInputType.emailAddress,
+                          validate: false,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: _addHrEmail,
+                        child: const Text('Add HR'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: _hrEmails
+                        .map((email) => Chip(
+                              label: Text(email),
+                              onDeleted: () {
+                                setState(() {
+                                  _hrEmails.remove(email);
+                                });
+                              },
+                            ))
+                        .toList(),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final company = CompanyModel(
+                            companyName: _nameController.text,
+                            description: _descriptionController.text,
+                            industry: _industryController.text,
+                            address: _addressController.text,
+                            companyEmail: _emailController.text,
+                            HRs: _hrEmails,
+                            minEmployees: int.parse(_minEmployeesController.text),
+                            maxEmployees: int.parse(_maxEmployeesController.text),
+                          );
+                          BlocProvider.of<CompaniesCubit>(context).createCompany(
+                            company,
+                            _profileImage,
+                            _coverImage,
+                          );
+                        }
+                      },
+                      child: const Text('Add Company'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

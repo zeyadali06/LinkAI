@@ -1,30 +1,37 @@
 class CompanyModel {
-  final String id;
+  final String? id;
   final String companyName;
   final String description;
   final String industry;
   final String address;
   final String companyEmail;
-  final String createdBy;
-  final String createdAt;
-  final String updatedAt;
-  final String numberOfEmployees;
+  final String? createdBy;
+  final String? createdAt;
+  final String? updatedAt;
+  final int maxEmployees;
+  final int minEmployees;
   final List<String> HRs;
-  final bool approvedByAdmin;
-
+  final bool? approvedByAdmin;
+   String? coverImage;
+   String? profileImage;
+  final String? role;
   CompanyModel({
-    required this.id,
+     this.id,
     required this.companyName,
     required this.description,
     required this.industry,
     required this.address,
     required this.companyEmail,
-    required this.createdBy,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.numberOfEmployees,
+     this.createdBy,
+     this.createdAt,
+     this.updatedAt,
+    required this.maxEmployees,
+    required this.minEmployees,
     required this.HRs,
-    required this.approvedByAdmin,
+     this.approvedByAdmin,
+    this.role,
+    this.coverImage,
+    this.profileImage,
   });
 
   Map<String, dynamic> toJson() {
@@ -38,7 +45,10 @@ class CompanyModel {
       'createdBy': createdBy,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
-      'numberOfEmployees': numberOfEmployees,
+      'numberOfEmployees': {
+        'from': minEmployees,
+        'to': maxEmployees,
+      },
       'HRs': HRs,
       'approvedByAdmin': approvedByAdmin,
     };
@@ -55,10 +65,13 @@ class CompanyModel {
       createdBy: json['createdBy'] ?? '',
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
-      numberOfEmployees: json['numberOfEmployees'] ?? '',
+      coverImage: json['coverPic']?["secure_url"] ,
+      profileImage: json['logo']?["secure_url"],
+      maxEmployees: json['numberOfEmployees']?['to'] ?? 0,
+      minEmployees: json['numberOfEmployees']?['from'] ?? 0,
       HRs: List<String>.from(json['HRs'] ?? []),
       approvedByAdmin: json['approvedByAdmin'] ?? false,
+      role: json['userRole'] ,
     );
   }
-
 }

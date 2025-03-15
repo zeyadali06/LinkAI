@@ -47,7 +47,7 @@ class JobRepoImpl extends JobRepo {
         return RequestResault.success(null);
       } else {
         return RequestResault.failure(
-          const CustomFailure("Failed to add job"),
+          CustomFailure("Failed to add job ${res["message"]}"),
         );
       }
     } catch (e) {

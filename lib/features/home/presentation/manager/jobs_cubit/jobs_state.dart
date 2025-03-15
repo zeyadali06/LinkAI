@@ -12,6 +12,11 @@ final class JobsLoaded extends JobsState {
   JobsLoaded(this.jobs);
 }
 
+final class JobCreated extends JobsState {
+  final JobModel job;
+  JobCreated(this.job);
+}
+
 final class JobsError extends JobsState {
   final String message;
   JobsError(this.message);

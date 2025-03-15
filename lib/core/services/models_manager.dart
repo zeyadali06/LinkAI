@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:linkai/core/services/ip_manager.dart';
 import 'package:linkai/core/utils/api_constants.dart';
-import 'package:linkai/core/utils/app_assets.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:path_provider/path_provider.dart';
 

@@ -33,7 +33,7 @@ class AudioManager {
 
     if (permissionStatus.isGranted) {
       await audioRecorder.startRecorder(
-        toFile: "$fileName",
+        toFile: fileName,
         codec: codec,
         audioSource: AudioSource.microphone,
       );

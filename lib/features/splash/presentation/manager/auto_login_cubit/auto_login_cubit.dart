@@ -1,7 +1,7 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
-import 'package:meta/meta.dart';
 
 part 'auto_login_state.dart';
 
@@ -14,7 +14,7 @@ class AutoLoginCubit extends Cubit<AutoLoginState> {
     final result = await _autoLoginRepo.autoLogin();
     if (result is Success) {
       emit(AutoLoginSuccess());
-    } else if (result is Failed){
+    } else if (result is Failed) {
       emit(AutoLoginFailure(result.data.message));
     }
   }

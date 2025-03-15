@@ -69,14 +69,13 @@ class ApiManager {
     return json.decode(await response.stream.bytesToString());
   }
 
-
   Future<Map<String, dynamic>> uploadFile(String endPoint, String filePath, {String? token}) async {
-   var request = http.MultipartRequest('PATCH', Uri.parse('${ApiConstants.baseURL}$endPoint'));
-   request.files.add(await http.MultipartFile.fromPath('image', filePath));
+    var request = http.MultipartRequest('PATCH', Uri.parse('${ApiConstants.baseURL}$endPoint'));
+    request.files.add(await http.MultipartFile.fromPath('image', filePath));
     request.headers.addAll({
       'authorization': 'Bearer $token',
     });
-  final http.StreamedResponse response = await request.send();
+    final http.StreamedResponse response = await request.send();
 
     return json.decode(await response.stream.bytesToString());
   }

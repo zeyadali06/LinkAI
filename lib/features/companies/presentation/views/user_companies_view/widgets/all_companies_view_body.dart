@@ -9,17 +9,15 @@ class AllCompaniesViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CompaniesCubit, CompaniesState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is CompaniesSuccess) {
           return ListView.builder(
-            itemBuilder: (context, index) {
-              return CompanyCard(companyModel: state.companies[index]);
-            },
-            itemCount: state.companies.length);
-        }
-        else if (state is CompaniesFailure) {
+              itemBuilder: (context, index) {
+                return CompanyCard(companyModel: state.companies[index]);
+              },
+              itemCount: state.companies.length);
+        } else if (state is CompaniesFailure) {
           return Center(child: Text(state.message));
         }
         return const Center(child: CircularProgressIndicator());

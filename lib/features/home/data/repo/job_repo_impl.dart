@@ -39,7 +39,7 @@ class JobRepoImpl extends JobRepo {
     try {
       final Map<String, dynamic> res = await _apiManager.post(
         job.toJson(),
-        ApiConstants.addJob,
+        "${ApiConstants.addJob}/${job.company.id}",
         token: UserModel.instance.token,
       );
 

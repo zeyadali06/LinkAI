@@ -38,7 +38,8 @@ class CompanyDetailsViewBody extends StatelessWidget {
                         )
                       : null,
                 ),
-                const SizedBox(height: 60), // Space for profile picture overflow
+                const SizedBox(
+                    height: 60), // Space for profile picture overflow
               ],
             ),
             Positioned(

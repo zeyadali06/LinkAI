@@ -17,7 +17,8 @@ class InterviewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async => await BlocProvider.of<InterviewCubit>(context).setupChat(jobModel),
+      (timeStamp) async =>
+          await BlocProvider.of<InterviewCubit>(context).setupChat(jobModel),
     );
 
     return BlocConsumer<InterviewCubit, InterviewState>(

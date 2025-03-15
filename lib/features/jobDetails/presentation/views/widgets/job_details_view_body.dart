@@ -48,14 +48,20 @@ class JobdetailsViewBody extends StatelessWidget {
                         "${jobModel.company.companyName} - ${jobModel.company.address}",
                         style: AppStyles.bold18(
                           context,
-                          BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
+                          BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                                  ThemeMode.light
+                              ? Colors.blueGrey
+                              : Colors.white70,
                         ),
                       ),
                       Text(
-                        "${DateTime.now().difference(DateTime.parse(jobModel.createdAt)).inDays} days ago",
+                        "${DateTime.now().difference(DateTime.parse(jobModel.createdAt ?? '')).inDays} days ago",
                         style: AppStyles.defaultStyle(
                           context,
-                          BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
+                          BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                                  ThemeMode.light
+                              ? Colors.green
+                              : Colors.white38,
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -139,7 +145,8 @@ class JobdetailsViewBody extends StatelessWidget {
             right: 20,
             child: CustomButton(
               onPressed: () {
-                GoRouter.of(context).push(AppRouter.interviewView, extra: jobModel);
+                GoRouter.of(context)
+                    .push(AppRouter.interviewView, extra: jobModel);
               },
               text: "Interview Now",
             ),

@@ -27,10 +27,20 @@ import 'package:linkai/features/interview/domain/repositories/interview_repo.dar
 import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/jobDetails/presentation/views/job_details_view.dart';
+import 'package:linkai/features/profile/presentation/managers/change_password_cubit/change_password_cubit.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 import 'package:linkai/features/splash/presentation/manager/auto_login_cubit/auto_login_cubit.dart';
 import 'package:linkai/features/splash/presentation/views/splash_view.dart';
+
+import '../../features/profile/domain/useCases/changeNameuseCase/change_name_use_case.dart';
+import '../../features/profile/domain/useCases/passwordUseCase/change_password_use_case.dart';
+import '../../features/profile/presentation/managers/change_name_cubit/change_name_cubit.dart';
+import '../../features/profile/presentation/managers/profile_cubit/profile_cubit.dart';
+import '../../features/profile/presentation/views/change_email.dart';
+import '../../features/profile/presentation/views/change_name.dart';
+import '../../features/profile/presentation/views/change_password.dart';
+import '../../features/settings/presentation/views/settings.dart';
 
 abstract class AppRouter {
   static const String splashView = "/splashView";
@@ -48,6 +58,11 @@ abstract class AppRouter {
   static const String jobDetailsView = "/jobDetailsView";
   static const String addCompanyView = "/addCompanyView";
   static const String companyDetailsView = "/companyDetailsView";
+  static const String settings = "/settings";
+  static const String changeName = "/changeName";
+  static const String changeEmail = "/changeEmail";
+  static const String changePassword = "/changePassword";
+
   static const String editCompanyView = "/editCompanyView";
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
@@ -93,10 +108,32 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: changePassword,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => ChangePasswordCubit(
+                  ServiceLocator.getIt<ChangePasswordUseCase>()),
+              child: const ChangePassword(),
+            ),
+            transitionsBuilder: bottomUpTransition,
+          );
+        },
+      ),
+      GoRoute(
         path: navigatorView,
         pageBuilder: (context, state) {
           return const CustomTransitionPage(
             child: NavigatorView(),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: settings,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: Settings(),
             transitionsBuilder: customTransition,
           );
         },
@@ -107,6 +144,34 @@ abstract class AppRouter {
           return const CustomTransitionPage(
             child: LoginView(),
             transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: changeName,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                    create: (context) => ChangeNameCubit(
+                        ServiceLocator.getIt<ChangeNameUseCase>())),
+                BlocProvider.value(
+                  value: state.extra as ProfileCubit,
+                ),
+              ],
+              child: ChangeName(),
+            ),
+            transitionsBuilder: bottomUpTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: changeEmail,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: ChangeEmail(),
+            transitionsBuilder: bottomUpTransition,
           );
         },
       ),
@@ -213,8 +278,11 @@ abstract class AppRouter {
       GoRoute(
         path: createJobView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
-            child: CreateJobView(),
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => JobsCubit(),
+              child: CreateJobView(companyModel: state.extra as CompanyModel),
+            ),
             transitionsBuilder: customTransition,
           );
         },
@@ -242,5 +310,16 @@ abstract class AppRouter {
     final Animation<Offset> offsetAnimation = animation.drive(tween);
 
     return SlideTransition(position: offsetAnimation, child: child);
+  }
+
+  static Widget bottomUpTransition(
+      context, animation, secondaryAnimation, child) {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0, 1),
+        end: Offset.zero,
+      ).animate(animation),
+      child: child,
+    );
   }
 }

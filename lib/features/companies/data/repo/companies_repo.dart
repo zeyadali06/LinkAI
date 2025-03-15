@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:linkai/core/failures/custom_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/company_model.dart';
@@ -33,8 +34,9 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
     }
   }
-    @override
-      Future<RequestResault> getUserCompanies() async {
+
+  @override
+  Future<RequestResault> getUserCompanies() async {
     try {
       final Map<String, dynamic> res = await _apiManager.get(
         ApiConstants.userCompanies,
@@ -58,6 +60,7 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
     }
   }
+
   @override
   Future<RequestResault> addCompany(CompanyModel company, File? profileImage, File? coverImage) async {
     try {
@@ -78,13 +81,11 @@ class CompaniesRepoImpl implements CompaniesRepo {
         }
         }
         // ignore: empty_catches
-        catch (e){
-
-        }
+        catch (e) {}
         return RequestResault.success(company);
       } else {
         return RequestResault.failure(
-           CustomFailure("Failed to add company, ${res['message']}"),
+          CustomFailure("Failed to add company, ${res['message']}"),
         );
       }
     } catch (e) {
@@ -93,10 +94,10 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
     }
   }
-  Future<RequestResault> uploadCompanyLogo(File? profileImage,String companyId) async {
+
+  Future<RequestResault> uploadCompanyLogo(File? profileImage, String companyId) async {
     try {
       final Map<String, dynamic> res = await _apiManager.uploadFile(
-      
         "${ApiConstants.uploadCompanyLogo}/$companyId",
         profileImage!.path,
         token: UserModel.instance.token,
@@ -108,22 +109,21 @@ class CompaniesRepoImpl implements CompaniesRepo {
           const CustomFailure("Failed to add company images"),
         );
       }
-    }
-    catch (e) {
+    } catch (e) {
       return RequestResault.failure(
         const CustomFailure("Something went wrong!"),
       );
     }
-    }
-  Future<RequestResault> uploadCompanyCover(File? coverImage,String companyId) async {
+  }
+
+  Future<RequestResault> uploadCompanyCover(File? coverImage, String companyId) async {
     try {
-        final Map<String, dynamic> res = await _apiManager.uploadFile(
-      
+      final Map<String, dynamic> res = await _apiManager.uploadFile(
         "${ApiConstants.uploadCompanyCover}/$companyId",
         coverImage!.path,
         token: UserModel.instance.token,
       );
-      if (res["success"]) { 
+      if (res["success"]) {
         return RequestResault.success(res["data"]);
       } else {
         return RequestResault.failure(
@@ -136,6 +136,7 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
     }
   }
+
   @override
   Future<RequestResault> deleteCompany(String companyId) async {
     try {

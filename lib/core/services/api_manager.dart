@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:linkai/core/utils/api_constants.dart';
-
+@injectable
 class ApiManager {
   const ApiManager();
   Future<Map<String, dynamic>> delete(String endPoint, {String? token}) async {
@@ -69,14 +70,13 @@ class ApiManager {
     return json.decode(await response.stream.bytesToString());
   }
 
-
   Future<Map<String, dynamic>> uploadFile(String endPoint, String filePath, {String? token}) async {
-   var request = http.MultipartRequest('PATCH', Uri.parse('${ApiConstants.baseURL}$endPoint'));
-   request.files.add(await http.MultipartFile.fromPath('image', filePath));
+    var request = http.MultipartRequest('PATCH', Uri.parse('${ApiConstants.baseURL}$endPoint'));
+    request.files.add(await http.MultipartFile.fromPath('image', filePath));
     request.headers.addAll({
       'authorization': 'Bearer $token',
     });
-  final http.StreamedResponse response = await request.send();
+    final http.StreamedResponse response = await request.send();
 
     return json.decode(await response.stream.bytesToString());
   }

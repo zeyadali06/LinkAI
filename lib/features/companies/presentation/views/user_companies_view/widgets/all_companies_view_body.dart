@@ -10,8 +10,7 @@ class AllCompaniesViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<CompaniesCubit>();
     return BlocConsumer<CompaniesCubit, CompaniesState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is CompaniesLoading) {
           return const Center(child: CircularProgressIndicator());

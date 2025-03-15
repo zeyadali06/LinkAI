@@ -15,15 +15,15 @@ class CompanyModel {
    String? profileImage;
    String? role;
   CompanyModel({
-     this.id,
+    this.id,
     required this.companyName,
     required this.description,
     required this.industry,
     required this.address,
     required this.companyEmail,
-     this.createdBy,
-     this.createdAt,
-     this.updatedAt,
+    this.createdBy,
+    this.createdAt,
+    this.updatedAt,
     required this.maxEmployees,
     required this.minEmployees,
     required this.HRs,
@@ -58,7 +58,7 @@ class CompanyModel {
       createdBy: json['createdBy'] ?? '',
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
-      coverImage: json['coverPic']?["secure_url"] ,
+      coverImage: json['coverPic']?["secure_url"],
       profileImage: json['logo']?["secure_url"],
       maxEmployees: json['numberOfEmployees']?['to'] ?? 0,
       minEmployees: json['numberOfEmployees']?['from'] ?? 0,

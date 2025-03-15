@@ -57,14 +57,10 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
 
   Future<void> _pickImage(bool isProfile) async {
     final ImagePicker picker = ImagePicker();
-     XFile? image;
-    try{
-     image = await picker.pickImage(source: ImageSource.gallery);
-    }
-    // ignore: empty_catches
-    catch (e){
-     
-    }
+    XFile? image;
+    try {
+      image = await picker.pickImage(source: ImageSource.gallery);
+    } catch (_) {}
     if (image != null) {
       setState(() {
         if (isProfile) {
@@ -75,6 +71,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
       });
     }
   }
+
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -83,13 +80,11 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
         if (state is CompanyCreateSuccess) {
           context.read<CompaniesCubit>().getUserCompanies();
           GoRouter.of(context).pop();
-        }
-        else if (state is CompaniesFailure) {
+        } else if (state is CompaniesFailure) {
           isLoading = false;
-         showSnackBar(context, state.message);
-        }
-        else if (state is CompaniesLoading) {
-            isLoading = true;
+          showSnackBar(context, state.message);
+        } else if (state is CompaniesLoading) {
+          isLoading = true;
         }
       },
       builder: (context, state) {
@@ -131,8 +126,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                                   : null,
                             ),
                           ),
-                          const SizedBox(
-                              height: 30), // Space for profile picture overflow
+                          const SizedBox(height: 30), // Space for profile picture overflow
                         ],
                       ),
                       Positioned(
@@ -150,9 +144,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                             child: CircleAvatar(
                               radius: 50,
                               backgroundColor: Colors.grey[300],
-                              backgroundImage: _profileImage != null
-                                  ? FileImage(_profileImage!)
-                                  : null,
+                              backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
                               child: _profileImage == null
                                   ? const Icon(
                                       Icons.add_a_photo_outlined,
@@ -170,7 +162,6 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                   CustomTextField(
                     controller: _nameController,
                     hintText: 'Company Name',
-
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(

@@ -13,9 +13,8 @@ class CompanyCard extends StatelessWidget {
   final CompanyModel companyModel;
   @override
   Widget build(BuildContext context) {
-        return GestureDetector(
+    return GestureDetector(
       onTap: () {
-        
         GoRouter.of(context).push(AppRouter.companyDetailsView, extra: companyModel);
       },
       child: Card(
@@ -35,7 +34,6 @@ class CompanyCard extends StatelessWidget {
                 spacing: 5,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  
                   Expanded(
                     child: Text(
                       companyModel.companyName,
@@ -67,7 +65,7 @@ class CompanyCard extends StatelessWidget {
                   context,
                   BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.grey[500] : Colors.white60,
                 ),
-              ), 
+              ),
               // // Experience
               // Text(
               //   jobModel.experience,
@@ -88,7 +86,7 @@ class CompanyCard extends StatelessWidget {
               //     BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.black54 : Colors.white,
               //   ),
               // ),
-              
+
               // const SizedBox(height: 8),
 
               // // Time Ago
@@ -104,6 +102,5 @@ class CompanyCard extends StatelessWidget {
         ),
       ),
     );
-  
   }
 }

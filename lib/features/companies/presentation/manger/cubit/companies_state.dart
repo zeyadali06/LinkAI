@@ -11,10 +11,12 @@ final class CompaniesSuccess extends CompaniesState {
   final List<CompanyModel> companies;
   CompaniesSuccess(this.companies);
 }
+
 final class CompanyCreateSuccess extends CompaniesState {
   final CompanyModel company;
   CompanyCreateSuccess(this.company);
 }
+
 final class CompaniesFailure extends CompaniesState {
   final String message;
   CompaniesFailure(this.message);

@@ -21,3 +21,23 @@ final class JobsError extends JobsState {
   final String message;
   JobsError(this.message);
 }
+
+final class JobUpdated extends JobsState {
+  final JobModel job;
+  JobUpdated(this.job);
+}
+
+final class JobUpdatedError extends JobsState {
+  final String message;
+  JobUpdatedError(this.message);
+}
+
+final class JobDeleted extends JobsState {
+  final String message;
+  JobDeleted(this.message);
+}
+
+final class JobDeletedError extends JobsState {
+  final String message;
+  JobDeletedError(this.message);
+}

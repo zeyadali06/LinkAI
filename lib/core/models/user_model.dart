@@ -15,6 +15,6 @@ class UserModel {
     lastName = json["lastName"];
     email = json["email"];
     phone = json["mobileNumber"];
-    profileImage = json["profilePic"]["secure_url"];
+    profileImage = json["profilePic"]?["secure_url"];
   }
 }

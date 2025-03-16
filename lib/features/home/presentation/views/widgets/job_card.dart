@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
@@ -11,10 +12,11 @@ class JobCard extends StatelessWidget {
   const JobCard({
     super.key,
     required this.jobModel,
+    this.companyModel,
   });
 
   final JobModel jobModel;
-
+  final CompanyModel? companyModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -48,6 +50,14 @@ class JobCard extends StatelessWidget {
                   ),
                   JobTag(text: jobModel.workingTime),
                   JobTag(text: jobModel.workLocation),
+                  companyModel != null
+                      ? IconButton(
+                          onPressed: () {
+                            GoRouter.of(context)
+                                .push(AppRouter.editJobView, extra: jobModel);
+                          },
+                          icon: const Icon(Icons.edit))
+                      : const SizedBox(),
                 ],
               ),
 

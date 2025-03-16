@@ -21,6 +21,7 @@ import 'package:linkai/features/companies/presentation/views/add_company_view/ad
 import 'package:linkai/features/companies/presentation/views/company_details_view/company_details_view.dart';
 import 'package:linkai/features/companies/presentation/views/edit_company_view/edit_company_view.dart';
 import 'package:linkai/features/createJob/presentation/views/create_job_view.dart';
+import 'package:linkai/features/editJob/presentation/views/edit_job_view.dart';
 import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/navigator_view.dart';
 import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
@@ -55,6 +56,7 @@ abstract class AppRouter {
   static const String interviewView = "/interviewView";
   static const String nameView = "/nameView";
   static const String createJobView = "/createJobView";
+  static const String editJobView = "/editJobView";
   static const String jobDetailsView = "/jobDetailsView";
   static const String addCompanyView = "/addCompanyView";
   static const String companyDetailsView = "/companyDetailsView";
@@ -86,9 +88,11 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider.value(
-              value: (state.extra as Map<String, dynamic>)['companiesCubit'] as CompaniesCubit,
+              value: (state.extra as Map<String, dynamic>)['companiesCubit']
+                  as CompaniesCubit,
               child: EditCompanyView(
-                companyModel: (state.extra as Map<String, dynamic>)['companyModel'] as CompanyModel,
+                companyModel: (state.extra
+                    as Map<String, dynamic>)['companyModel'] as CompanyModel,
               ),
             ),
             transitionsBuilder: customTransition,
@@ -282,6 +286,18 @@ abstract class AppRouter {
             child: BlocProvider(
               create: (context) => JobsCubit(),
               child: CreateJobView(companyModel: state.extra as CompanyModel),
+            ),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: editJobView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => JobsCubit(),
+              child: EditJobView(jobModel: state.extra as JobModel),
             ),
             transitionsBuilder: customTransition,
           );

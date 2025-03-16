@@ -25,6 +25,7 @@ class JobsListPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return JobCard(
                   jobModel: state.jobs[index],
+                  companyModel: companyModel,
                 );
               },
             );

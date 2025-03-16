@@ -74,14 +74,25 @@ class ProfileViewBody extends StatelessWidget {
 
                       ),
                       const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(user.firstName?.toUpperCase() ?? "Guest",
-                              style: AppStyles.bold18(context, Colors.white)),
-                          Text(user.email ?? "No Email",
-                              style: AppStyles.normal16(context, Colors.grey)),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(user.firstName?.toUpperCase() ?? "Guest",
+                                style: AppStyles.bold18(context, Colors.white)),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(user.email ?? "No Email",
+                                        style: AppStyles.normal16(context, Colors.grey)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

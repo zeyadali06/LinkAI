@@ -97,7 +97,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 centerTitle: true,
                 title: Text(
                   "Change Password",
-                  style: AppStyles.normal18(context),
+                  style: AppStyles.semiBold18(context),
                 ),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(

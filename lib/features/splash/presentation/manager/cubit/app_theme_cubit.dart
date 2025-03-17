@@ -22,8 +22,6 @@ class AppThemeCubit extends Cubit<AppThemeState> {
       appTheme = AppThemes.fromString(res);
     }
 
-    appTheme = ThemeMode.light;
-
     emit(AppThemeUpdateTheme());
   }
 

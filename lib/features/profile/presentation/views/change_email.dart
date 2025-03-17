@@ -77,7 +77,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
           centerTitle: true,
           title: Text(
             "Change Email",
-            style: AppStyles.normal18(context),
+            style: AppStyles.semiBold18(context),
           ),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(

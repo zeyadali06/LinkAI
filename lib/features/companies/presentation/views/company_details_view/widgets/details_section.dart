@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/models/company_model.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 
 class DetailsSection extends StatelessWidget {
   const DetailsSection({super.key, required this.company});
@@ -64,7 +65,11 @@ class DetailsSection extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: Theme.of(context).colorScheme.primary, size: 24),
+          Icon(
+            icon,
+            color: Theme.of(context).colorScheme.primary,
+            size: 24,
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -72,20 +77,15 @@ class DetailsSection extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).textTheme.bodySmall?.color,
-                    fontWeight: FontWeight.w500,
+                  style: AppStyles.semiBold16(
+                    context,
+                    Theme.of(context).textTheme.bodySmall?.color,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   value ?? 'Not specified',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppStyles.normal16(context),
                 ),
               ],
             ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:linkai/core/failures/custom_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
@@ -39,7 +38,7 @@ class JobRepoImpl extends JobRepo {
     try {
       final Map<String, dynamic> res = await _apiManager.post(
         job.toJson(),
-        "${ApiConstants.addJob}/${job.company.id}",
+        "${ApiConstants.addJob}/${job.company?.id}",
         token: UserModel.instance.token,
       );
 

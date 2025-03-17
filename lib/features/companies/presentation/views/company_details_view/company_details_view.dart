@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/models/company_model.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/companies/presentation/views/company_details_view/widgets/company_details_view_body.dart';
 
 class CompanyDetailsView extends StatelessWidget {
@@ -13,7 +14,13 @@ class CompanyDetailsView extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(company.companyName),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          foregroundColor: Theme.of(context).iconTheme.color,
+          forceMaterialTransparency: true,
+          title: Text(
+            company.companyName,
+            style: AppStyles.semiBold18(context),
+          ),
           centerTitle: true,
         ),
         body: CompanyDetailsViewBody(company: company),

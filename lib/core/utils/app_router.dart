@@ -164,7 +164,7 @@ abstract class AppRouter {
                   value: state.extra as ProfileCubit,
                 ),
               ],
-              child: ChangeName(),
+              child: const ChangeName(),
             ),
             transitionsBuilder: bottomUpTransition,
           );

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/company_model.dart';
-import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/features/home/presentation/manager/jobs_cubit/jobs_cubit.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_card.dart';
 
@@ -34,17 +32,6 @@ class JobsListPage extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: companyModel != null
-          ? FloatingActionButton(
-              onPressed: () {
-                GoRouter.of(context).push(
-                  AppRouter.createJobView,
-                  extra: companyModel,
-                );
-              },
-              child: const Icon(Icons.add),
-            )
-          : null,
     );
   }
 }

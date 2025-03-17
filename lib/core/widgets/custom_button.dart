@@ -15,7 +15,8 @@ class CustomButton extends StatelessWidget {
     this.gradient,
     this.textAlign,
     this.borderRadius = 16,
-    this.padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 12.5),
+    this.padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+    this.fontSize = 18,
   });
 
   final void Function()? onPressed;
@@ -30,6 +31,7 @@ class CustomButton extends StatelessWidget {
   final TextAlign? textAlign;
   final EdgeInsets padding;
   final double borderRadius;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +67,10 @@ class CustomButton extends StatelessWidget {
         child: Text(
           text,
           textAlign: textAlign,
-          style: AppStyles.normal18(
+          style: AppStyles.defaultStyle(
             context,
             textColor ?? Theme.of(context).filledButtonTheme.style!.foregroundColor!.resolve({}),
-          ),
+          ).copyWith(fontSize: fontSize),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/company_model.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/core/widgets/snack_bar.dart';
@@ -32,22 +33,14 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
   void initState() {
     super.initState();
     // Initialize controllers with existing data
-    nameController =
-        TextEditingController(text: widget.companyModel.companyName);
-    descriptionController =
-        TextEditingController(text: widget.companyModel.description);
-    emailController =
-        TextEditingController(text: widget.companyModel.companyEmail);
-    addressController =
-        TextEditingController(text: widget.companyModel.address);
-    industryController =
-        TextEditingController(text: widget.companyModel.industry);
-    minEmployeesController = TextEditingController(
-        text: widget.companyModel.minEmployees.toString());
-    maxEmployeesController = TextEditingController(
-        text: widget.companyModel.maxEmployees.toString());
-    _hrEmails
-        .addAll(widget.companyModel.HRs); // Initialize with existing HRs
+    nameController = TextEditingController(text: widget.companyModel.companyName);
+    descriptionController = TextEditingController(text: widget.companyModel.description);
+    emailController = TextEditingController(text: widget.companyModel.companyEmail);
+    addressController = TextEditingController(text: widget.companyModel.address);
+    industryController = TextEditingController(text: widget.companyModel.industry);
+    minEmployeesController = TextEditingController(text: widget.companyModel.minEmployees.toString());
+    maxEmployeesController = TextEditingController(text: widget.companyModel.maxEmployees.toString());
+    _hrEmails.addAll(widget.companyModel.HRs); // Initialize with existing HRs
   }
 
   @override
@@ -80,7 +73,7 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
         if (state is CompanyUpdateSuccess) {
           GoRouter.of(context).pop();
         }
-        if (state is CompanyUpdateFailure ) {
+        if (state is CompanyUpdateFailure) {
           showSnackBar(context, state.message);
         }
         if (state is CompanyDeleteSuccess) {
@@ -128,8 +121,7 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
                     hintText: 'Company Email',
                     validator: (value) {
                       if (value?.isEmpty ?? true) return 'Please enter email';
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                          .hasMatch(value!)) {
+                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value!)) {
                         return 'Please enter valid email';
                       }
                       return null;
@@ -193,18 +185,22 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton(
+                      CustomButton(
+                        text: "Add",
+                        fitWidth: false,
+                        fontSize: 16,
                         onPressed: _addHrEmail,
-                        child: const Text('Add HR'),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
+                    runSpacing: 8,
                     children: _hrEmails
                         .map((email) => Chip(
                               label: Text(email),
+                              color: WidgetStatePropertyAll(Theme.of(context).inputDecorationTheme.fillColor!),
                               onDeleted: () {
                                 setState(() {
                                   _hrEmails.remove(email);
@@ -224,45 +220,54 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
                           companyEmail: emailController.text,
                           address: addressController.text,
                           industry: industryController.text,
-                          minEmployees:
-                              int.tryParse(minEmployeesController.text) ?? 0,
-                          maxEmployees:
-                              int.tryParse(maxEmployeesController.text) ?? 0,
+                          minEmployees: int.tryParse(minEmployeesController.text) ?? 0,
+                          maxEmployees: int.tryParse(maxEmployeesController.text) ?? 0,
                           HRs: _hrEmails,
                         );
-                        context
-                            .read<CompaniesCubit>()
-                            .updateCompany( updatedCompany);
+                        context.read<CompaniesCubit>().updateCompany(updatedCompany);
                       }
                     },
                   ),
                   const SizedBox(height: 16),
                   CustomButton(
                     text: 'Delete Company',
+                    textColor: Colors.white,
+                    buttonColor: Colors.red,
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: const Text('Delete Company'),
-                          content: const Text('Are you sure you want to delete this company?'),
+                          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                          title: Text(
+                            'Delete Company',
+                            style: AppStyles.semiBold18(context),
+                          ),
+                          content: Text(
+                            'Are you sure you want to delete this company?',
+                            style: AppStyles.normal16(context),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => GoRouter.of(context).pop(),
-                              child: const Text('Cancel'),
+                              child: Text(
+                                'Cancel',
+                                style: AppStyles.defaultStyle(context),
+                              ),
                             ),
                             TextButton(
                               onPressed: () {
                                 cubit.deleteCompany(widget.companyModel.id!);
-                                GoRouter.of(context).pop(); // Close dialog
+                                GoRouter.of(context).pop();
                               },
-                              child: const Text('Delete'),
+                              child: Text(
+                                'Delete',
+                                style: AppStyles.defaultStyle(context, Colors.red),
+                              ),
                             ),
                           ],
                         ),
                       );
                     },
-                    textColor: Colors.white,
-                    buttonColor: Colors.red,
                   ),
                 ],
               ),

@@ -1,8 +1,5 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
-
 import '../../../../../core/failures/request_result.dart';
 import '../../../domain/useCases/changeNameuseCase/change_name_use_case.dart';
 

@@ -6,6 +6,7 @@ import 'package:linkai/core/services/audio_manager.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/features/interview/data/models/message_item_model.dart';
 import 'package:linkai/features/interview/data/models/message_type_enum.dart';
+import 'package:linkai/features/interview/data/models/score_model.dart';
 import 'package:linkai/features/interview/domain/repositories/interview_repo.dart';
 
 part 'interview_state.dart';
@@ -65,8 +66,13 @@ class InterviewCubit extends Cubit<InterviewState> {
       final RequestResault res = await _interviewRepo.sendMessage(message, chatId);
 
       if (res is Success) {
-        chat.add(MessageItemModel(message: res.data, type: MessageType.recieved));
-        emit(InterviewAnswer(res.data));
+        if (res.data is String) {
+          chat.add(MessageItemModel(message: res.data, type: MessageType.recieved));
+          await _interviewRepo.runVoice(res.data);
+          emit(InterviewAnswer(res.data));
+        } else if (res.data is ScoreModel) {
+          emit(InterviewFinishInterview(res.data));
+        }
       } else if (res is Failed) {
         emit(InterviewFailed(res.data));
       }

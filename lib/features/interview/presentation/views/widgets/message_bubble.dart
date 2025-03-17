@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/logo.dart';
 import 'package:linkai/core/widgets/person_avatar.dart';
@@ -28,7 +29,7 @@ class MessageBubble extends StatelessWidget {
             style: AppStyles.normal18(context),
           ),
         ),
-        if (model.type == MessageType.sended) const PersonAvatar(radius: 20),
+        if (model.type == MessageType.sended) PersonAvatar(radius: 20, imageURL: UserModel.instance.profileImage),
       ],
     );
   }

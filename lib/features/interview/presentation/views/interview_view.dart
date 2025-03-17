@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/snack_bar.dart';
 import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
@@ -17,8 +19,7 @@ class InterviewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async =>
-          await BlocProvider.of<InterviewCubit>(context).setupChat(jobModel),
+      (timeStamp) async => await BlocProvider.of<InterviewCubit>(context).setupChat(jobModel),
     );
 
     return BlocConsumer<InterviewCubit, InterviewState>(
@@ -27,6 +28,8 @@ class InterviewView extends StatelessWidget {
           showSnackBar(context, state.errorMessage);
         } else if (state is InterviewGetChatId) {
           chatId = state.chatId;
+        } else if (state is InterviewFinishInterview) {
+          GoRouter.of(context).pushReplacement(AppRouter.scoreView, extra: state.score);
         }
       },
       builder: (context, state) {

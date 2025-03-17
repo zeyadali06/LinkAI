@@ -9,6 +9,12 @@ final class InterviewLoading extends InterviewState {}
 
 final class InterviewSuccess extends InterviewState {}
 
+final class InterviewFinishInterview extends InterviewState {
+  final ScoreModel score;
+
+  InterviewFinishInterview(this.score);
+}
+
 final class InterviewAnswer extends InterviewState {
   final String response;
 

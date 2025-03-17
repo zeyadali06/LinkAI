@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/utils/app_styles.dart';
-import 'package:linkai/core/utils/formatters.dart';
 import 'package:linkai/core/widgets/custom_obsecure_text_field.dart';
-import '../../../../../../core/utils/app_colors.dart';
 
 class ChangePasswordNewPassBody extends StatefulWidget {
   const ChangePasswordNewPassBody({super.key, required this.controller});
@@ -10,8 +8,7 @@ class ChangePasswordNewPassBody extends StatefulWidget {
   final TextEditingController controller;
 
   @override
-  _ChangePasswordNewPassBodyState createState() =>
-      _ChangePasswordNewPassBodyState();
+  State<ChangePasswordNewPassBody> createState() => _ChangePasswordNewPassBodyState();
 }
 
 class _ChangePasswordNewPassBodyState extends State<ChangePasswordNewPassBody> {
@@ -73,50 +70,44 @@ class _ChangePasswordNewPassBodyState extends State<ChangePasswordNewPassBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.darkBackgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomObsecureTextField(
-              borderRadius: 16,
-              controller: widget.controller,
-              hintText: "New password",
-              enableValidator: true,
-              validator: _validatePassword,
-              onChanged: _checkPasswordStrength,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomObsecureTextField(
+            borderRadius: 16,
+            controller: widget.controller,
+            hintText: "New password",
+            enableValidator: true,
+            validator: _validatePassword,
+            onChanged: _checkPasswordStrength,
+          ),
+          const SizedBox(height: 10),
+          LinearProgressIndicator(
+            value: passwordStrength,
+            borderRadius: BorderRadius.circular(10),
+            backgroundColor: Colors.grey[700],
+            valueColor: AlwaysStoppedAnimation<Color>(
+              passwordStrength <= 0.4
+                  ? Colors.red
+                  : passwordStrength <= 0.6
+                      ? Colors.orange
+                      : passwordStrength <= 0.8
+                          ? Colors.yellow
+                          : Colors.green,
             ),
-            const SizedBox(height: 10),
-            LinearProgressIndicator(
-              value: passwordStrength,
-              backgroundColor: Colors.grey[700],
-              valueColor: AlwaysStoppedAnimation<Color>(
-                passwordStrength <= 0.4
-                    ? Colors.red
-                    : passwordStrength <= 0.6
-                        ? Colors.orange
-                        : passwordStrength <= 0.8
-                            ? Colors.yellow
-                            : Colors.green,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              passwordHint,
-              style: TextStyle(
-                color: passwordStrength <= 0.4 ? Colors.red : Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              "Use 8 or more characters with a mix of letters, numbers & symbols",
-              style: AppStyles.normal16(context, Colors.grey)
-                  .copyWith(fontSize: 14),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            passwordHint,
+            style: AppStyles.defaultStyle(context, passwordStrength <= 0.4 ? Colors.red : null),
+          ),
+          Text(
+            "Use 8 or more characters with a mix of letters, numbers & symbols",
+            style: AppStyles.defaultStyle(context, Colors.grey),
+          ),
+        ],
       ),
     );
   }

@@ -18,7 +18,7 @@ class JobTag extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: AppStyles.bold14(context),
+        style: AppStyles.bold14(context).copyWith(fontSize: 12),
       ),
     );
   }

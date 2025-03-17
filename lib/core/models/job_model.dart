@@ -3,7 +3,7 @@ import 'package:linkai/core/models/company_model.dart';
 class JobModel {
   String? id;
   String title;
-  CompanyModel company;
+  CompanyModel? company;
   String experience;
   List<dynamic> technicalSkills;
   List<dynamic> softSkills;
@@ -46,7 +46,7 @@ class JobModel {
     return JobModel(
       id: json['_id'] ?? '',
       title: json['jobTitle'] ?? '',
-      company: CompanyModel.fromJson(json['companyId']),
+      company: json['companyId'] != null ? CompanyModel.fromJson(json['companyId']) : null,
       experience: json['seniorityLevel'] ?? '',
       technicalSkills: json['technicalSkills'] ?? [],
       softSkills: json['softSkills'] ?? [],

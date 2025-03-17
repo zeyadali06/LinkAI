@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/core/widgets/snack_bar.dart';
@@ -18,14 +19,7 @@ class EditJobViewBody extends StatefulWidget {
 }
 
 class _EditJobViewBodyState extends State<EditJobViewBody> {
-  final List<String> experienceLevels = [
-    "fresh",
-    "Junior",
-    "Mid-Level",
-    "Senior",
-    "Team-Lead",
-    "CTO"
-  ];
+  final List<String> experienceLevels = ["fresh", "Junior", "Mid-Level", "Senior", "Team-Lead", "CTO"];
   final List<String> workingTimes = ["full-time", "part-time", "internship"];
   final List<String> workLocations = ["onsite", "remotely", "hybrid"];
 
@@ -34,17 +28,13 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
   late List<String> technicalSkills;
   late List<String> softSkills;
 
-  final TextEditingController technicalSkillsController =
-      TextEditingController();
+  final TextEditingController technicalSkillsController = TextEditingController();
   final TextEditingController softSkillsController = TextEditingController();
   final TextEditingController jobTitleController = TextEditingController();
-  final TextEditingController jobDescriptionController =
-      TextEditingController();
+  final TextEditingController jobDescriptionController = TextEditingController();
   final TextEditingController jobExperienceController = TextEditingController();
-  final TextEditingController jobWorkingTimeController =
-      TextEditingController();
-  final TextEditingController jobWorkLocationController =
-      TextEditingController();
+  final TextEditingController jobWorkingTimeController = TextEditingController();
+  final TextEditingController jobWorkLocationController = TextEditingController();
   final TextEditingController jobCountryController = TextEditingController();
 
   void _addTechnicalSkill() {
@@ -90,16 +80,14 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
     return BlocConsumer<JobsCubit, JobsState>(
       listener: (context, state) {
         if (state is JobUpdated) {
-          showSnackBar(context, "Job updated successfully",
-              backgroundColor: Colors.green);
+          showSnackBar(context, "Job updated successfully", backgroundColor: Colors.green);
           GoRouter.of(context).pop();
         }
         if (state is JobUpdatedError) {
           showSnackBar(context, state.message);
         }
         if (state is JobDeleted) {
-          showSnackBar(context, "Job deleted successfully",
-              backgroundColor: Colors.green);
+          showSnackBar(context, "Job deleted successfully", backgroundColor: Colors.green);
           GoRouter.of(context).pop();
         }
         if (state is JobDeletedError) {
@@ -143,26 +131,33 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton(
+                      CustomButton(
+                        text: "Add",
+                        fitWidth: false,
+                        fontSize: 16,
                         onPressed: _addTechnicalSkill,
-                        child: const Text('Add'),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
+                    runSpacing: 8,
                     children: technicalSkills
-                        .map((skill) => Chip(
-                              label: Text(skill),
-                              onDeleted: () {
-                                setState(() {
-                                  technicalSkills.remove(skill);
-                                });
-                              },
-                            ))
+                        .map(
+                          (skill) => Chip(
+                            label: Text(skill),
+                            color: WidgetStatePropertyAll(Theme.of(context).inputDecorationTheme.fillColor!),
+                            onDeleted: () {
+                              setState(() {
+                                technicalSkills.remove(skill);
+                              });
+                            },
+                          ),
+                        )
                         .toList(),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 15),
                   Row(
                     children: [
                       Expanded(
@@ -174,23 +169,30 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton(
+                      CustomButton(
+                        text: "Add",
+                        fitWidth: false,
+                        fontSize: 16,
                         onPressed: _addSoftSkill,
-                        child: const Text('Add'),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
+                    runSpacing: 8,
                     children: softSkills
-                        .map((skill) => Chip(
-                              label: Text(skill),
-                              onDeleted: () {
-                                setState(() {
-                                  softSkills.remove(skill);
-                                });
-                              },
-                            ))
+                        .map(
+                          (skill) => Chip(
+                            label: Text(skill),
+                            color: WidgetStatePropertyAll(Theme.of(context).inputDecorationTheme.fillColor!),
+                            onDeleted: () {
+                              setState(() {
+                                softSkills.remove(skill);
+                              });
+                            },
+                          ),
+                        )
                         .toList(),
                   ),
                   const SizedBox(height: 10),
@@ -239,8 +241,7 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
                           company: widget.jobModel.company,
                           jobCountry: jobCountryController.text,
                         );
-                        BlocProvider.of<JobsCubit>(context)
-                            .updateJob(updatedJob);
+                        BlocProvider.of<JobsCubit>(context).updateJob(updatedJob);
                       } else {
                         _autovalidatemodel = AutovalidateMode.always;
                         setState(() {});
@@ -251,31 +252,42 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
                   const SizedBox(height: 16),
                   CustomButton(
                     text: 'Delete Job',
+                    textColor: Colors.white,
+                    buttonColor: Colors.red,
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: const Text('Delete Job'),
-                          content: const Text(
-                              'Are you sure you want to delete this Job?'),
+                          title: Text(
+                            'Delete Job',
+                            style: AppStyles.semiBold18(context),
+                          ),
+                          content: Text(
+                            'Are you sure you want to delete this Job?',
+                            style: AppStyles.normal16(context),
+                          ),
                           actions: [
                             TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('Cancel'),
+                              onPressed: () => GoRouter.of(context).pop(),
+                              child: Text(
+                                'Cancel',
+                                style: AppStyles.defaultStyle(context),
+                              ),
                             ),
                             TextButton(
                               onPressed: () {
                                 cubit.deleteJob(widget.jobModel.id!);
-                                Navigator.pop(context);
+                                GoRouter.of(context).pop();
                               },
-                              child: const Text('Delete'),
+                              child: Text(
+                                'Delete',
+                                style: AppStyles.defaultStyle(context, Colors.red),
+                              ),
                             ),
                           ],
                         ),
                       );
                     },
-                    textColor: Colors.white,
-                    buttonColor: Colors.red,
                   ),
                   const SizedBox(height: 16),
                 ],

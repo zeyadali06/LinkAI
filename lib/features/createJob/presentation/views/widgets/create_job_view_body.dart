@@ -19,14 +19,7 @@ class CreateJobViewBody extends StatefulWidget {
 }
 
 class _CreateJobViewBodyState extends State<CreateJobViewBody> {
-  final List<String> experienceLevels = [
-    "fresh",
-    "Junior",
-    "Mid-Level",
-    "Senior",
-    "Team-Lead",
-    "CTO"
-  ];
+  final List<String> experienceLevels = ["fresh", "Junior", "Mid-Level", "Senior", "Team-Lead", "CTO"];
   final List<String> technicalSkills = [];
   final List<String> softSkills = [];
   final List<String> workingTimes = ["full-time", "part-time", "internship"];
@@ -35,17 +28,13 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
   late final GlobalKey<FormState> _formKey;
   late final JobRepo jobRepo;
   late AutovalidateMode _autovalidatemodel;
-  final TextEditingController technicalSkillsController =
-      TextEditingController();
+  final TextEditingController technicalSkillsController = TextEditingController();
   final TextEditingController softSkillsController = TextEditingController();
   final TextEditingController jobTitleController = TextEditingController();
-  final TextEditingController jobDescriptionController =
-      TextEditingController();
+  final TextEditingController jobDescriptionController = TextEditingController();
   final TextEditingController jobExperienceController = TextEditingController();
-  final TextEditingController jobWorkingTimeController =
-      TextEditingController();
-  final TextEditingController jobWorkLocationController =
-      TextEditingController();
+  final TextEditingController jobWorkingTimeController = TextEditingController();
+  final TextEditingController jobWorkLocationController = TextEditingController();
   final TextEditingController jobCountryController = TextEditingController();
 
   void _addTechnicalSkill() {
@@ -85,162 +74,165 @@ class _CreateJobViewBodyState extends State<CreateJobViewBody> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          appBar: AppBar(
-            title: const Text("Create Job"),
-            centerTitle: true,
-            forceMaterialTransparency: true,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            foregroundColor: Theme.of(context).iconTheme.color,
-          ),
-          body: Form(
-            key: _formKey,
-            autovalidateMode: _autovalidatemodel,
-            child: Stack(
-              children: [
-                CustomScrollView(
-                  slivers: [
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          spacing: 14,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 6),
-                            CustomTextField(
-                              hintText: "Job Title",
-                              controller: jobTitleController,
-                            ),
-                            MyDropdown(
-                              label: "Experience Level",
-                              items: experienceLevels,
-                              onChanged: (value) {
-                                jobExperienceController.text = value!;
-                              },
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CustomTextField(
-                                      controller: technicalSkillsController,
-                                      hintText: 'Technical Skills',
-                                      keyboardType: TextInputType.text,
-                                      enableValidator: false),
+        return Form(
+          key: _formKey,
+          autovalidateMode: _autovalidatemodel,
+          child: Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        spacing: 14,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 6),
+                          CustomTextField(
+                            hintText: "Job Title",
+                            controller: jobTitleController,
+                          ),
+                          MyDropdown(
+                            label: "Experience Level",
+                            items: experienceLevels,
+                            onChanged: (value) {
+                              jobExperienceController.text = value!;
+                            },
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: technicalSkillsController,
+                                  hintText: 'Technical Skills',
+                                  keyboardType: TextInputType.text,
+                                  enableValidator: false,
                                 ),
-                                const SizedBox(width: 8),
-                                ElevatedButton(
-                                  onPressed: _addTechnicalSkill,
-                                  child: const Text('Add'),
-                                ),
-                              ],
-                            ),
-                            Wrap(
-                              spacing: 8,
-                              children: technicalSkills
-                                  .map((skill) => Chip(
-                                        label: Text(skill),
-                                        onDeleted: () {
-                                          setState(() {
-                                            technicalSkills.remove(skill);
-                                          });
-                                        },
-                                      ))
-                                  .toList(),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CustomTextField(
-                                    controller: softSkillsController,
-                                    hintText: 'Soft Skills',
-                                    keyboardType: TextInputType.text,
-                                    enableValidator: false,
+                              ),
+                              const SizedBox(width: 8),
+                              CustomButton(
+                                text: "Add",
+                                fitWidth: false,
+                                fontSize: 16,
+                                onPressed: _addTechnicalSkill,
+                              ),
+                            ],
+                          ),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: technicalSkills
+                                .map(
+                                  (skill) => Chip(
+                                    label: Text(skill),
+                                    color: WidgetStatePropertyAll(Theme.of(context).inputDecorationTheme.fillColor!),
+                                    onDeleted: () {
+                                      setState(() {
+                                        technicalSkills.remove(skill);
+                                      });
+                                    },
                                   ),
+                                )
+                                .toList(),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: softSkillsController,
+                                  hintText: 'Soft Skills',
+                                  keyboardType: TextInputType.text,
+                                  enableValidator: false,
                                 ),
-                                const SizedBox(width: 8),
-                                ElevatedButton(
-                                  onPressed: _addSoftSkill,
-                                  child: const Text('Add'),
-                                ),
-                              ],
-                            ),
-                            Wrap(
-                              spacing: 8,
-                              children: softSkills
-                                  .map((skill) => Chip(
-                                        label: Text(skill),
-                                        onDeleted: () {
-                                          setState(() {
-                                            softSkills.remove(skill);
-                                          });
-                                        },
-                                      ))
-                                  .toList(),
-                            ),
-                            CustomTextField(
-                              hintText: "Job Country",
-                              controller: jobCountryController,
-                            ),
-                            MyDropdown(
-                              label: "Working Time",
-                              items: workingTimes,
-                              onChanged: (value) {
-                                jobWorkingTimeController.text = value!;
-                              },
-                            ),
-                            MyDropdown(
-                              label: "Work Location",
-                              items: workLocations,
-                              onChanged: (value) {
-                                jobWorkLocationController.text = value!;
-                              },
-                            ),
-                            CustomTextField(
-                              hintText: "Job Description",
-                              maxLines: 5,
-                              controller: jobDescriptionController,
-                            ),
-                            const SizedBox(height: 100),
-                          ],
-                        ),
+                              ),
+                              const SizedBox(width: 8),
+                              CustomButton(
+                                text: "Add",
+                                fitWidth: false,
+                                fontSize: 16,
+                                onPressed: _addSoftSkill,
+                              ),
+                            ],
+                          ),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: softSkills
+                                .map(
+                                  (skill) => Chip(
+                                    label: Text(skill),
+                                    color: WidgetStatePropertyAll(Theme.of(context).inputDecorationTheme.fillColor!),
+                                    onDeleted: () {
+                                      setState(() {
+                                        softSkills.remove(skill);
+                                      });
+                                    },
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          CustomTextField(
+                            hintText: "Job Country",
+                            controller: jobCountryController,
+                          ),
+                          MyDropdown(
+                            label: "Working Time",
+                            items: workingTimes,
+                            onChanged: (value) {
+                              jobWorkingTimeController.text = value!;
+                            },
+                          ),
+                          MyDropdown(
+                            label: "Work Location",
+                            items: workLocations,
+                            onChanged: (value) {
+                              jobWorkLocationController.text = value!;
+                            },
+                          ),
+                          CustomTextField(
+                            hintText: "Job Description",
+                            maxLines: 5,
+                            controller: jobDescriptionController,
+                          ),
+                          const SizedBox(height: 100),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  child: CustomButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        final jobModel = JobModel(
-                          title: jobTitleController.text,
-                          experience: jobExperienceController.text,
-                          technicalSkills: technicalSkills,
-                          softSkills: softSkills,
-                          workingTime: jobWorkingTimeController.text,
-                          workLocation: jobWorkLocationController.text,
-                          description: jobDescriptionController.text,
-                          company: widget.companyModel,
-                          jobCountry: jobCountryController.text,
-                        );
-                        BlocProvider.of<JobsCubit>(context).addJob(jobModel);
-                      } else {
-                        _autovalidatemodel = AutovalidateMode.always;
-                        setState(() {});
-                      }
-                    },
-                    text: "Post Job",
                   ),
+                ],
+              ),
+              Positioned(
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: CustomButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      final jobModel = JobModel(
+                        title: jobTitleController.text,
+                        experience: jobExperienceController.text,
+                        technicalSkills: technicalSkills,
+                        softSkills: softSkills,
+                        workingTime: jobWorkingTimeController.text,
+                        workLocation: jobWorkLocationController.text,
+                        description: jobDescriptionController.text,
+                        company: widget.companyModel,
+                        jobCountry: jobCountryController.text,
+                      );
+                      BlocProvider.of<JobsCubit>(context).addJob(jobModel);
+                    } else {
+                      _autovalidatemodel = AutovalidateMode.always;
+                      setState(() {});
+                    }
+                  },
+                  text: "Post Job",
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

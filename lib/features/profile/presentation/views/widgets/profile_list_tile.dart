@@ -1,67 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/features/profile/presentation/views/widgets/custom_divider.dart';
 
 class ProfileListTile extends StatelessWidget {
-  ProfileListTile(
-      {super.key,
-      required this.title,
-      this.subtitle,
-      required this.hasArrow,
-      required this.height,
-       this.borderRadius= BorderRadius.zero,
-      this.description,
-      this.isTitle = false,
-      this.borderStyle,this.onPressed});
+  const ProfileListTile({
+    super.key,
+    required this.title,
+    this.subtitle,
+    required this.hasArrow,
+    this.borderRadius = BorderRadius.zero,
+    this.description,
+    this.isTitle = false,
+    this.onPressed,
+    this.maxDescriptionLines = 1,
+    this.verticalPadding = 15,
+    this.addDivider = false,
+  });
 
   final String title;
   final bool hasArrow;
-   BorderRadiusGeometry borderRadius;
-  final double height;
-  String? description;
-  String? subtitle;
-  bool isTitle;
-  BoxBorder? borderStyle;
-  GestureTapCallback? onPressed;
+  final BorderRadiusGeometry borderRadius;
+  final String? description;
+  final String? subtitle;
+  final bool isTitle;
+  final GestureTapCallback? onPressed;
+  final int maxDescriptionLines;
+  final double verticalPadding;
+  final bool addDivider;
 
   @override
   Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
-    ThemeData theme = Theme.of(context);
-    return GestureDetector(
+    final ThemeData theme = Theme.of(context);
 
+    return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        width: media.width * .9,
-        height: height,
-        decoration: BoxDecoration(
-            color: theme.cardColor,
-            borderRadius: borderRadius,
-            border: borderStyle ?? const Border()),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
+            decoration: BoxDecoration(
+              color: theme.cardColor,
+              borderRadius: borderRadius,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(title,
-                    style: isTitle
-                        ? AppStyles.normal16(context, Colors.white)
-                            .copyWith(color: Colors.grey)
-                        : AppStyles.normal18(context, Colors.white)),
-                const Spacer(),
-                if (subtitle != null)
-                  Text(subtitle!, style: AppStyles.normal16(context, Colors.grey).copyWith(fontSize: 14)),
-                const SizedBox(width: 7),
-                if (hasArrow)
-                  const Icon(Icons.arrow_forward_ios,
-                      color: Colors.grey, size: 16),
+                Row(
+                  spacing: 7,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          title,
+                          style: isTitle ? AppStyles.normal16(context, Colors.grey) : AppStyles.normal18(context),
+                        ),
+                      ),
+                    ),
+                    if (subtitle != null)
+                      Flexible(
+                        flex: 2,
+                        child: Text(
+                          subtitle!,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.defaultStyle(context, Colors.grey),
+                        ),
+                      ),
+                    if (hasArrow) Icon(Icons.arrow_forward_ios, color: Theme.of(context).iconTheme.color, size: 16),
+                  ],
+                ),
+                if (description != null)
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              description!,
+                              maxLines: maxDescriptionLines,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppStyles.defaultStyle(context, Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
               ],
             ),
-            if (description != null)
-              Text(description!, style: AppStyles.normal16(context, Colors.grey).copyWith(fontSize: 14))
-          ],
-        ),
+          ),
+          if (addDivider)
+            Container(
+              color: theme.cardColor,
+              child: const CustomDivider(),
+            ),
+        ],
       ),
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/passwordWidgets/change_password_new_pass_body.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/passwordWidgets/change_password_old_pass_body.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/passwordWidgets/confirm_password_body.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
 import '../../../../core/widgets/snack_bar.dart';
 import '../managers/change_password_cubit/change_password_cubit.dart';
 
@@ -60,8 +60,6 @@ class _ChangePasswordState extends State<ChangePassword> {
     } else {
       ChangePasswordCubit cubit = ChangePasswordCubit.get(context);
       await cubit.changePassword(oldPassword, newPassword);
-
-
     }
   }
 
@@ -80,23 +78,27 @@ class _ChangePasswordState extends State<ChangePassword> {
       child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
         listener: (context, state) {
           if (state is ChangePasswordSuccess) {
-            showSnackBar(context, "Password changed successfully",
-                backgroundColor: Colors.green);
-            Navigator.pop(context);
+            showSnackBar(context, "Password changed successfully", backgroundColor: Colors.green);
+            GoRouter.of(context).pop();
           }
           if (state is ChangePasswordFailure) {
             showSnackBar(context, state.errorMessage);
-            Navigator.pop(context);
+            GoRouter.of(context).pop();
           }
         },
         builder: (context, state) {
-
           return ModalProgressHUD(
             inAsyncCall: state is ChangePasswordLoading,
             child: Scaffold(
-              backgroundColor: Colors.transparent,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               appBar: AppBar(
-                title: const Text("Change Password"),
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                foregroundColor: Theme.of(context).iconTheme.color,
+                centerTitle: true,
+                title: Text(
+                  "Change Password",
+                  style: AppStyles.semiBold18(context),
+                ),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(12),
@@ -104,8 +106,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                 ),
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                  onPressed: () => GoRouter.of(context).pop(),
                 ),
                 actions: [
                   TextButton(
@@ -120,9 +122,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     },
                     child: Text(
                       _selectedIndex + 1 == _screens.length ? "Save" : "Next",
-                      style: AppStyles.normal18(context, Colors.white),
+                      style: AppStyles.defaultStyle(context),
                     ),
-                  )
+                  ),
+                  const SizedBox(width: 5),
                 ],
               ),
               body: Form(

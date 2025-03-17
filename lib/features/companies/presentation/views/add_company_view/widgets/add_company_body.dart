@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:linkai/core/models/company_model.dart';
+import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/core/widgets/snack_bar.dart';
 import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
@@ -31,6 +33,8 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
 
   File? _profileImage;
   File? _coverImage;
+
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -71,7 +75,6 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
     }
   }
 
-  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CompaniesCubit, CompaniesState>(
@@ -186,6 +189,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                           controller: _minEmployeesController,
                           hintText: 'Min Employees',
                           keyboardType: TextInputType.number,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -194,6 +198,7 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                           controller: _maxEmployeesController,
                           hintText: 'Max Employees',
                           keyboardType: TextInputType.number,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         ),
                       ),
                     ],
@@ -216,9 +221,11 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton(
+                      CustomButton(
+                        fitWidth: false,
+                        fontSize: 16,
+                        text: 'Add HR',
                         onPressed: _addHrEmail,
-                        child: const Text('Add HR'),
                       ),
                     ],
                   ),
@@ -226,23 +233,27 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                   Wrap(
                     spacing: 8,
                     children: _hrEmails
-                        .map((email) => Chip(
-                              label: Text(email),
-                              onDeleted: () {
-                                setState(() {
-                                  _hrEmails.remove(email);
-                                });
-                              },
-                            ))
+                        .map(
+                          (email) => Chip(
+                            color: WidgetStatePropertyAll(Theme.of(context).inputDecorationTheme.fillColor!),
+                            label: Text(email),
+                            onDeleted: () {
+                              setState(() {
+                                _hrEmails.remove(email);
+                              });
+                            },
+                          ),
+                        )
                         .toList(),
                   ),
                   const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
+                    child: CustomButton(
+                      text: 'Add Company',
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          final company = CompanyModel(
+                          final CompanyModel company = CompanyModel(
                             companyName: _nameController.text,
                             description: _descriptionController.text,
                             industry: _industryController.text,
@@ -259,7 +270,6 @@ class _AddCompanyBodyState extends State<AddCompanyBody> {
                           );
                         }
                       },
-                      child: const Text('Add Company'),
                     ),
                   ),
                 ],

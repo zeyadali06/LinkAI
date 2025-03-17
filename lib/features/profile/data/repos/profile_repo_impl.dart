@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import '../../../../core/failures/custom_failure.dart';
@@ -25,18 +24,15 @@ class ProfileRepoImpl implements ProfileRepo {
         UserModel.instance.lastName = lastName;
         return RequestResault.success(UserModel.instance.firstName);
       } else {
-        return RequestResault.failure(
-            const CustomFailure("Some thing went wrong!"));
+        return RequestResault.failure(const CustomFailure("Some thing went wrong!"));
       }
     } catch (e) {
-      return RequestResault.failure(
-          const CustomFailure("Some thing went wrong!"));
+      return RequestResault.failure(const CustomFailure("Some thing went wrong!"));
     }
   }
 
   @override
-  Future<RequestResault> changePassword(
-      String oldPassword, String newPassword) async {
+  Future<RequestResault> changePassword(String oldPassword, String newPassword) async {
     try {
       final response = await _apiManager.patch({
         "oldPassword": oldPassword,
@@ -45,13 +41,10 @@ class ProfileRepoImpl implements ProfileRepo {
       if (response["success"]) {
         return RequestResault.success(response["msg"]);
       } else {
-        return RequestResault.failure(CustomFailure(response["msg"] ??
-            response["message"] ??
-            "Some thing went wrong!"));
+        return RequestResault.failure(CustomFailure(response["msg"] ?? response["message"] ?? "Some thing went wrong!"));
       }
     } catch (e) {
-      return RequestResault.failure(
-          const CustomFailure("Some thing went wrong!"));
+      return RequestResault.failure(const CustomFailure("Some thing went wrong!"));
     }
   }
 

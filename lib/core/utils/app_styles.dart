@@ -37,6 +37,12 @@ abstract class AppStyles {
         color: color ?? Theme.of(context).textTheme.bodyLarge!.color,
       );
 
+  static TextStyle Function(BuildContext context, [Color? color]) semiBold16 = (context, [color]) => TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: color ?? Theme.of(context).textTheme.bodyLarge!.color,
+      );
+
   static TextStyle Function(BuildContext context, [Color? color]) bold18 = (context, [color]) => TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,

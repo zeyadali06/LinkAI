@@ -14,16 +14,15 @@ class AllCompaniesViewBody extends StatelessWidget {
       builder: (context, state) {
         if (state is CompaniesLoading) {
           return const Center(child: CircularProgressIndicator());
-        }
-        else if (state is CompaniesFailure) {
+        } else if (state is CompaniesFailure) {
           return Center(child: Text(state.message));
         }
-          return ListView.builder(
-            itemBuilder: (context, index) {
-
-              return CompanyCard(companyModel: cubit.userCompanies[index]);
-            },
-            itemCount: cubit.userCompanies.length);
+        return ListView.builder(
+          itemCount: cubit.userCompanies.length,
+          itemBuilder: (context, index) {
+            return CompanyCard(companyModel: cubit.userCompanies[index]);
+          },
+        );
       },
     );
   }

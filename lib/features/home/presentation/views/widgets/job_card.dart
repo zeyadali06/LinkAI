@@ -43,37 +43,56 @@ class JobCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
+                    flex: 3,
                     child: Text(
                       jobModel.title,
                       style: AppStyles.bold18(context, Colors.blueAccent),
                     ),
                   ),
-                  JobTag(text: jobModel.workingTime),
-                  JobTag(text: jobModel.workLocation),
-                  companyModel != null
-                      ? IconButton(
+                  Flexible(
+                    flex: 2,
+                    child: Column(
+                      spacing: 5,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: JobTag(text: jobModel.workingTime),
+                        ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: JobTag(text: jobModel.workLocation),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (companyModel != null)
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: IconButton(
                           onPressed: () {
-                            GoRouter.of(context)
-                                .push(AppRouter.editJobView, extra: jobModel);
+                            GoRouter.of(context).push(AppRouter.editJobView, extra: jobModel);
                           },
-                          icon: const Icon(Icons.edit))
-                      : const SizedBox(),
+                          icon: const Icon(Icons.edit, size: 18),
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox(),
                 ],
               ),
 
               const SizedBox(height: 5),
 
               // Company & Location
-              Text(
-                "${jobModel.company.companyName} - ${jobModel.company.address}",
-                style: AppStyles.bold14(
-                  context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
-                          ThemeMode.light
-                      ? Colors.blueGrey
-                      : Colors.white70,
+              if (jobModel.company != null)
+                Text(
+                  "${jobModel.company?.companyName} - ${jobModel.company?.address}",
+                  style: AppStyles.bold14(
+                    context,
+                    BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
+                  ),
                 ),
-              ),
 
               const SizedBox(height: 5),
 
@@ -82,10 +101,7 @@ class JobCard extends StatelessWidget {
                 jobModel.experience,
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
-                          ThemeMode.light
-                      ? Colors.grey[500]
-                      : Colors.white60,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.grey[500] : Colors.white60,
                 ),
               ),
               const SizedBox(height: 5),
@@ -97,10 +113,7 @@ class JobCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
-                          ThemeMode.light
-                      ? Colors.black54
-                      : Colors.white,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.black54 : Colors.white,
                 ),
               ),
 
@@ -111,10 +124,7 @@ class JobCard extends StatelessWidget {
                 "${DateTime.now().difference(DateTime.parse(jobModel.createdAt ?? '')).inDays} days ago",
                 style: AppStyles.defaultStyle(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
-                          ThemeMode.light
-                      ? Colors.green
-                      : Colors.white38,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
                 ),
               ),
             ],

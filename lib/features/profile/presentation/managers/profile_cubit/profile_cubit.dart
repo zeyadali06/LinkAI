@@ -1,8 +1,5 @@
-import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:linkai/core/models/user_model.dart';
-
 import '../../../../../core/failures/request_result.dart';
 import '../../../domain/useCases/addProfileImageUseCase/add_profile_image.dart';
 
@@ -22,7 +19,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     try {
-
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
@@ -41,5 +37,4 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileImageError("Failed to pick image"));
     }
   }
-
 }

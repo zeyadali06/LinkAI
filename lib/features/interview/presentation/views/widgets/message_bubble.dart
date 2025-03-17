@@ -28,7 +28,7 @@ class MessageBubble extends StatelessWidget {
             style: AppStyles.normal18(context),
           ),
         ),
-        if (model.type == MessageType.sended) const PersonAvatar(),
+        if (model.type == MessageType.sended) const PersonAvatar(radius: 20),
       ],
     );
   }

@@ -10,12 +10,15 @@ import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubi
 
 class CompanyCard extends StatelessWidget {
   const CompanyCard({super.key, required this.companyModel});
+
   final CompanyModel companyModel;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.companyDetailsView, extra: companyModel);
+        GoRouter.of(context)
+            .push(AppRouter.companyDetailsView, extra: companyModel);
       },
       child: Card(
         color: Theme.of(context).cardColor,
@@ -40,10 +43,18 @@ class CompanyCard extends StatelessWidget {
                       style: AppStyles.bold18(context, Colors.blueAccent),
                     ),
                   ),
-                  JobTag(text: companyModel.role??''),
-                  companyModel.role?.toLowerCase() =="owner" ?IconButton(onPressed: () {
-                    GoRouter.of(context).push(AppRouter.editCompanyView, extra: {'companyModel': companyModel,'companiesCubit': context.read<CompaniesCubit>(),});
-                  }, icon: const Icon(Icons.edit)):const SizedBox(),
+                  JobTag(text: companyModel.role ?? ''),
+                  companyModel.role?.toLowerCase() == "owner"
+                      ? IconButton(
+                          onPressed: () {
+                            GoRouter.of(context)
+                                .push(AppRouter.editCompanyView, extra: {
+                              'companyModel': companyModel,
+                              'companiesCubit': context.read<CompaniesCubit>(),
+                            });
+                          },
+                          icon: const Icon(Icons.edit))
+                      : const SizedBox(),
                 ],
               ),
 
@@ -54,7 +65,10 @@ class CompanyCard extends StatelessWidget {
                 companyModel.address,
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                          ThemeMode.light
+                      ? Colors.blueGrey
+                      : Colors.white70,
                 ),
               ),
 
@@ -63,7 +77,10 @@ class CompanyCard extends StatelessWidget {
                 "from ${companyModel.minEmployees} to ${companyModel.maxEmployees} Employee",
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.grey[500] : Colors.white60,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                          ThemeMode.light
+                      ? Colors.grey[500]
+                      : Colors.white60,
                 ),
               ),
               // // Experience

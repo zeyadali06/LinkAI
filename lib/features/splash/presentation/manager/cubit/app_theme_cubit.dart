@@ -25,14 +25,10 @@ class AppThemeCubit extends Cubit<AppThemeState> {
     emit(AppThemeUpdateTheme());
   }
 
-  Future<void> changeTheme() async {
+  Future<void> changeTheme(ThemeMode themeMode) async {
     emit(AppThemeInitial());
 
-    if (appTheme == ThemeMode.dark) {
-      appTheme = ThemeMode.light;
-    } else {
-      appTheme = ThemeMode.dark;
-    }
+    appTheme = themeMode;
     await sharedPreferences.set(AppConstants.themeKey, appTheme.name);
 
     emit(AppThemeUpdateTheme());

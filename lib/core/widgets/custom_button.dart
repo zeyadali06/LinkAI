@@ -15,7 +15,7 @@ class CustomButton extends StatelessWidget {
     this.gradient,
     this.textAlign,
     this.borderRadius = 16,
-    this.padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    this.padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 12.5),
   });
 
   final void Function()? onPressed;

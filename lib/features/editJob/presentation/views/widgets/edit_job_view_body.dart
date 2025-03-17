@@ -260,13 +260,13 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
                               'Are you sure you want to delete this Job?'),
                           actions: [
                             TextButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => GoRouter.of(context).pop(),
                               child: const Text('Cancel'),
                             ),
                             TextButton(
                               onPressed: () {
                                 cubit.deleteJob(widget.jobModel.id!);
-                                Navigator.pop(context);
+                                GoRouter.of(context).pop();
                               },
                               child: const Text('Delete'),
                             ),

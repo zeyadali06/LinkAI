@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/emailWidgets/change_email_pass_body.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/emailWidgets/new_email_body.dart';
 import 'package:linkai/features/profile/presentation/views/widgets/emailWidgets/new_email_pin_body.dart';
 
-
-  class ChangeEmail extends StatefulWidget {
+class ChangeEmail extends StatefulWidget {
   const ChangeEmail({super.key});
 
   @override
@@ -29,13 +29,16 @@ class _ChangeEmailState extends State<ChangeEmail> {
     _autoValidateMode = AutovalidateMode.disabled;
     passwordController = TextEditingController();
     newEmailController = TextEditingController();
-   pinController = TextEditingController();
+    pinController = TextEditingController();
     _pageController = PageController();
 
     _screens = [
       ChangeEmailPassBody(controller: passwordController),
       NewEmailBody(controller: newEmailController),
-      NewEmailPinBody(controller: pinController,email: newEmailController,)
+      NewEmailPinBody(
+        controller: pinController,
+        email: newEmailController,
+      ),
     ];
   }
 
@@ -51,7 +54,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
       });
     } else {
       // TODO: Handle Save Logic
-      Navigator.pop(context);
+      GoRouter.of(context).pop();
     }
   }
 
@@ -67,9 +70,15 @@ class _ChangeEmailState extends State<ChangeEmail> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          title: const Text("Change Email"),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          foregroundColor: Theme.of(context).iconTheme.color,
+          centerTitle: true,
+          title: Text(
+            "Change Email",
+            style: AppStyles.normal18(context),
+          ),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(12),
@@ -77,12 +86,12 @@ class _ChangeEmailState extends State<ChangeEmail> {
             ),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
+            onPressed: () => GoRouter.of(context).pop(),
           ),
           actions: [
             TextButton(
-              onPressed: ()  {
+              onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   _nextPage();
@@ -93,9 +102,10 @@ class _ChangeEmailState extends State<ChangeEmail> {
               },
               child: Text(
                 _selectedIndex + 1 == _screens.length ? "Submit" : "Next",
-                style: AppStyles.normal18(context, Colors.white),
+                style: AppStyles.defaultStyle(context),
               ),
-            )
+            ),
+            const SizedBox(width: 5),
           ],
         ),
         body: Form(

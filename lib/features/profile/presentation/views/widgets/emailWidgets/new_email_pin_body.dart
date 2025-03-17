@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../../../../../core/utils/app_colors.dart';
-import '../../../../../../core/utils/app_styles.dart';
-import '../../../../../../core/utils/formatters.dart';
-import '../../../../../../core/widgets/pin_code_field.dart';
+import 'package:linkai/core/utils/app_styles.dart';
+import 'package:linkai/core/utils/formatters.dart';
+import 'package:linkai/core/widgets/pin_code_field.dart';
 
 class NewEmailPinBody extends StatefulWidget {
   const NewEmailPinBody({
@@ -53,7 +52,6 @@ class _NewEmailPinBodyState extends State<NewEmailPinBody> {
 
   void _resendOTP() {
     // TODO: Add OTP resend logic
-
     _startResendCountdown();
   }
 
@@ -65,48 +63,43 @@ class _NewEmailPinBodyState extends State<NewEmailPinBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.darkBackgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-        child: Column(
-          children: [
-            Text(
-              "Please enter the verification code we sent to",
-              style: AppStyles.normal16(context, Colors.white)
-                  .copyWith(fontSize: 14),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
+      child: Column(
+        children: [
+          Text(
+            "Please enter the verification code we sent to",
+            textAlign: TextAlign.center,
+            style: AppStyles.defaultStyle(context),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            widget.email.text,
+            style: AppStyles.semiBold18(context),
+          ),
+          const SizedBox(height: 28),
+          PinCodeField(
+            inputFormatters: [Formatters.numbersOnlyFormatter],
+            controller: widget.controller,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return "OTP code is required";
+              }
+              if (value.length < 6) {
+                return "OTP must be 6 digits";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 20),
+          TextButton(
+            onPressed: _canResend ? _resendOTP : null,
+            child: Text(
+              _canResend ? "Resend" : "Resend($_resendTimer)",
+              style: AppStyles.defaultStyle(context, _canResend ? null : Colors.grey),
             ),
-            const SizedBox(height: 8),
-            Text(
-              widget.email.text,
-              style: AppStyles.semiBold18(context, Colors.white),
-            ),
-            const SizedBox(height: 28),
-             PinCodeField(
-               inputFormatters: [Formatters.numbersOnlyFormatter],
-              controller: widget.controller,
-               validator: (value) {
-                 if (value == null || value.trim().isEmpty) {
-                   return "OTP code is required";
-                 }
-                 if (value.length < 6) {
-                   return "OTP must be 6 digits";
-                 }
-                 return null;
-               },
-
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: _canResend ? _resendOTP : null,
-              child: Text(
-                _canResend ? "Resend" : "Resend($_resendTimer)",
-                style: AppStyles.normal16(
-                    context, _canResend ? Colors.white : Colors.grey).copyWith(fontSize: 14),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

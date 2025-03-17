@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_obsecure_text_field.dart';
-import '../../../../../../core/utils/app_colors.dart';
 
 class ConfirmPasswordBody extends StatefulWidget {
   const ConfirmPasswordBody({
@@ -13,7 +13,7 @@ class ConfirmPasswordBody extends StatefulWidget {
   final TextEditingController confirmPasswordController;
 
   @override
-  _ConfirmPasswordBodyState createState() => _ConfirmPasswordBodyState();
+  State<ConfirmPasswordBody> createState() => _ConfirmPasswordBodyState();
 }
 
 class _ConfirmPasswordBodyState extends State<ConfirmPasswordBody> {
@@ -30,8 +30,7 @@ class _ConfirmPasswordBodyState extends State<ConfirmPasswordBody> {
     if (confirmPassword == null) return;
 
     final newPassword = widget.newPasswordController.text;
-    final doMatch =
-        confirmPassword.isNotEmpty && confirmPassword == newPassword;
+    final doMatch = confirmPassword.isNotEmpty && confirmPassword == newPassword;
 
     setState(() {
       _passwordsMatch = doMatch;
@@ -55,50 +54,47 @@ class _ConfirmPasswordBodyState extends State<ConfirmPasswordBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.darkBackgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomObsecureTextField(
-              borderRadius: 16,
-              controller: widget.confirmPasswordController,
-              hintText: "Confirm password",
-              enableValidator: true,
-              validator: _validateConfirmPassword,
-              onChanged: _checkPasswordsMatch,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomObsecureTextField(
+            borderRadius: 16,
+            controller: widget.confirmPasswordController,
+            hintText: "Confirm password",
+            enableValidator: true,
+            validator: _validateConfirmPassword,
+            onChanged: _checkPasswordsMatch,
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            decoration: BoxDecoration(
+              color: _passwordsMatch ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
             ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              decoration: BoxDecoration(
-                color: _passwordsMatch
-                    ? Colors.green.withOpacity(0.1)
-                    : Colors.red.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    _passwordsMatch ? Icons.check_circle : Icons.error,
-                    color: _passwordsMatch ? Colors.green : Colors.red,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    _confirmationMessage,
-                    style: TextStyle(
-                      color: _passwordsMatch ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.w500,
+            child: Row(
+              children: [
+                Icon(
+                  _passwordsMatch ? Icons.check_circle : Icons.error,
+                  color: _passwordsMatch ? Colors.green : Colors.red,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      _confirmationMessage,
+                      style: AppStyles.defaultStyle(context, _passwordsMatch ? Colors.green : Colors.red),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

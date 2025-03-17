@@ -30,7 +30,7 @@ abstract class ServiceLocator {
     getIt.registerSingleton<AudioManager>(
       AudioManager(),
     );
-    await getIt<AudioManager>().init();
+    // await getIt<AudioManager>().init();
 
     getIt.registerSingleton<SharedPreferenceServices>(
       SharedPreferenceServices(),

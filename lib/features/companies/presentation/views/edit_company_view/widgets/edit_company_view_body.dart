@@ -247,13 +247,13 @@ class _EditCompanyViewBodyState extends State<EditCompanyViewBody> {
                           content: const Text('Are you sure you want to delete this company?'),
                           actions: [
                             TextButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => GoRouter.of(context).pop(),
                               child: const Text('Cancel'),
                             ),
                             TextButton(
                               onPressed: () {
                                 cubit.deleteCompany(widget.companyModel.id!);
-                                Navigator.pop(context); // Close dialog
+                                GoRouter.of(context).pop(); // Close dialog
                               },
                               child: const Text('Delete'),
                             ),

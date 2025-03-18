@@ -37,7 +37,8 @@ class ProfileViewBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  const ProfileHeader(),
+                  // ignore: prefer_const_constructors
+                  ProfileHeader(),
                   const SizedBox(height: 20),
                   ProfileListTile(
                     onPressed: () {
@@ -120,6 +121,7 @@ class ProfileViewBody extends StatelessWidget {
               const FlutterSecureStorage storage = FlutterSecureStorage();
               await storage.delete(key: 'user_token');
               if (context.mounted) {
+                GoRouter.of(context).pop();
                 GoRouter.of(context).go(AppRouter.loginView);
               }
             },

@@ -10,28 +10,28 @@ class JobsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<JobsCubit, JobsState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          if (state is JobsError) {
-            return Center(child: Text(state.message));
-          }
-          if (state is JobsLoaded) {
-            return ListView.builder(
-              itemCount: state.jobs.length,
-              itemBuilder: (context, index) {
-                return JobCard(
-                  jobModel: state.jobs[index],
-                  companyModel: companyModel,
-                );
-              },
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+    return BlocConsumer<JobsCubit, JobsState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is JobsError) {
+          return Center(child: Text(state.message));
+        }
+        if (state is JobsLoaded) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: state.jobs.length,
+            itemBuilder: (context, index) {
+              return JobCard(
+                jobModel: state.jobs[index],
+                companyModel: companyModel,
+              );
+            },
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }

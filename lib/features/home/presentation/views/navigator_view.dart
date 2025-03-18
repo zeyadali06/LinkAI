@@ -28,10 +28,7 @@ class _NavigatorViewState extends State<NavigatorView> {
       child: const HomeView(),
     ),
     const AllCompaniesView(),
-    BlocProvider(
-      create: (context) => ProfileCubit(ServiceLocator.getIt<AddProfileImageUseCase>()),
-      child: const ProfileView(),
-    )
+    const ProfileView(),
   ];
 
   void _onItemTapped(int index) {
@@ -57,6 +54,9 @@ class _NavigatorViewState extends State<NavigatorView> {
       providers: [
         BlocProvider(
           create: (context) => JobsCubit()..getJobs(),
+        ),
+        BlocProvider(
+          create: (context) => ProfileCubit(ServiceLocator.getIt<AddProfileImageUseCase>()),
         ),
       ],
       child: Scaffold(
@@ -88,7 +88,11 @@ class _NavigatorViewState extends State<NavigatorView> {
               label: 'Companies',
             ),
             BottomNavigationBarItem(
-              icon: PersonAvatar(radius: 15, imageURL: UserModel.instance.profileImage),
+              icon: BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  return PersonAvatar(radius: 15, imageURL: UserModel.instance.profileImage);
+                },
+              ),
               label: 'Profile',
             ),
           ],

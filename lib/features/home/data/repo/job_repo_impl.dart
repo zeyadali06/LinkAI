@@ -66,6 +66,7 @@ class JobRepoImpl extends JobRepo {
       );
 
       if (res["success"]) {
+        await getJobs();
         return RequestResault.success(null);
       } else {
         return RequestResault.failure(
@@ -88,6 +89,7 @@ class JobRepoImpl extends JobRepo {
       );
 
       if (res["success"]) {
+        await getJobs();
         return RequestResault.success(null);
       } else {
         return RequestResault.failure(

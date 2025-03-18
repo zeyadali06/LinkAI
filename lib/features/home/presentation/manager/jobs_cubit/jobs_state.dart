@@ -12,10 +12,7 @@ final class JobsLoaded extends JobsState {
   JobsLoaded(this.jobs);
 }
 
-final class JobCreated extends JobsState {
-  final JobModel job;
-  JobCreated(this.job);
-}
+final class JobCreated extends JobsState {}
 
 final class JobsError extends JobsState {
   final String message;
@@ -32,10 +29,7 @@ final class JobUpdatedError extends JobsState {
   JobUpdatedError(this.message);
 }
 
-final class JobDeleted extends JobsState {
-  final String message;
-  JobDeleted(this.message);
-}
+final class JobDeleted extends JobsState {}
 
 final class JobDeletedError extends JobsState {
   final String message;

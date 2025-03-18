@@ -52,7 +52,8 @@ class JobsCubit extends Cubit<JobsState> {
     emit(JobsLoading());
     final result = await _jobRepo.addJob(job);
     if (result is Success) {
-      emit(JobCreated(result.data));
+      await getJobsByCompanyId(job.company!.id!);
+      emit(JobCreated());
     } else if (result is Failed) {
       emit(JobsError(result.data.message));
     }
@@ -62,17 +63,19 @@ class JobsCubit extends Cubit<JobsState> {
     emit(JobsLoading());
     final result = await _jobRepo.updateJob(job);
     if (result is Success) {
+      await getJobsByCompanyId(job.company!.id!);
       emit(JobUpdated(job));
     } else if (result is Failed) {
       emit(JobUpdatedError(result.data.message));
     }
   }
 
-  Future<void> deleteJob(String jobId) async {
+  Future<void> deleteJob(JobModel job) async {
     emit(JobsLoading());
-    final result = await _jobRepo.deleteJob(jobId);
+    final result = await _jobRepo.deleteJob(job.id!);
     if (result is Success) {
-      emit(JobDeleted(result.data));
+      await getJobsByCompanyId(job.company!.id!);
+      emit(JobDeleted());
     } else if (result is Failed) {
       emit(JobDeletedError(result.data.message));
     }

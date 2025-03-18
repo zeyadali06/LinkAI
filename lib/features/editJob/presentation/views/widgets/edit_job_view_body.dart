@@ -276,7 +276,7 @@ class _EditJobViewBodyState extends State<EditJobViewBody> {
                             ),
                             TextButton(
                               onPressed: () {
-                                cubit.deleteJob(widget.jobModel.id!);
+                                cubit.deleteJob(widget.jobModel);
                                 GoRouter.of(context).pop();
                               },
                               child: Text(

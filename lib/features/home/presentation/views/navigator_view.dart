@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:linkai/core/enums/role_enum.dart';
 import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/utils/service_locator.dart';
@@ -27,7 +28,7 @@ class _NavigatorViewState extends State<NavigatorView> {
       create: (context) => JobsCubit()..getJobs(),
       child: const HomeView(),
     ),
-    const AllCompaniesView(),
+    if (UserModel.instance.role == Role.hr) const AllCompaniesView(),
     const ProfileView(),
   ];
 
@@ -83,10 +84,11 @@ class _NavigatorViewState extends State<NavigatorView> {
               icon: Icon(Icons.home),
               label: 'Home',
             ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Companies',
-            ),
+            if (UserModel.instance.role == Role.hr)
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.business),
+                label: 'Companies',
+              ),
             BottomNavigationBarItem(
               icon: BlocBuilder<ProfileCubit, ProfileState>(
                 builder: (context, state) {

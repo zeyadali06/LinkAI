@@ -84,7 +84,7 @@ class _NameViewBodyState extends State<NameViewBody> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        GoRouter.of(context).push(AppRouter.phoneNumberView);
+                        GoRouter.of(context).push(AppRouter.roleView);
                       } else {
                         autovalidatemodel = AutovalidateMode.always;
                         setState(() {});

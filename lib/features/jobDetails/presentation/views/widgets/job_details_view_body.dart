@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkai/core/enums/role_enum.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
@@ -125,19 +127,18 @@ class JobdetailsViewBody extends StatelessWidget {
             ),
           ],
         ),
-
-        // button
-        Positioned(
-          bottom: 20,
-          left: 20,
-          right: 20,
-          child: CustomButton(
-            onPressed: () {
-              GoRouter.of(context).push(AppRouter.interviewView, extra: jobModel);
-            },
-            text: "Interview Now",
+        if (UserModel.instance.role == Role.user)
+          Positioned(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            child: CustomButton(
+              onPressed: () {
+                GoRouter.of(context).push(AppRouter.interviewView, extra: jobModel);
+              },
+              text: "Interview Now",
+            ),
           ),
-        ),
       ],
     );
   }

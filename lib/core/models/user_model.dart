@@ -1,3 +1,5 @@
+import 'package:linkai/core/enums/role_enum.dart';
+
 class UserModel {
   String? firstName;
   String? lastName;
@@ -5,6 +7,7 @@ class UserModel {
   String? phone;
   String? token;
   String? profileImage;
+  Role? role;
 
   UserModel._();
   static final UserModel _singletonInstance = UserModel._();
@@ -16,5 +19,6 @@ class UserModel {
     email = json["email"];
     phone = json["mobileNumber"];
     profileImage = json["profilePic"]?["secure_url"];
+    role = Role.fromString(json["role"]);
   }
 }

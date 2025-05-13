@@ -1,3 +1,5 @@
+import 'package:linkai/core/enums/role_enum.dart';
+
 class AuthModel {
   String? email;
   String? password;
@@ -6,6 +8,7 @@ class AuthModel {
   String? otp;
   String? firstName;
   String? lastName;
+  Role? role;
 
   AuthModel({
     this.email,
@@ -15,6 +18,7 @@ class AuthModel {
     this.otp,
     this.firstName,
     this.lastName,
+    this.role,
   });
 
   static const String emailKey = 'email';
@@ -24,6 +28,7 @@ class AuthModel {
   static const String otpKey = "otp";
   static const String firstNameKey = "firstName";
   static const String lastNameKey = "lastName";
+  static const String roleKey = "role";
 
   Map<String, dynamic> toJson() {
     return {
@@ -34,6 +39,7 @@ class AuthModel {
       firstNameKey: firstName,
       lastNameKey: lastName,
       otpKey: otp,
+      roleKey: role?.label,
     };
   }
 
@@ -53,6 +59,7 @@ class AuthModel {
       firstName: json[firstNameKey],
       lastName: json[lastNameKey],
       otp: json[otpKey],
+      role: json[roleKey],
     );
   }
 }

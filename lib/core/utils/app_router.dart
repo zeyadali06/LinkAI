@@ -16,6 +16,7 @@ import 'package:linkai/features/authentication/presentation/views/name_view.dart
 import 'package:linkai/features/authentication/presentation/views/password_confimation_view.dart';
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
+import 'package:linkai/features/authentication/presentation/views/role_view.dart';
 import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
 import 'package:linkai/features/companies/presentation/views/add_company_view/add_company_view.dart';
 import 'package:linkai/features/companies/presentation/views/company_details_view/company_details_view.dart';
@@ -67,6 +68,7 @@ abstract class AppRouter {
   static const String changeEmail = "/changeEmail";
   static const String changePassword = "/changePassword";
   static const String scoreView = "/scoreView";
+  static const String roleView = "/roleView";
 
   static const String editCompanyView = "/editCompanyView";
   static final GoRouter router = GoRouter(
@@ -309,6 +311,15 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: ScoreView(state.extra as ScoreModel),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: roleView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            child: RoleView(),
             transitionsBuilder: customTransition,
           );
         },

@@ -9,7 +9,6 @@ class SettingsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return BlocBuilder<AppThemeCubit, AppThemeState>(
       builder: (context, state) {
         final themeCubit = context.read<AppThemeCubit>();
@@ -22,19 +21,14 @@ class SettingsBody extends StatelessWidget {
                 color: Theme.of(context).cardColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-
                 ),
-
                 elevation: 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 16, left: 16),
-                      child: Text("Theme",
-                          style:AppStyles.normal16(context).copyWith(
-                            fontSize: 14
-                          )),
+                      child: Text("Theme", style: AppStyles.normal16(context).copyWith(fontSize: 14)),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -94,8 +88,7 @@ class SettingsBody extends StatelessWidget {
                 width: 2,
               ),
             ),
-            child:
-                Icon(icon, size: 30, color: Theme.of(context).iconTheme.color),
+            child: Icon(icon, size: 30, color: Theme.of(context).iconTheme.color),
           ),
           const SizedBox(height: 8),
           Text(title, style: Theme.of(context).textTheme.bodyMedium),

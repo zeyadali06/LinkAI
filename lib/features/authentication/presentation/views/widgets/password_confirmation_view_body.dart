@@ -11,12 +11,10 @@ class PasswordConfirmationViewBody extends StatefulWidget {
   const PasswordConfirmationViewBody({super.key});
 
   @override
-  State<PasswordConfirmationViewBody> createState() =>
-      _PasswordConfirmationViewBodyState();
+  State<PasswordConfirmationViewBody> createState() => _PasswordConfirmationViewBodyState();
 }
 
-class _PasswordConfirmationViewBodyState
-    extends State<PasswordConfirmationViewBody> {
+class _PasswordConfirmationViewBodyState extends State<PasswordConfirmationViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode autovalidatemodel;
   bool _passwordsMatch = false;
@@ -34,16 +32,15 @@ class _PasswordConfirmationViewBodyState
   void _checkPasswordsMatch(String? confirmPassword) {
     if (confirmPassword == null) return;
 
-    final doMatch =
-        confirmPassword.isNotEmpty && confirmPassword == authModel.password;
+    final doMatch = confirmPassword.isNotEmpty && confirmPassword == authModel.password;
 
     setState(() {
       _passwordsMatch = doMatch;
       _confirmationMessage = confirmPassword.isEmpty
           ? 'Please confirm your password'
           : doMatch
-          ? 'Passwords match!'
-          : 'Passwords do not match';
+              ? 'Passwords match!'
+              : 'Passwords do not match';
     });
   }
 
@@ -61,7 +58,7 @@ class _PasswordConfirmationViewBodyState
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
-        color: _passwordsMatch ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+        color: _passwordsMatch ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

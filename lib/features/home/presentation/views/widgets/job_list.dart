@@ -19,7 +19,6 @@ class JobsListPage extends StatelessWidget {
         if (state is JobsLoaded) {
           return ListView.builder(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
             itemCount: state.jobs.length,
             itemBuilder: (context, index) {
               return JobCard(

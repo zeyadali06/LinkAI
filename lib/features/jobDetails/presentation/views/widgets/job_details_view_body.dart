@@ -1,12 +1,19 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
+
+import '../../../data/repo_impl/job_details_repo_impl.dart';
 
 class JobdetailsViewBody extends StatelessWidget {
   const JobdetailsViewBody({
@@ -18,6 +25,7 @@ class JobdetailsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(jobModel.id);
     return Stack(
       children: [
         CustomScrollView(
@@ -42,14 +50,20 @@ class JobdetailsViewBody extends StatelessWidget {
                         "${jobModel.company?.companyName} - ${jobModel.company?.address}",
                         style: AppStyles.bold18(
                           context,
-                          BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
+                          BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                                  ThemeMode.light
+                              ? Colors.blueGrey
+                              : Colors.white70,
                         ),
                       ),
                     Text(
                       "${DateTime.now().difference(DateTime.parse(jobModel.createdAt ?? '')).inDays} days ago",
                       style: AppStyles.defaultStyle(
                         context,
-                        BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
+                        BlocProvider.of<AppThemeCubit>(context).appTheme ==
+                                ThemeMode.light
+                            ? Colors.green
+                            : Colors.white38,
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -130,8 +144,16 @@ class JobdetailsViewBody extends StatelessWidget {
           left: 20,
           right: 20,
           child: CustomButton(
-            onPressed: () {
-              GoRouter.of(context).push(AppRouter.interviewView, extra: jobModel);
+            onPressed: () async {
+              JobDetailsRepoImpl test = JobDetailsRepoImpl(ApiManager());
+              File file = await test.pickCv();
+              var result = await test.uploadCv(jobModel.id!, file);
+              if (result is Success) {
+                print("suxxxxxxxxxxxx");
+
+              } else if (result is Failed) {
+                print(result.data.toString());
+              }
             },
             text: "Interview Now",
           ),

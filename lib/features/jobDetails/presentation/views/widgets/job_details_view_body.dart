@@ -1,21 +1,14 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
 import 'package:linkai/core/models/user_model.dart';
-import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
+import 'package:linkai/features/jobDetails/presentation/manager/apply_job_cubit.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
-
-import '../../../data/repo_impl/job_details_repo_impl.dart';
-import '../../manager/apply_job_cubit.dart';
 
 class JobdetailsViewBody extends StatelessWidget {
   const JobdetailsViewBody({
@@ -25,11 +18,10 @@ class JobdetailsViewBody extends StatelessWidget {
 
   final JobModel jobModel;
 
-
   @override
   Widget build(BuildContext context) {
-    print(jobModel.id);
-    print(UserModel.instance.token);
+    debugPrint(jobModel.id);
+    debugPrint(UserModel.instance.token);
     return BlocConsumer<ApplyJobCubit, ApplyJobState>(
       listener: (context, state) {
         if (state is ApplyJobInterviewed) {
@@ -70,22 +62,14 @@ class JobdetailsViewBody extends StatelessWidget {
                               "${jobModel.company?.companyName} - ${jobModel.company?.address}",
                               style: AppStyles.bold18(
                                 context,
-                                BlocProvider.of<AppThemeCubit>(context)
-                                            .appTheme ==
-                                        ThemeMode.light
-                                    ? Colors.blueGrey
-                                    : Colors.white70,
+                                BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
                               ),
                             ),
                           Text(
                             "${DateTime.now().difference(DateTime.parse(jobModel.createdAt ?? '')).inDays} days ago",
                             style: AppStyles.defaultStyle(
                               context,
-                              BlocProvider.of<AppThemeCubit>(context)
-                                          .appTheme ==
-                                      ThemeMode.light
-                                  ? Colors.green
-                                  : Colors.white38,
+                              BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.green : Colors.white38,
                             ),
                           ),
                           const SizedBox(height: 15),
@@ -167,15 +151,14 @@ class JobdetailsViewBody extends StatelessWidget {
                 right: 20,
                 child: CustomButton(
                   onPressed: () async {
-                    if ( jobModel.status == "Upload Your CV") {
+                    if (jobModel.status == "Upload Your CV") {
                       context.read<ApplyJobCubit>().uploadCV(jobModel.id!);
-                    }else if ( jobModel.status == "Interview now"){
+                    } else if (jobModel.status == "Interview now") {
                       context.read<ApplyJobCubit>().updateApplicationStatus(jobModel.id!);
-                      GoRouter.of(context).push(AppRouter.interviewView,extra: jobModel);
-
+                      GoRouter.of(context).push(AppRouter.interviewView, extra: jobModel);
                     }
                   },
-                  text:  jobModel.status??"Something went wrong",
+                  text: jobModel.status ?? "Something went wrong",
                 ),
               ),
             ],

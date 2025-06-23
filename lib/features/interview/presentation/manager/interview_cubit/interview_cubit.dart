@@ -21,7 +21,7 @@ class InterviewCubit extends Cubit<InterviewState> {
   Future<void> setupChat(JobModel jobModel) async {
     try {
       emit(InterviewLoading());
-      final RequestResault res = await _interviewRepo.setupChat(jobModel);
+      final RequestResault res = await _interviewRepo.setupInterview(jobModel);
 
       if (res is Success) {
         emit(InterviewGetChatId(res.data));

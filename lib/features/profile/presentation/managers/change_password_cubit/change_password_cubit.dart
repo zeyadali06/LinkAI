@@ -9,8 +9,7 @@ part 'change_password_state.dart';
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   final ChangePasswordUseCase _changePasswordUseCase;
 
-  ChangePasswordCubit(this._changePasswordUseCase)
-      : super(ChangePasswordInitial());
+  ChangePasswordCubit(this._changePasswordUseCase) : super(ChangePasswordInitial());
 
   static ChangePasswordCubit get(context) => BlocProvider.of(context);
 

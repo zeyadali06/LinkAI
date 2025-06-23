@@ -37,8 +37,7 @@ class ProfileListTile extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding:
-                EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
             decoration: BoxDecoration(
               color: theme.cardColor,
               borderRadius: borderRadius,
@@ -55,9 +54,7 @@ class ProfileListTile extends StatelessWidget {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           title,
-                          style: isTitle
-                              ? AppStyles.normal16(context, Colors.grey)
-                              : AppStyles.normal18(context),
+                          style: isTitle ? AppStyles.normal16(context, Colors.grey) : AppStyles.normal18(context),
                         ),
                       ),
                     ),
@@ -70,9 +67,7 @@ class ProfileListTile extends StatelessWidget {
                           style: AppStyles.defaultStyle(context, Colors.grey),
                         ),
                       ),
-                    if (hasArrow)
-                      Icon(Icons.arrow_forward_ios,
-                          color: Theme.of(context).iconTheme.color, size: 16),
+                    if (hasArrow) Icon(Icons.arrow_forward_ios, color: Theme.of(context).iconTheme.color, size: 16),
                   ],
                 ),
                 if (description != null)
@@ -87,8 +82,7 @@ class ProfileListTile extends StatelessWidget {
                               description!,
                               maxLines: maxDescriptionLines,
                               overflow: TextOverflow.ellipsis,
-                              style:
-                                  AppStyles.defaultStyle(context, Colors.grey),
+                              style: AppStyles.defaultStyle(context, Colors.grey),
                             ),
                           ],
                         ),

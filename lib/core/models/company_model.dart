@@ -1,19 +1,19 @@
 class CompanyModel {
-   String? id;
-   String companyName;
-   String description;
-   String industry;
-   String address;
-   String companyEmail;
-   String? createdBy;
-   String? createdAt;
-   String? updatedAt;
-   int maxEmployees;
-   int minEmployees;
-   List<String> HRs;
-   String? coverImage;
-   String? profileImage;
-   String? role;
+  String? id;
+  String companyName;
+  String description;
+  String industry;
+  String address;
+  String companyEmail;
+  String? createdBy;
+  String? createdAt;
+  String? updatedAt;
+  int maxEmployees;
+  int minEmployees;
+  List<String> HRs;
+  String? coverImage;
+  String? profileImage;
+  String? role;
   CompanyModel({
     this.id,
     required this.companyName,
@@ -63,7 +63,7 @@ class CompanyModel {
       maxEmployees: json['numberOfEmployees']?['to'] ?? 0,
       minEmployees: json['numberOfEmployees']?['from'] ?? 0,
       HRs: List<String>.from(json['HRs'] ?? []),
-      role: json['userRole'] ,
+      role: json['userRole'],
     );
   }
   void setFrom(CompanyModel other) {
@@ -82,6 +82,7 @@ class CompanyModel {
     createdBy = other.createdBy;
     updatedAt = other.updatedAt;
   }
+
   CompanyModel copyWith({
     String? id,
     String? companyName,

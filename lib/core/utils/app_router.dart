@@ -81,9 +81,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) =>
-                  AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())
-                    ..autoLogin(),
+              create: (context) => AutoLoginCubit(ServiceLocator.getIt<AutoLoginRepo>())..autoLogin(),
               child: const SplashView(),
             ),
             transitionsBuilder: customTransition,
@@ -95,11 +93,9 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider.value(
-              value: (state.extra as Map<String, dynamic>)['companiesCubit']
-                  as CompaniesCubit,
+              value: (state.extra as Map<String, dynamic>)['companiesCubit'] as CompaniesCubit,
               child: EditCompanyView(
-                companyModel: (state.extra
-                    as Map<String, dynamic>)['companyModel'] as CompanyModel,
+                companyModel: (state.extra as Map<String, dynamic>)['companyModel'] as CompanyModel,
               ),
             ),
             transitionsBuilder: customTransition,
@@ -123,8 +119,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) => ChangePasswordCubit(
-                  ServiceLocator.getIt<ChangePasswordUseCase>()),
+              create: (context) => ChangePasswordCubit(ServiceLocator.getIt<ChangePasswordUseCase>()),
               child: const ChangePassword(),
             ),
             transitionsBuilder: bottomUpTransition,
@@ -164,9 +159,7 @@ abstract class AppRouter {
           return CustomTransitionPage(
             child: MultiBlocProvider(
               providers: [
-                BlocProvider(
-                    create: (context) => ChangeNameCubit(
-                        ServiceLocator.getIt<ChangeNameUseCase>())),
+                BlocProvider(create: (context) => ChangeNameCubit(ServiceLocator.getIt<ChangeNameUseCase>())),
                 BlocProvider.value(
                   value: state.extra as ProfileCubit,
                 ),
@@ -200,8 +193,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) => JobsCubit()
-                ..getJobsByCompanyId((state.extra as CompanyModel).id ?? ''),
+              create: (context) => JobsCubit()..getJobsByCompanyId((state.extra as CompanyModel).id ?? ''),
               child: CompanyDetailsView(company: state.extra as CompanyModel),
             ),
             transitionsBuilder: customTransition,
@@ -246,8 +238,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) =>
-                  RegisterCubit(ServiceLocator.getIt<AuthRepo>()),
+              create: (context) => RegisterCubit(ServiceLocator.getIt<AuthRepo>()),
               child: const EmailVerificationView(),
             ),
             transitionsBuilder: customTransition,
@@ -268,9 +259,7 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: BlocProvider(
-              create: (context) => InterviewCubit(
-                  ServiceLocator.getIt<InterviewRepo>(),
-                  ServiceLocator.getIt<AudioManager>()),
+              create: (context) => InterviewCubit(ServiceLocator.getIt<InterviewRepo>(), ServiceLocator.getIt<AudioManager>()),
               child: InterviewView(state.extra as JobModel),
             ),
             transitionsBuilder: customTransition,
@@ -318,12 +307,9 @@ abstract class AppRouter {
             child: BlocProvider(
               create: (context) {
                 if (arguments.status != null) {
-                  return ApplyJobCubit(
-                      ServiceLocator.getIt<JobDetailsRepoImpl>());
+                  return ApplyJobCubit(ServiceLocator.getIt<JobDetailsRepoImpl>());
                 } else {
-                  return ApplyJobCubit(
-                      ServiceLocator.getIt<JobDetailsRepoImpl>())
-                    ..handleUserApplication(arguments.id!);
+                  return ApplyJobCubit(ServiceLocator.getIt<JobDetailsRepoImpl>())..handleUserApplication(arguments.id!);
                 }
               },
               child: JobdetailsView(jobModel: arguments),
@@ -353,21 +339,18 @@ abstract class AppRouter {
     ],
   );
 
-  static Widget customTransition(
-      context, animation, secondaryAnimation, child) {
+  static Widget customTransition(context, animation, secondaryAnimation, child) {
     const Offset begin = Offset(1.0, 0.0);
     const Offset end = Offset(0.0, 0.0);
     const Cubic curve = Curves.easeInOut;
 
-    final Animatable<Offset> tween =
-        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+    final Animatable<Offset> tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
     final Animation<Offset> offsetAnimation = animation.drive(tween);
 
     return SlideTransition(position: offsetAnimation, child: child);
   }
 
-  static Widget bottomUpTransition(
-      context, animation, secondaryAnimation, child) {
+  static Widget bottomUpTransition(context, animation, secondaryAnimation, child) {
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(0, 1),

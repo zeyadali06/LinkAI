@@ -70,13 +70,13 @@ class CompaniesRepoImpl implements CompaniesRepo {
 
       if (res["success"]) {
         CompanyModel company = CompanyModel.fromJson(res['company']);
-        try{
-        if (profileImage != null) {
-           await uploadCompanyLogo(profileImage,company.id!);
-        }
-        if (coverImage != null) {
-           await uploadCompanyCover(coverImage,company.id!);
-        }
+        try {
+          if (profileImage != null) {
+            await uploadCompanyLogo(profileImage, company.id!);
+          }
+          if (coverImage != null) {
+            await uploadCompanyCover(coverImage, company.id!);
+          }
         }
         // ignore: empty_catches
         catch (e) {}
@@ -156,6 +156,7 @@ class CompaniesRepoImpl implements CompaniesRepo {
       );
     }
   }
+
   @override
   Future<RequestResault> updateCompany(CompanyModel company) async {
     try {

@@ -21,17 +21,20 @@ final class CompaniesFailure extends CompaniesState {
   final String message;
   CompaniesFailure(this.message);
 }
-final class CompanyUpdateSuccess extends CompaniesState {
 
+final class CompanyUpdateSuccess extends CompaniesState {
   CompanyUpdateSuccess();
 }
+
 final class CompanyUpdateFailure extends CompaniesState {
   final String message;
   CompanyUpdateFailure(this.message);
 }
+
 final class CompanyDeleteSuccess extends CompaniesState {
   CompanyDeleteSuccess();
 }
+
 final class CompanyDeleteFailure extends CompaniesState {
   final String message;
   CompanyDeleteFailure(this.message);

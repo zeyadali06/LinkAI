@@ -52,10 +52,10 @@ class JobDetailsRepoImpl implements JobDetailsRepo {
   }
 
   @override
-  Future<RequestResault> getApplicationStatus(String id) async{
+  Future<RequestResault> getApplicationStatus(String id) async {
     try {
       final Map<String, dynamic> res = await _apiManager.get(
-       "${ApiConstants.getApplicationStatus}/$id",
+        "${ApiConstants.getApplicationStatus}/$id",
         token: UserModel.instance.token,
       );
 
@@ -72,13 +72,13 @@ class JobDetailsRepoImpl implements JobDetailsRepo {
       );
     }
   }
+
   @override
-  Future<RequestResault>updateApplicationStatus(String id  )async{
+  Future<RequestResault> updateApplicationStatus(String id) async {
     try {
       final Map<String, dynamic> res = await _apiManager.patch(
         {},
         "${ApiConstants.updateApplicationStatus}/$id",
-
         token: UserModel.instance.token,
       );
 

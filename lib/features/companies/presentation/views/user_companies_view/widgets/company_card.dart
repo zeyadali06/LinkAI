@@ -17,8 +17,7 @@ class CompanyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context)
-            .push(AppRouter.companyDetailsView, extra: companyModel);
+        GoRouter.of(context).push(AppRouter.companyDetailsView, extra: companyModel);
       },
       child: Card(
         color: Theme.of(context).cardColor,
@@ -47,8 +46,7 @@ class CompanyCard extends StatelessWidget {
                   companyModel.role?.toLowerCase() == "owner"
                       ? IconButton(
                           onPressed: () {
-                            GoRouter.of(context)
-                                .push(AppRouter.editCompanyView, extra: {
+                            GoRouter.of(context).push(AppRouter.editCompanyView, extra: {
                               'companyModel': companyModel,
                               'companiesCubit': context.read<CompaniesCubit>(),
                             });
@@ -65,10 +63,7 @@ class CompanyCard extends StatelessWidget {
                 companyModel.address,
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
-                          ThemeMode.light
-                      ? Colors.blueGrey
-                      : Colors.white70,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.blueGrey : Colors.white70,
                 ),
               ),
 
@@ -77,10 +72,7 @@ class CompanyCard extends StatelessWidget {
                 "from ${companyModel.minEmployees} to ${companyModel.maxEmployees} Employee",
                 style: AppStyles.bold14(
                   context,
-                  BlocProvider.of<AppThemeCubit>(context).appTheme ==
-                          ThemeMode.light
-                      ? Colors.grey[500]
-                      : Colors.white60,
+                  BlocProvider.of<AppThemeCubit>(context).appTheme == ThemeMode.light ? Colors.grey[500] : Colors.white60,
                 ),
               ),
               // // Experience

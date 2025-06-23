@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:linkai/core/failures/custom_failure.dart';
 import 'package:linkai/core/failures/interview_message_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/services/audio_manager.dart';
 import 'package:linkai/core/services/models_manager.dart';
@@ -16,11 +15,16 @@ class InterviewRepoImpl extends InterviewRepo {
   InterviewRepoImpl(this._apiManager);
 
   final ApiManager _apiManager;
+  late DateTime _interviewDuration;
+  late JobModel _jobModel;
 
   @override
-  Future<RequestResault<String, Failed>> setupChat(JobModel jobModel) async {
+  Future<RequestResault<String, Failed>> setupInterview(JobModel jobModel) async {
     try {
       final Map<String, dynamic> res = await _apiManager.post({}, ApiConstants.startChat, baseUrl: ApiConstants.modelsBaseURL);
+
+      _interviewDuration = DateTime.now();
+      _jobModel = jobModel;
 
       return RequestResault.success(res["chat_id"]);
     } catch (e) {
@@ -35,29 +39,15 @@ class InterviewRepoImpl extends InterviewRepo {
         "message": message,
         "chat_id": chatId,
       };
+
       final Map<String, dynamic> res = await _apiManager.post(body, ApiConstants.sendMessage, baseUrl: ApiConstants.modelsBaseURL);
 
       if (res["response"] != null) {
         res["response"] = (res["response"] as String).trim().replaceAll("\n", " ").replaceAll(RegExp(r'\s+'), ' ');
       }
 
-      if ((res["response"] as String).contains("Score:") && (res["response"] as String).contains("Summary:")) {
-        late final double score;
-        late final String summary;
-
-        final scoreMatch = RegExp(r'Score:\s*(\d+)').firstMatch(res["response"]);
-        final summaryMatch = RegExp(r'Summary:\s*(.*)').firstMatch(res["response"]);
-
-        if (scoreMatch != null) {
-          score = double.parse(scoreMatch.group(1)!);
-          log('Extracted score: $score');
-        }
-        if (summaryMatch != null) {
-          summary = summaryMatch.group(1)?.trim() ?? "";
-          log('Extracted summary: $summary');
-        }
-
-        return RequestResault.success(ScoreModel(score: score, summary: summary));
+      if (res["summary"] != null) {
+        return await finishInterview(res);
       }
 
       if (res.containsKey("error")) {
@@ -66,6 +56,27 @@ class InterviewRepoImpl extends InterviewRepo {
 
       return RequestResault.success(res["response"]);
     } catch (e) {
+      return RequestResault.failure(const CustomFailure("Error try again!"));
+    }
+  }
+
+  @override
+  Future<RequestResault<ScoreModel, Failed>> finishInterview(dynamic res) async {
+    final ScoreModel scoreModel = ScoreModel.fromJson(
+      res,
+      DateTime.now().difference(_interviewDuration).inSeconds,
+    );
+
+    final Map<String, dynamic> response = await _apiManager.post(
+      scoreModel.toMap(),
+      "${ApiConstants.interviews}/${_jobModel.id}",
+      baseUrl: ApiConstants.baseURL,
+      token: UserModel.instance.token,
+    );
+
+    if (response["success"]) {
+      return RequestResault.success(scoreModel);
+    } else {
       return RequestResault.failure(const CustomFailure("Error try again!"));
     }
   }

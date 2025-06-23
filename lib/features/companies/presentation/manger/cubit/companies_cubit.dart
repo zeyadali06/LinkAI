@@ -9,7 +9,6 @@ import 'package:linkai/features/companies/domain/repo/companies_repo.dart';
 part 'companies_state.dart';
 
 class CompaniesCubit extends Cubit<CompaniesState> {
-
   CompaniesCubit() : super(CompaniesInitial());
   final _companiesRepo = ServiceLocator.getIt<CompaniesRepo>();
   final List<CompanyModel> userCompanies = [];
@@ -34,19 +33,21 @@ class CompaniesCubit extends Cubit<CompaniesState> {
       emit(CompaniesFailure(result.data.message));
     }
   }
- Future<void> updateCompany(CompanyModel company) async {
+
+  Future<void> updateCompany(CompanyModel company) async {
     emit(CompaniesLoading());
     final result = await _companiesRepo.updateCompany(company);
     if (result is Success) {
-     final index = userCompanies.indexWhere((element) => element.id == company.id);
-     if (index != -1) {
-       userCompanies[index].setFrom(company);
-     }
+      final index = userCompanies.indexWhere((element) => element.id == company.id);
+      if (index != -1) {
+        userCompanies[index].setFrom(company);
+      }
       emit(CompanyUpdateSuccess());
     } else if (result is Failed) {
       emit(CompanyUpdateFailure(result.data.message));
     }
   }
+
   Future<void> deleteCompany(String companyId) async {
     emit(CompaniesLoading());
     final result = await _companiesRepo.deleteCompany(companyId);
@@ -57,5 +58,4 @@ class CompaniesCubit extends Cubit<CompaniesState> {
       emit(CompanyDeleteFailure(result.data.message));
     }
   }
-  
 }

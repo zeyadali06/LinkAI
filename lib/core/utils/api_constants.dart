@@ -12,13 +12,13 @@ abstract class ApiConstants {
   static const String refreshToken = "/auth/refresh-token";
   static const String userData = "/users";
   static const String getJobs = "/jobs/filter";
-  static const String applyForJob = "/jobs/apply";
   static const String addJob = "/jobs/add";
+  static const String applyForJob = "/jobs/apply";
   static const String updateJob = "/jobs";
   static const String deleteJob = "/jobs";
   static const String companies = "/companies";
   static const String changeName = "/users";
-  static const String modelsBaseURL = "https://9af9-34-127-39-220.ngrok-free.app";
+  static const String modelsBaseURL = "https://d5d3-34-68-4-48.ngrok-free.app";
   static const String startChat = "/start_chat";
   static const String sendMessage = "/chat";
   static const String userCompanies = "/companies/userCompanies";
@@ -27,6 +27,7 @@ abstract class ApiConstants {
   static const String jobs = "/jobs";
   static const String changePassword = "/users/updatePass";
   static const String uploadProfileImage = "/users/profile-pic";
+  static const String interviews = "/interviews";
   static const String uploadCv = "/jobs/apply";
   static const String getApplicationStatus = "/jobs/application-status";
   static const String updateApplicationStatus = "/jobs/change-application-status";

@@ -7,5 +7,6 @@ abstract class JobDetailsRepo {
 
   Future<RequestResault> uploadCv(String id,File cv);
   Future<RequestResault> getApplicationStatus(String id);
+  Future<RequestResault>updateApplicationStatus(String id  );
 
 }

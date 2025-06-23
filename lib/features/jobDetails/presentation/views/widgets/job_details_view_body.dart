@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/failures/request_result.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
@@ -27,6 +28,8 @@ class JobdetailsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(jobModel.id);
+    print(UserModel.instance.token);
     return BlocConsumer<ApplyJobCubit, ApplyJobState>(
       listener: (context, state) {
         if (state is ApplyJobInterviewed) {
@@ -167,9 +170,9 @@ class JobdetailsViewBody extends StatelessWidget {
                     if ( jobModel.status == "Upload Your CV") {
                       context.read<ApplyJobCubit>().uploadCV(jobModel.id!);
                     }else if ( jobModel.status == "Interview now"){
+                      context.read<ApplyJobCubit>().updateApplicationStatus(jobModel.id!);
                       GoRouter.of(context).push(AppRouter.interviewView,extra: jobModel);
-                      //TODo call update application api
-                      jobModel.status ="You have already entered this interview";
+
                     }
                   },
                   text:  jobModel.status??"Something went wrong",

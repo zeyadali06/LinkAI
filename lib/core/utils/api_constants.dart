@@ -29,5 +29,5 @@ abstract class ApiConstants {
   static const String uploadProfileImage = "/users/profile-pic";
   static const String uploadCv = "/jobs/apply";
   static const String getApplicationStatus = "/jobs/application-status";
-  static const String updateApplicationStatus = "/jobs";
+  static const String updateApplicationStatus = "/jobs/change-application-status";
 }

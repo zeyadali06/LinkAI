@@ -17,7 +17,6 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
     emit(ApplyJobLoading());
     final result = await _jobDetailsRepo.getApplicationStatus(jobId);
     if (result is Success) {
-      print(jobId);
       if (result.data == "not applied") {
         emit(ApplyJobNone());
       } else if (result.data == "applied") {
@@ -35,9 +34,19 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
     emit(ApplyJobLoading());
     final res = await _jobDetailsRepo.uploadCv(id, cv);
     if (res is Success) {
-      await handleUserApplication(id);
+     emit(ApplyJobApplied());
     } else {
       emit(ApplyJobError());
     }
+  }
+  Future<void> updateApplicationStatus(String id) async{
+    emit(ApplyJobLoading());
+   final res=  await  _jobDetailsRepo.updateApplicationStatus(id);
+   if(res is Success ){
+    emit(ApplyJobInterviewed());
+   }else{
+     emit(ApplyJobError());
+   }
+
   }
 }

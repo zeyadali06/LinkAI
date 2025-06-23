@@ -11,6 +11,7 @@ import 'package:linkai/features/interview/domain/repositories/interview_repo.dar
 import 'package:linkai/features/companies/data/repo/companies_repo.dart';
 import 'package:linkai/features/companies/domain/repo/companies_repo.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
+import '../../features/jobDetails/data/repo_impl/job_details_repo_impl.dart';
 import '../../features/profile/data/repos/profile_repo_impl.dart';
 import '../../features/profile/domain/abstractRepos/profile_repo.dart';
 import '../../features/profile/domain/useCases/addProfileImageUseCase/add_profile_image.dart';
@@ -68,6 +69,9 @@ abstract class ServiceLocator {
     );
     getIt.registerSingleton<AddProfileImageUseCase>(
       AddProfileImageUseCase(getIt<ProfileRepo>()),
+    );
+    getIt.registerSingleton<JobDetailsRepoImpl>(
+      JobDetailsRepoImpl(getIt<ApiManager>()),
     );
   }
 }

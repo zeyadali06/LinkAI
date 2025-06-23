@@ -50,4 +50,26 @@ class JobDetailsRepoImpl implements JobDetailsRepo {
       );
     }
   }
+
+  @override
+  Future<RequestResault> getApplicationStatus(String id) async{
+    try {
+      final Map<String, dynamic> res = await _apiManager.get(
+       "${ApiConstants.getApplicationStatus}/$id",
+        token: UserModel.instance.token,
+      );
+
+      if (res["success"]) {
+        return RequestResault.success(res["data"]);
+      } else {
+        return RequestResault.failure(
+          const CustomFailure("Failed to fetch job details"),
+        );
+      }
+    } catch (e) {
+      return RequestResault.failure(
+        CustomFailure("Something went wrong! ${e.toString()}"),
+      );
+    }
+  }
 }

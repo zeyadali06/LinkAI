@@ -12,6 +12,7 @@ class JobModel {
   String workingTime;
   String workLocation;
   String jobCountry;
+  String? status;
 
   JobModel({
     this.id,

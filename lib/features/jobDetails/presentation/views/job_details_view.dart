@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/features/jobDetails/presentation/views/widgets/job_details_view_body.dart';
 
@@ -19,6 +21,14 @@ class JobdetailsView extends StatelessWidget {
           "Job Details",
           style: AppStyles.semiBold18(context),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              GoRouter.of(context).push(AppRouter.jobInterviewHistoryView, extra: jobModel.id);
+            },
+            icon: const Icon(Icons.more_vert),
+          )
+        ],
       ),
       body: JobdetailsViewBody(jobModel: jobModel),
     );

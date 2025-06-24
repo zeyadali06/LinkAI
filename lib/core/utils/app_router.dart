@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkai/core/enums/role_enum.dart';
 import 'package:linkai/core/models/job_model.dart';
+import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/services/audio_manager.dart';
 import 'package:linkai/core/models/company_model.dart';
 import 'package:linkai/core/utils/service_locator.dart';
@@ -30,15 +32,17 @@ import 'package:linkai/features/interview/domain/repositories/interview_repo.dar
 import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/interview/presentation/views/score_view.dart';
+import 'package:linkai/features/jobDetails/presentation/manager/job_interview_history_cubit/job_interview_history_cubit.dart';
 import 'package:linkai/features/jobDetails/presentation/views/job_details_view.dart';
+import 'package:linkai/features/jobDetails/presentation/views/job_interview_history_hr_view.dart';
+import 'package:linkai/features/jobDetails/presentation/views/job_interview_history_user_view.dart';
 import 'package:linkai/features/profile/presentation/managers/change_password_cubit/change_password_cubit.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
 import 'package:linkai/features/splash/presentation/manager/auto_login_cubit/auto_login_cubit.dart';
 import 'package:linkai/features/splash/presentation/views/splash_view.dart';
-
 import '../../features/jobDetails/data/repo_impl/job_details_repo_impl.dart';
-import '../../features/jobDetails/presentation/manager/apply_job_cubit.dart';
+import '../../features/jobDetails/presentation/manager/apply_job_cubit/apply_job_cubit.dart';
 import '../../features/profile/domain/useCases/changeNameuseCase/change_name_use_case.dart';
 import '../../features/profile/domain/useCases/passwordUseCase/change_password_use_case.dart';
 import '../../features/profile/presentation/managers/change_name_cubit/change_name_cubit.dart';
@@ -71,6 +75,7 @@ abstract class AppRouter {
   static const String changePassword = "/changePassword";
   static const String scoreView = "/scoreView";
   static const String roleView = "/roleView";
+  static const String jobInterviewHistoryView = "/jobInterviewHistoryView";
 
   static const String editCompanyView = "/editCompanyView";
   static final GoRouter router = GoRouter(
@@ -332,6 +337,20 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           return const CustomTransitionPage(
             child: RoleView(),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: jobInterviewHistoryView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => JobInterviewHistoryCubit(ServiceLocator.getIt<JobDetailsRepoImpl>()),
+              child: UserModel.instance.role == Role.user
+                  ? JobInterviewHistoryUserView(jobId: state.extra as String) //
+                  : JobInterviewHistoryHRView(),
+            ),
             transitionsBuilder: customTransition,
           );
         },

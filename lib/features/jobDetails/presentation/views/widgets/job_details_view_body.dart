@@ -7,7 +7,7 @@ import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
 import 'package:linkai/features/home/presentation/views/widgets/job_tag.dart';
-import 'package:linkai/features/jobDetails/presentation/manager/apply_job_cubit.dart';
+import 'package:linkai/features/jobDetails/presentation/manager/apply_job_cubit/apply_job_cubit.dart';
 import 'package:linkai/features/splash/presentation/manager/cubit/app_theme_cubit.dart';
 
 class JobdetailsViewBody extends StatelessWidget {
@@ -138,7 +138,7 @@ class JobdetailsViewBody extends StatelessWidget {
                             jobModel.softSkills.join(', '),
                             style: AppStyles.normal16(context),
                           ),
-                          const SizedBox(height: 100),
+                          const SizedBox(height: 120),
                         ],
                       ),
                     ),

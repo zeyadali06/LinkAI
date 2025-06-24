@@ -1,13 +1,12 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
+import 'package:linkai/core/failures/custom_failure.dart';
 import 'package:linkai/core/failures/request_result.dart';
+import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/utils/api_constants.dart';
-
-import '../../../../core/failures/custom_failure.dart';
-import '../../../../core/models/user_model.dart';
-import '../../domain/repo/job_details_repo.dart';
+import 'package:linkai/features/jobDetails/data/models/interview_history_item.dart';
+import 'package:linkai/features/jobDetails/domain/repo/job_details_repo.dart';
 
 class JobDetailsRepoImpl implements JobDetailsRepo {
   final ApiManager _apiManager;
@@ -93,6 +92,48 @@ class JobDetailsRepoImpl implements JobDetailsRepo {
       return RequestResault.failure(
         const CustomFailure("Something went wrong"),
       );
+    }
+  }
+
+  @override
+  Future<RequestResault<List<InterviewHistoryItem>, Failed>> getJobInterviewsHistoryForHR(String jobId) async {
+    try {
+      final Map<String, dynamic> res = await _apiManager.get(
+        "${ApiConstants.interviews}/$jobId",
+        token: UserModel.instance.token,
+      );
+
+      if (res["success"]) {
+        return RequestResault.success([]);
+      } else {
+        return RequestResault.failure(
+          const CustomFailure("Error, try again!"),
+        );
+      }
+    } catch (e) {
+      return RequestResault.failure(
+        const CustomFailure("Something went wrong"),
+      );
+    }
+  }
+
+  @override
+  Future<RequestResault<InterviewHistoryItem?, Failed>> getJobInterviewsHistoryForUser(String jobId) async {
+    try {
+      final Map<String, dynamic> res = await _apiManager.get(
+        "${ApiConstants.interviews}/$jobId",
+        token: UserModel.instance.token,
+      );
+
+      if (res["success"]) {
+        return RequestResault.success(InterviewHistoryItem.fromJson(res["data"]));
+      } else if (res["message"] == "Cannot read properties of null (reading 'userId')") {
+        return RequestResault.success(null);
+      } else {
+        return RequestResault.failure(const CustomFailure("Error, try again!"));
+      }
+    } catch (e) {
+      return RequestResault.failure(const CustomFailure("Something went wrong"));
     }
   }
 }

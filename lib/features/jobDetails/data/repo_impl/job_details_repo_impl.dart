@@ -6,6 +6,7 @@ import 'package:linkai/core/models/user_model.dart';
 import 'package:linkai/core/services/api_manager.dart';
 import 'package:linkai/core/utils/api_constants.dart';
 import 'package:linkai/features/jobDetails/data/models/interview_history_item.dart';
+import 'package:linkai/features/jobDetails/data/models/job_application_model.dart';
 import 'package:linkai/features/jobDetails/domain/repo/job_details_repo.dart';
 
 class JobDetailsRepoImpl implements JobDetailsRepo {
@@ -98,22 +99,23 @@ class JobDetailsRepoImpl implements JobDetailsRepo {
   @override
   Future<RequestResault<List<InterviewHistoryItem>, Failed>> getJobInterviewsHistoryForHR(String jobId) async {
     try {
-      final Map<String, dynamic> res = await _apiManager.get(
-        "${ApiConstants.interviews}/$jobId",
+      final Map<String, dynamic> interviews = await _apiManager.get(
+        "${ApiConstants.interviews}/interview/$jobId",
         token: UserModel.instance.token,
       );
 
-      if (res["success"]) {
-        return RequestResault.success([]);
+      if (interviews["success"]) {
+        return RequestResault.success(List<InterviewHistoryItem>.generate(
+          interviews["data"].length,
+          (index) {
+            return InterviewHistoryItem.fromJson(interviews["data"][index]);
+          },
+        )..sort((a, b) => b.score.compareTo(a.score)));
       } else {
-        return RequestResault.failure(
-          const CustomFailure("Error, try again!"),
-        );
+        return RequestResault.failure(const CustomFailure("Error, try again!"));
       }
     } catch (e) {
-      return RequestResault.failure(
-        const CustomFailure("Something went wrong"),
-      );
+      return RequestResault.failure(const CustomFailure("Something went wrong"));
     }
   }
 
@@ -129,6 +131,29 @@ class JobDetailsRepoImpl implements JobDetailsRepo {
         return RequestResault.success(InterviewHistoryItem.fromJson(res["data"]));
       } else if (res["message"] == "Cannot read properties of null (reading 'userId')") {
         return RequestResault.success(null);
+      } else {
+        return RequestResault.failure(const CustomFailure("Error, try again!"));
+      }
+    } catch (e) {
+      return RequestResault.failure(const CustomFailure("Something went wrong"));
+    }
+  }
+
+  @override
+  Future<RequestResault<List<JobApplicationModel>, Failed>> getJobApplications(String jobId) async {
+    try {
+      final Map<String, dynamic> applications = await _apiManager.get(
+        "${ApiConstants.getJobApplications}/$jobId",
+        token: UserModel.instance.token,
+      );
+
+      if (applications["success"]) {
+        return RequestResault.success(List<JobApplicationModel>.generate(
+          applications["applications"].length,
+          (index) {
+            return JobApplicationModel.fromJson(applications["applications"][index]);
+          },
+        ));
       } else {
         return RequestResault.failure(const CustomFailure("Error, try again!"));
       }

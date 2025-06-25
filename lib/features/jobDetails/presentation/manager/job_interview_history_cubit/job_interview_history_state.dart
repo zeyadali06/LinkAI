@@ -7,6 +7,12 @@ final class JobInterviewHistoryInitial extends JobInterviewHistoryState {}
 
 final class JobInterviewHistoryLoading extends JobInterviewHistoryState {}
 
+final class JobInterviewApplicationListSuccess extends JobInterviewHistoryState {
+  final List<JobApplicationModel> models;
+
+  JobInterviewApplicationListSuccess(this.models);
+}
+
 final class JobInterviewHistoryListSuccess extends JobInterviewHistoryState {
   final List<InterviewHistoryItem> models;
 

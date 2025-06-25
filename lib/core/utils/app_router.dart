@@ -32,10 +32,12 @@ import 'package:linkai/features/interview/domain/repositories/interview_repo.dar
 import 'package:linkai/features/interview/presentation/manager/interview_cubit/interview_cubit.dart';
 import 'package:linkai/features/interview/presentation/views/interview_view.dart';
 import 'package:linkai/features/interview/presentation/views/score_view.dart';
+import 'package:linkai/features/jobDetails/data/models/interview_history_item.dart';
 import 'package:linkai/features/jobDetails/presentation/manager/job_interview_history_cubit/job_interview_history_cubit.dart';
 import 'package:linkai/features/jobDetails/presentation/views/job_details_view.dart';
 import 'package:linkai/features/jobDetails/presentation/views/job_interview_history_hr_view.dart';
 import 'package:linkai/features/jobDetails/presentation/views/job_interview_history_user_view.dart';
+import 'package:linkai/features/jobDetails/presentation/views/widgets/job_interview_history_item_view.dart';
 import 'package:linkai/features/profile/presentation/managers/change_password_cubit/change_password_cubit.dart';
 import 'package:linkai/features/profile/presentation/views/profile_view.dart';
 import 'package:linkai/features/splash/data/repo/auto_login_repo.dart';
@@ -76,6 +78,7 @@ abstract class AppRouter {
   static const String scoreView = "/scoreView";
   static const String roleView = "/roleView";
   static const String jobInterviewHistoryView = "/jobInterviewHistoryView";
+  static const String jobInterviewHistoryItemView = "/jobInterviewHistoryItemView";
 
   static const String editCompanyView = "/editCompanyView";
   static final GoRouter router = GoRouter(
@@ -342,6 +345,15 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: jobInterviewHistoryItemView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: JobInterviewHistoryItemView(item: state.extra as InterviewHistoryItem),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
         path: jobInterviewHistoryView,
         pageBuilder: (context, state) {
           return CustomTransitionPage(
@@ -349,7 +361,7 @@ abstract class AppRouter {
               create: (context) => JobInterviewHistoryCubit(ServiceLocator.getIt<JobDetailsRepoImpl>()),
               child: UserModel.instance.role == Role.user
                   ? JobInterviewHistoryUserView(jobId: state.extra as String) //
-                  : JobInterviewHistoryHRView(),
+                  : JobInterviewHistoryHRView(jobId: state.extra as String),
             ),
             transitionsBuilder: customTransition,
           );

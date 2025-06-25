@@ -9,6 +9,9 @@ class InterviewHistoryItem {
   final String summary;
   final int score;
   final int duration;
+  final String? cvLink;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   InterviewHistoryItem({
     required this.id,
@@ -18,6 +21,9 @@ class InterviewHistoryItem {
     required this.summary,
     required this.score,
     required this.duration,
+    required this.cvLink,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory InterviewHistoryItem.fromJson(Map<String, dynamic> json) {
@@ -28,7 +34,10 @@ class InterviewHistoryItem {
       chat: (json['chat'] as List<dynamic>).map((e) => Message.fromJson(e)).toList(),
       summary: json['summary'],
       score: json['score'],
-      duration: json['duration'],
+      duration: json['duration'] ?? 0,
+      cvLink: json["userCV"],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 
@@ -41,6 +50,9 @@ class InterviewHistoryItem {
       'summary': summary,
       'score': score,
       'duration': duration,
+      "userCV": cvLink,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 }

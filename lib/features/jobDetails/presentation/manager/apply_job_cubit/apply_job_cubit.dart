@@ -28,14 +28,16 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
   }
 
   Future<void> uploadCV(String id) async {
-    final File cv = await _jobDetailsRepo.pickCv();
-    emit(ApplyJobLoading());
-    final res = await _jobDetailsRepo.uploadCv(id, cv);
-    if (res is Success) {
-      emit(ApplyJobApplied());
-    } else {
-      emit(ApplyJobError());
-    }
+    try {
+      final File cv = await _jobDetailsRepo.pickCv();
+      emit(ApplyJobLoading());
+      final res = await _jobDetailsRepo.uploadCv(id, cv);
+      if (res is Success) {
+        emit(ApplyJobApplied());
+      } else {
+        emit(ApplyJobError());
+      }
+    } catch (_) {}
   }
 
   Future<void> updateApplicationStatus(String id) async {

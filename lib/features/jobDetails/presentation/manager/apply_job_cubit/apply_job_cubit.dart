@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/failures/request_result.dart';
-import '../../domain/repo/job_details_repo.dart';
+import '../../../../../core/failures/request_result.dart';
+import '../../../domain/repo/job_details_repo.dart';
 
 part 'apply_job_state.dart';
 
@@ -28,14 +28,16 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
   }
 
   Future<void> uploadCV(String id) async {
-    final File cv = await _jobDetailsRepo.pickCv();
-    emit(ApplyJobLoading());
-    final res = await _jobDetailsRepo.uploadCv(id, cv);
-    if (res is Success) {
-      emit(ApplyJobApplied());
-    } else {
-      emit(ApplyJobError());
-    }
+    try {
+      final File cv = await _jobDetailsRepo.pickCv();
+      emit(ApplyJobLoading());
+      final res = await _jobDetailsRepo.uploadCv(id, cv);
+      if (res is Success) {
+        emit(ApplyJobApplied());
+      } else {
+        emit(ApplyJobError());
+      }
+    } catch (_) {}
   }
 
   Future<void> updateApplicationStatus(String id) async {

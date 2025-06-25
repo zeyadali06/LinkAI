@@ -23,15 +23,17 @@ class CompaniesCubit extends Cubit<CompaniesState> {
   }
 
   Future<void> getUserCompanies() async {
-    emit(CompaniesLoading());
-    final result = await _companiesRepo.getUserCompanies();
-    if (result is Success) {
-      emit(CompaniesSuccess(result.data));
-      userCompanies.clear();
-      userCompanies.addAll(result.data);
-    } else if (result is Failed) {
-      emit(CompaniesFailure(result.data.message));
-    }
+    try {
+      emit(CompaniesLoading());
+      final result = await _companiesRepo.getUserCompanies();
+      if (result is Success) {
+        emit(CompaniesSuccess(result.data));
+        userCompanies.clear();
+        userCompanies.addAll(result.data);
+      } else if (result is Failed) {
+        emit(CompaniesFailure(result.data.message));
+      }
+    } catch (_) {}
   }
 
   Future<void> updateCompany(CompanyModel company) async {

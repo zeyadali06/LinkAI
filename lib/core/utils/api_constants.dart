@@ -32,4 +32,8 @@ abstract class ApiConstants {
   static const String getJobApplications = "/jobs/getJobApplications";
   static const String getApplicationStatus = "/jobs/application-status";
   static const String updateApplicationStatus = "/jobs/change-application-status";
+  static const String deleteProfilePic = "/users/profile-pic";
+  static const String changeEmailCheckPass = "/users/checkPasswordChangeEmail";
+  static const String changeEmailSendOTP = "/users/sendOTP";
+  static const String changeEmailEnterNewEmail = "/users/changeEmail";
 }

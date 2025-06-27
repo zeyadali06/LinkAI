@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkai/core/utils/app_router.dart';
 import 'package:linkai/core/utils/app_styles.dart';
 import 'package:linkai/core/utils/formatters.dart';
 import 'package:linkai/core/utils/service_locator.dart';
 import 'package:linkai/core/widgets/custom_button.dart';
+import 'package:linkai/core/widgets/custom_obsecure_text_field.dart';
 import 'package:linkai/features/authentication/data/models/auth_model.dart';
-import 'package:linkai/features/authentication/presentation/views/widgets/google_button.dart';
+import 'package:linkai/features/authentication/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:linkai/core/widgets/custom_text_field.dart';
 import 'package:linkai/core/widgets/logo.dart';
 
@@ -63,12 +65,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   padding: const EdgeInsets.all(25),
                   child: Column(
                     children: [
-                      const Expanded(child: Logo(width: 60)),
+                      const Expanded(flex: 2, child: Logo(width: 60)),
                       const SizedBox(height: 10),
                       Expanded(
+                        flex: 3,
                         child: Column(
                           children: [
-                            GoogleButton(onPressed: () async {}),
                             Divider(
                               height: 40,
                               color: Colors.white.withValues(alpha: .4),
@@ -91,14 +93,30 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               textColor: Colors.white,
                             ),
                             const SizedBox(height: 15),
+                            CustomObsecureTextField(
+                              hintText: "Password",
+                              borderColor: Colors.white.withValues(alpha: 0.3),
+                              fillColor: Colors.white.withValues(alpha: .15),
+                              hintColor: Colors.white,
+                              cursorColor: Colors.white,
+                              textColor: Colors.white,
+                              validator: (value) {
+                                return value!.length < 6 ? "at least 6 characters long" : null;
+                              },
+                              onSaved: (value) async {
+                                ServiceLocator.getIt<AuthModel>().password = value;
+                              },
+                            ),
+                            const SizedBox(height: 15),
                             CustomButton(
-                              text: "Sign In or Sign up",
+                              text: "Sign In",
                               buttonColor: Colors.black,
                               textColor: Colors.white,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  GoRouter.of(context).push(AppRouter.passwordView);
+                                  // GoRouter.of(context).push(AppRouter.passwordView);
+                                  await BlocProvider.of<LoginCubit>(context).login(ServiceLocator.getIt<AuthModel>());
                                 } else {
                                   _autovalidateMode = AutovalidateMode.always;
                                   setState(() {});
@@ -106,15 +124,35 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                               },
                             ),
                             const SizedBox(height: 10),
-                            TextButton(
-                              onPressed: () {
-                                GoRouter.of(context).push(AppRouter.forgetPasswordView);
-                              },
-                              style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
-                              child: Text(
-                                "Forget Password",
-                                style: AppStyles.defaultStyle(context, Colors.white),
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      GoRouter.of(context).push(AppRouter.registerView);
+                                    },
+                                    style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
+                                    child: Text(
+                                      "Signup",
+                                      style: AppStyles.defaultStyle(context, Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      GoRouter.of(context).push(AppRouter.forgetPasswordView);
+                                    },
+                                    style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
+                                    child: Text(
+                                      "Forget Password",
+                                      style: AppStyles.defaultStyle(context, Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),

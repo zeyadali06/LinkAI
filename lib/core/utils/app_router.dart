@@ -47,7 +47,11 @@ import '../../features/jobDetails/data/repo_impl/job_details_repo_impl.dart';
 import '../../features/jobDetails/presentation/manager/apply_job_cubit/apply_job_cubit.dart';
 import '../../features/profile/domain/useCases/changeNameuseCase/change_name_use_case.dart';
 import '../../features/profile/domain/useCases/passwordUseCase/change_password_use_case.dart';
+import '../../features/profile/domain/useCases/changeEmailCheckPasswordUseCase/change_email_check_password_use_case.dart';
+import '../../features/profile/domain/useCases/changeEmailSendOTPUseCase/change_email_send_otp_use_case.dart';
+import '../../features/profile/domain/useCases/changeEmailEnterNewEmailUseCase/change_email_enter_new_email_use_case.dart';
 import '../../features/profile/presentation/managers/change_name_cubit/change_name_cubit.dart';
+import '../../features/profile/presentation/managers/change_email_cubit/change_email_cubit.dart';
 import '../../features/profile/presentation/managers/profile_cubit/profile_cubit.dart';
 import '../../features/profile/presentation/views/change_email.dart';
 import '../../features/profile/presentation/views/change_name.dart';
@@ -181,8 +185,15 @@ abstract class AppRouter {
       GoRoute(
         path: changeEmail,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
-            child: ChangeEmail(),
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => ChangeEmailCubit(
+                ServiceLocator.getIt<ChangeEmailCheckPasswordUseCase>(),
+                ServiceLocator.getIt<ChangeEmailSendOTPUseCase>(),
+                ServiceLocator.getIt<ChangeEmailEnterNewEmailUseCase>(),
+              ),
+              child: const ChangeEmail(),
+            ),
             transitionsBuilder: bottomUpTransition,
           );
         },

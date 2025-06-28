@@ -123,8 +123,9 @@ class ProfileRepoImpl implements ProfileRepo {
       final response = await _apiManager.post({
         "otp": otp,
         "email": newEmail,
-      }, ApiConstants.changeEmailSendOTP, token: UserModel.instance.token);
+      }, ApiConstants.changeEmailEnterNewEmail, token: UserModel.instance.token);
       if (response["success"]) {
+        UserModel.instance.email = newEmail;
         return RequestResault.success(response["message"]);
       } else {
         return RequestResault.failure(

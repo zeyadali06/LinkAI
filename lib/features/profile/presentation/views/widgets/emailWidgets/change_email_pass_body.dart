@@ -28,7 +28,7 @@ class ChangeEmailPassBody extends StatelessWidget {
           CustomObsecureTextField(
             borderRadius: 16,
             controller: controller,
-            hintText: "Password",
+            hintText: "Enter your Password",
             enableValidator: true,
             validator: (value) {
               if (value == null || value.trim().isEmpty) {

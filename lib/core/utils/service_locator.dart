@@ -17,6 +17,9 @@ import '../../features/profile/domain/abstractRepos/profile_repo.dart';
 import '../../features/profile/domain/useCases/addProfileImageUseCase/add_profile_image.dart';
 import '../../features/profile/domain/useCases/changeNameuseCase/change_name_use_case.dart';
 import '../../features/profile/domain/useCases/passwordUseCase/change_password_use_case.dart';
+import '../../features/profile/domain/useCases/changeEmailCheckPasswordUseCase/change_email_check_password_use_case.dart';
+import '../../features/profile/domain/useCases/changeEmailSendOTPUseCase/change_email_send_otp_use_case.dart';
+import '../../features/profile/domain/useCases/changeEmailEnterNewEmailUseCase/change_email_enter_new_email_use_case.dart';
 
 abstract class ServiceLocator {
   static final GetIt getIt = GetIt.instance;
@@ -69,6 +72,15 @@ abstract class ServiceLocator {
     );
     getIt.registerSingleton<AddProfileImageUseCase>(
       AddProfileImageUseCase(getIt<ProfileRepo>()),
+    );
+    getIt.registerSingleton<ChangeEmailCheckPasswordUseCase>(
+      ChangeEmailCheckPasswordUseCase(getIt<ProfileRepo>()),
+    );
+    getIt.registerSingleton<ChangeEmailSendOTPUseCase>(
+      ChangeEmailSendOTPUseCase(getIt<ProfileRepo>()),
+    );
+    getIt.registerSingleton<ChangeEmailEnterNewEmailUseCase>(
+      ChangeEmailEnterNewEmailUseCase(getIt<ProfileRepo>()),
     );
     getIt.registerSingleton<JobDetailsRepoImpl>(
       JobDetailsRepoImpl(getIt<ApiManager>()),

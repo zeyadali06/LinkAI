@@ -18,6 +18,7 @@ import 'package:linkai/features/authentication/presentation/views/name_view.dart
 import 'package:linkai/features/authentication/presentation/views/password_confimation_view.dart';
 import 'package:linkai/features/authentication/presentation/views/password_view.dart';
 import 'package:linkai/features/authentication/presentation/views/phone_number_view.dart';
+import 'package:linkai/features/authentication/presentation/views/register_view.dart';
 import 'package:linkai/features/authentication/presentation/views/role_view.dart';
 import 'package:linkai/features/companies/presentation/manger/cubit/companies_cubit.dart';
 import 'package:linkai/features/companies/presentation/views/add_company_view/add_company_view.dart';
@@ -83,6 +84,7 @@ abstract class AppRouter {
   static const String roleView = "/roleView";
   static const String jobInterviewHistoryView = "/jobInterviewHistoryView";
   static const String jobInterviewHistoryItemView = "/jobInterviewHistoryItemView";
+  static const String registerView = "/registerView";
 
   static const String editCompanyView = "/editCompanyView";
   static final GoRouter router = GoRouter(
@@ -159,8 +161,11 @@ abstract class AppRouter {
       GoRoute(
         path: loginView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
-            child: LoginView(),
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => LoginCubit(ServiceLocator.getIt<AuthRepo>()),
+              child: const LoginView(),
+            ),
             transitionsBuilder: customTransition,
           );
         },
@@ -373,6 +378,18 @@ abstract class AppRouter {
               child: UserModel.instance.role == Role.user
                   ? JobInterviewHistoryUserView(jobId: state.extra as String) //
                   : JobInterviewHistoryHRView(jobId: state.extra as String),
+            ),
+            transitionsBuilder: customTransition,
+          );
+        },
+      ),
+      GoRoute(
+        path: registerView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: BlocProvider(
+              create: (context) => OtpCubit(ServiceLocator.getIt<AuthRepo>()),
+              child: const RegisterView(),
             ),
             transitionsBuilder: customTransition,
           );

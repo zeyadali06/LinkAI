@@ -19,7 +19,7 @@ class LoginCubit extends Cubit<LoginState> {
     if (result is Success) {
       emit(LoginSuccess());
     } else if (result is Failed) {
-      emit(CompleteRegister());
+      emit(LoginFailed(result.data.message));
     }
   }
 }

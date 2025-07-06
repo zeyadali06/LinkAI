@@ -4,11 +4,11 @@ This project is a job-matching platform similar to LinkedIn or Wuzzuf, enhanced 
 
 # Table of contents 📑
 
-- ### [Main Packages Used 🛠 =>](#main-packages-used)
-- ### [Folder Structure 📂 =>](#folder-structure)
+- ### [Main Packages Used =>](#main-packages-used)
+- ### [Folder Structure =>](#folder-structure)
 - ### [App Link =>](#app-link)
-- ### [Video Link =>](#app-link)
-- ### [Screen Shots 📸 =>](#screen-shots)
+- ### [Video Link =>](#video-link)
+- ### [Screen Shots =>](#screen-shots)
 
 ## [Main Packages Used 🛠]()
 
@@ -35,7 +35,7 @@ This project is a job-matching platform similar to LinkedIn or Wuzzuf, enhanced 
 - [shared_preferences](https://pub.dev/packages/shared_preferences) -> For storing simple key-value pairs locally.
 - [url_launcher](https://pub.dev/packages/url_launcher) -> To launch URLs in the browser or external apps.
 
-# Folder Structure 📂
+# Folder Structure
 
 Here is the folder structure we have been using in this project:
 

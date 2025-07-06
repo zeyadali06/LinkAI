@@ -20,7 +20,9 @@ class RegisterViewBody extends StatefulWidget {
 class _RegisterViewBodyState extends State<RegisterViewBody> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidatemodel;
+  // ignore: unused_field
   bool _passwordsMatch = false;
+  // ignore: unused_field
   String _confirmationMessage = '';
 
   @override

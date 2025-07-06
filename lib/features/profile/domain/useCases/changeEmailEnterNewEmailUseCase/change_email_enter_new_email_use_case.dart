@@ -9,4 +9,4 @@ class ChangeEmailEnterNewEmailUseCase {
   Future<RequestResault> call(String otp, String newEmail) async {
     return await _profileRepo.changeEmailEnterNewEmail(otp, newEmail);
   }
-} 
+}

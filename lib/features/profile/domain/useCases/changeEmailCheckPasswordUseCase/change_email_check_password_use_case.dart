@@ -9,4 +9,4 @@ class ChangeEmailCheckPasswordUseCase {
   Future<RequestResault> call(String password) async {
     return await _profileRepo.changeEmailCheckPassword(password);
   }
-} 
+}

@@ -42,4 +42,4 @@ final class ChangeEmailEnterNewEmailSuccess extends ChangeEmailState {
 final class ChangeEmailEnterNewEmailFailure extends ChangeEmailState {
   final String errorMessage;
   ChangeEmailEnterNewEmailFailure(this.errorMessage);
-} 
+}

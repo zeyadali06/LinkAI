@@ -74,7 +74,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
   void _handleNextAction() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      
+
       if (_selectedIndex == 0) {
         // Check password
         ChangeEmailCubit.get(context).checkPassword(passwordController.text);
@@ -114,9 +114,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
             SnackBar(content: Text(state.message)),
           );
           GoRouter.of(context).pop();
-        } else if (state is ChangeEmailCheckPasswordFailure ||
-                   state is ChangeEmailSendOTPFailure ||
-                   state is ChangeEmailEnterNewEmailFailure) {
+        } else if (state is ChangeEmailCheckPasswordFailure || state is ChangeEmailSendOTPFailure || state is ChangeEmailEnterNewEmailFailure) {
           String errorMessage = '';
           if (state is ChangeEmailCheckPasswordFailure) {
             errorMessage = state.errorMessage;
@@ -125,7 +123,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
           } else if (state is ChangeEmailEnterNewEmailFailure) {
             errorMessage = state.errorMessage;
           }
-          
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(errorMessage)),
           );
@@ -155,11 +153,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
               ),
               actions: [
                 TextButton(
-                  onPressed: (state is ChangeEmailCheckPasswordLoading ||
-                             state is ChangeEmailSendOTPLoading ||
-                             state is ChangeEmailEnterNewEmailLoading)
-                      ? null
-                      : _handleNextAction,
+                  onPressed: (state is ChangeEmailCheckPasswordLoading || state is ChangeEmailSendOTPLoading || state is ChangeEmailEnterNewEmailLoading) ? null : _handleNextAction,
                   child: Text(
                     _selectedIndex + 1 == _screens.length ? "Submit" : "Next",
                     style: AppStyles.defaultStyle(context),
@@ -183,11 +177,9 @@ class _ChangeEmailState extends State<ChangeEmail> {
                     },
                     children: _screens,
                   ),
-                  if (state is ChangeEmailCheckPasswordLoading ||
-                      state is ChangeEmailSendOTPLoading ||
-                      state is ChangeEmailEnterNewEmailLoading)
+                  if (state is ChangeEmailCheckPasswordLoading || state is ChangeEmailSendOTPLoading || state is ChangeEmailEnterNewEmailLoading)
                     Container(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       child: const Center(
                         child: CircularProgressIndicator(),
                       ),

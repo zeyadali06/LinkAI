@@ -10,6 +10,7 @@ class CompanyModel {
   String? updatedAt;
   int maxEmployees;
   int minEmployees;
+  // ignore: non_constant_identifier_names
   List<String> HRs;
   String? coverImage;
   String? profileImage;
@@ -26,6 +27,7 @@ class CompanyModel {
     this.updatedAt,
     required this.maxEmployees,
     required this.minEmployees,
+    // ignore: non_constant_identifier_names
     required this.HRs,
     this.role,
     this.coverImage,
@@ -94,6 +96,7 @@ class CompanyModel {
     String? coverImage,
     int? minEmployees,
     int? maxEmployees,
+    // ignore: non_constant_identifier_names
     List<String>? HRs,
   }) {
     return CompanyModel(

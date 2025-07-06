@@ -9,4 +9,4 @@ class ChangeEmailSendOTPUseCase {
   Future<RequestResault> call(String token, String newEmail) async {
     return await _profileRepo.changeEmailSendOTP(token, newEmail);
   }
-} 
+}

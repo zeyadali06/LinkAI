@@ -77,7 +77,7 @@ class _NewEmailPinBodyState extends State<NewEmailPinBody> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
-        GoRouter.of(context).pushReplacementNamed(AppRouter.loginView);
+          GoRouter.of(context).pushReplacementNamed(AppRouter.loginView);
         } else if (state is ChangeEmailSendOTPFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.errorMessage)),
@@ -99,7 +99,8 @@ class _NewEmailPinBodyState extends State<NewEmailPinBody> {
               style: AppStyles.semiBold18(context),
             ),
             const SizedBox(height: 28),
-            PinCodeField(length: 5,
+            PinCodeField(
+              length: 5,
               inputFormatters: [Formatters.numbersOnlyFormatter],
               controller: widget.controller,
               validator: (value) {
@@ -116,15 +117,10 @@ class _NewEmailPinBodyState extends State<NewEmailPinBody> {
             BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
               builder: (context, state) {
                 return TextButton(
-                  onPressed: (_canResend && state is! ChangeEmailSendOTPLoading) 
-                      ? _resendOTP 
-                      : null,
+                  onPressed: (_canResend && state is! ChangeEmailSendOTPLoading) ? _resendOTP : null,
                   child: Text(
                     _canResend ? "Resend" : "Resend($_resendTimer)",
-                    style: AppStyles.defaultStyle(
-                      context, 
-                      (_canResend && state is! ChangeEmailSendOTPLoading) ? null : Colors.grey
-                    ),
+                    style: AppStyles.defaultStyle(context, (_canResend && state is! ChangeEmailSendOTPLoading) ? null : Colors.grey),
                   ),
                 );
               },

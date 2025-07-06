@@ -52,4 +52,4 @@ class ChangeEmailCubit extends Cubit<ChangeEmailState> {
       emit(ChangeEmailEnterNewEmailFailure(result.data.message));
     }
   }
-} 
+}

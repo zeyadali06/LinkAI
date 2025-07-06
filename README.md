@@ -78,24 +78,24 @@ features
 └── splash: Displays an animated splash screen during app startup and handles initial navigation logic.
 ```
 
-# [App Link]()
+# [App Link](https://drive.google.com/file/d/1ia_EinxEHT-v6dP23is0tNap-sVbiq5u/view?usp=sharing)
 
 # [Video Link](https://drive.google.com/file/d/1vPMDUNs95K4eRZU3EOjuQLZTv7zA1RvO/view?usp=sharing)
 
 ## Screen Shots 📸
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/1.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/2.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/3.png" width="300">
+<img src="https://github.com/zeyadali06/LinkAI/blob/readme/screen_shots/1.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/2.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/3.jpg" width="300">
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/4.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/5.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/6.png" width="300">
+<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/4.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/5.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/6.jpg" width="300">
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/7.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/8.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/9.png" width="300">
+<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/7.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/8.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/9.jpg" width="300">
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/10.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/11.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/12.png" width="300">
+<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/10.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/11.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/12.jpg" width="300">
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/13.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/14.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/15.png" width="300">
+<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/13.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/14.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/15.jpg" width="300">
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/16.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/17.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/18.png" width="300">
+<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/16.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/17.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/18.jpg" width="300">
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/19.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/20.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/21.png" width="300">
+<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/19.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/20.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/21.jpg" width="300">
 
-<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/21.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/22.png" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/23.png" width="300"><
+<img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/21.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/22.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/tree/readme/screen_shots/23.jpg" width="300">

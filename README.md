@@ -10,7 +10,7 @@ This project is a job-matching platform similar to LinkedIn or Wuzzuf, enhanced 
 - ### [Video Link =>](#app-link)
 - ### [Screen Shots 📸 =>](#screen-shots)
 
-## Main Packages Used 🛠
+## [Main Packages Used 🛠]()
 
 - [audioplayers](https://pub.dev/packages/audioplayers) -> For playing audio files in various formats.
 - [avatar_glow](https://pub.dev/packages/avatar_glow) -> For glowing avatar animation effects (e.g., recording indicators).

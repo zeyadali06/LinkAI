@@ -10,7 +10,7 @@ This project is a job-matching platform similar to LinkedIn or Wuzzuf, enhanced 
 - ### [Video Link =>](#app-link)
 - ### [Screen Shots 📸 =>](#screen-shots)
 
-# Main Packages Used 🛠
+## Main Packages Used 🛠
 
 - [audioplayers](https://pub.dev/packages/audioplayers) -> For playing audio files in various formats.
 - [avatar_glow](https://pub.dev/packages/avatar_glow) -> For glowing avatar animation effects (e.g., recording indicators).
@@ -78,11 +78,11 @@ features
 └── splash: Displays an animated splash screen during app startup and handles initial navigation logic.
 ```
 
-# [App Link](https://drive.google.com/file/d/1ia_EinxEHT-v6dP23is0tNap-sVbiq5u/view?usp=sharing)
+## [App Link](https://drive.google.com/file/d/1ia_EinxEHT-v6dP23is0tNap-sVbiq5u/view?usp=sharing)
 
-# [Video Link](https://drive.google.com/file/d/1vPMDUNs95K4eRZU3EOjuQLZTv7zA1RvO/view?usp=sharing)
+## [Video Link](https://drive.google.com/file/d/1vPMDUNs95K4eRZU3EOjuQLZTv7zA1RvO/view?usp=sharing)
 
-# Screen Shots 📸
+## Screen Shots 📸
 
 <img src="https://github.com/zeyadali06/LinkAI/blob/readme/screen_shots/1.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/blob/readme/screen_shots/2.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/blob/readme/screen_shots/3.jpg" width="300">
 

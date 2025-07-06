@@ -2,7 +2,7 @@
 
 This project is a job-matching platform similar to LinkedIn or Wuzzuf, enhanced with an AI-powered voice interview feature. It helps employers assess communication skills through simulated interviews using speech analysis. The app is built with Flutter, and integrates custom AI models for voice-to-text, AI evaluation, and text-to-speech. It aims to improve hiring accuracy and candidate preparation.
 
-## Table of contents 📑
+# Table of contents 📑
 
 - ### [Main Packages Used =>](#main-packages-used)
 - ### [Folder Structure =>](#folder-structure)
@@ -10,7 +10,7 @@ This project is a job-matching platform similar to LinkedIn or Wuzzuf, enhanced 
 - ### [Video Link =>](#app-link)
 - ### [Screen Shots =>](#screen-shots)
 
-# Main Packages Used 🛠
+# [Main Packages Used 🛠]()
 
 - [audioplayers](https://pub.dev/packages/audioplayers) -> For playing audio files in various formats.
 - [avatar_glow](https://pub.dev/packages/avatar_glow) -> For glowing avatar animation effects (e.g., recording indicators).
@@ -35,7 +35,7 @@ This project is a job-matching platform similar to LinkedIn or Wuzzuf, enhanced 
 - [shared_preferences](https://pub.dev/packages/shared_preferences) -> For storing simple key-value pairs locally.
 - [url_launcher](https://pub.dev/packages/url_launcher) -> To launch URLs in the browser or external apps.
 
-# Folder Structure 📂
+# [Folder Structure 📂]()
 
 Here is the folder structure we have been using in this project:
 
@@ -82,7 +82,7 @@ features
 
 # [Video Link](https://drive.google.com/file/d/1vPMDUNs95K4eRZU3EOjuQLZTv7zA1RvO/view?usp=sharing)
 
-# Screen Shots 📸
+# [Screen Shots 📸]()
 
 <img src="https://github.com/zeyadali06/LinkAI/blob/readme/screen_shots/1.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/blob/readme/screen_shots/2.jpg" width="300"><img src="https://github.com/zeyadali06/LinkAI/blob/readme/screen_shots/3.jpg" width="300">
 
